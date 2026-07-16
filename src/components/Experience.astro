@@ -1,0 +1,71 @@
+---
+import { experience } from "../data/site";
+
+// Cronológico real (importa): del primer trabajo al actual, de arriba a abajo.
+const nodeColors = ["bg-yellow", "bg-violet", "bg-magenta"];
+---
+
+<section id="experiencia" class="relative px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
+  <p
+    data-reveal
+    class="mb-12 font-mono text-xs uppercase tracking-[0.25em] text-ink/50"
+  >
+    02 — experiencia
+  </p>
+
+  <div class="relative">
+    <!-- Línea del timeline -->
+    <span
+      aria-hidden="true"
+      class="absolute bottom-3 left-[9px] top-3 w-0.5 bg-ink/15 sm:left-[11px]"
+    ></span>
+
+    <ol class="space-y-14 sm:space-y-20">
+      {
+        experience.map((job, i) => {
+          const current = /actualidad/i.test(job.period);
+          return (
+            <li data-reveal class="relative pl-10 sm:pl-16">
+              {/* Nodo */}
+              <span
+                class:list={[
+                  "absolute left-0 top-1.5 h-5 w-5 rounded-[4px] border-2 border-ink",
+                  nodeColors[i % nodeColors.length],
+                ]}
+                style="rotate: 8deg"
+              />
+
+              <div class="flex flex-wrap items-center gap-2.5 font-mono text-[11px] uppercase tracking-widest">
+                <span class="rounded-full border-2 border-ink px-3 py-1">
+                  {job.period}
+                </span>
+                {job.note && (
+                  <span class="rounded-full bg-ink px-3 py-1 text-paper">
+                    {job.note}
+                  </span>
+                )}
+                {current && (
+                  <span class="inline-flex items-center gap-1.5 rounded-full bg-magenta px-3 py-1 text-white">
+                    <span class="relative flex h-1.5 w-1.5">
+                      <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-70" />
+                      <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
+                    </span>
+                    Actualidad
+                  </span>
+                )}
+              </div>
+
+              <h3 class="mt-4 font-display text-2xl font-extrabold leading-tight sm:text-4xl">
+                {job.role}
+              </h3>
+              <p class="mt-1 font-display text-lg font-bold text-violet sm:text-xl">
+                {job.org}
+              </p>
+              <p class="mt-4 max-w-2xl text-ink/70 sm:text-lg">{job.summary}</p>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>
