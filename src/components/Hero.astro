@@ -1,0 +1,153 @@
+---
+import { site, skills } from "../data/site";
+
+// Nombre partido para jerarquía: nombre GIGANTE, apellidos debajo.
+const [first, ...rest] = site.name.split(" ");
+const apellidos = rest.join(" ");
+
+// Stickers de personalidad — colores vivos en ciclo + rotaciones alternadas.
+const stickerStyles = [
+  { bg: "bg-magenta", text: "text-white" },
+  { bg: "bg-yellow", text: "text-ink" },
+  { bg: "bg-teal", text: "text-ink" },
+  { bg: "bg-violet", text: "text-white" },
+];
+const rots = [-5, 3, -2, 5, -4, 2, -3, 4];
+
+// Marquee: skills reales, en dos copias idénticas para loop sin costura.
+const marquee = [...skills.expert, ...skills.intermediate];
+---
+
+<section class="hero relative flex min-h-svh flex-col overflow-hidden">
+  <!-- Formas decorativas brutalistas de fondo -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="absolute -right-16 top-24 hidden h-52 w-52 rotate-12 rounded-full border-[3px] border-ink/15 sm:block"
+    >
+    </div>
+    <div
+      class="absolute -left-10 bottom-40 hidden h-32 w-32 -rotate-6 border-[3px] border-ink/10 lg:block"
+    >
+    </div>
+  </div>
+
+  <!-- Barra superior -->
+  <header
+    class="hero-el flex items-center justify-between gap-4 px-5 py-6 font-mono text-[10px] uppercase tracking-[0.2em] sm:px-8 sm:text-xs lg:px-12"
+  >
+    <span class="text-ink/70">Portafolio ’25 — {site.location}</span>
+    <span
+      class="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-teal px-3 py-1 text-ink shadow-hard"
+    >
+      <span class="relative flex h-2 w-2">
+        <span
+          class="absolute inline-flex h-full w-full animate-ping rounded-full bg-ink opacity-60"
+        ></span>
+        <span class="relative inline-flex h-2 w-2 rounded-full bg-ink"></span>
+      </span>
+      Disponible
+    </span>
+  </header>
+
+  <!-- Bloque principal -->
+  <div class="relative flex flex-1 flex-col justify-center px-5 py-8 sm:px-8 lg:px-12">
+    <p
+      class="hero-el mb-5 font-mono text-xs uppercase tracking-[0.25em] text-violet sm:text-sm"
+    >
+      {site.role}
+    </p>
+
+    <h1 class="name font-display font-extrabold leading-[0.82]">
+      <span class="block overflow-hidden pb-[0.08em]">
+        <span class="name-line block text-[clamp(3.2rem,17vw,15rem)]">{first}</span>
+      </span>
+      <span class="block overflow-hidden pb-[0.05em]">
+        <span
+          class="name-line block text-[clamp(1.5rem,6.5vw,5.5rem)] text-magenta"
+          >{apellidos}</span
+        >
+      </span>
+    </h1>
+
+    <!-- Stickers de personalidad -->
+    <ul class="mt-8 flex max-w-3xl flex-wrap items-center gap-3">
+      {
+        site.brand.personality.map((word, i) => {
+          const s = stickerStyles[i % stickerStyles.length];
+          return (
+            <li
+              class:list={[
+                "sticker inline-block rounded-lg border-2 border-ink px-3.5 py-1.5 font-display text-sm font-bold shadow-hard sm:text-base",
+                s.bg,
+                s.text,
+              ]}
+              style={`rotate: ${rots[i % rots.length]}deg`}
+            >
+              {word}
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <!-- Cierre + cue de scroll -->
+    <div
+      class="hero-el mt-12 flex items-end justify-between gap-6 font-mono text-xs text-ink/60"
+    >
+      <p class="max-w-xs leading-relaxed">
+        {site.availability} — {site.name.split(" ")[0]} arma la idea, la ejecuta y
+        la mide.
+      </p>
+      <span class="hidden items-center gap-2 sm:inline-flex">
+        baja <span class="text-lg leading-none">↓</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Marquee de skills a lo ancho -->
+  <div
+    class="marquee relative overflow-hidden border-y-2 border-ink bg-ink py-3 text-paper"
+  >
+    <div class="track flex w-max animate-marquee">
+      {
+        [0, 1].map(() => (
+          <div class="flex shrink-0 items-center" aria-hidden={true}>
+            {marquee.map((s) => (
+              <span class="flex items-center gap-5 whitespace-nowrap px-5 font-mono text-sm uppercase tracking-wider">
+                {s}
+                <span class="text-magenta">✦</span>
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduce) {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    tl.from(".name-line", { yPercent: 115, duration: 0.9, stagger: 0.12 })
+      .from(
+        ".hero-el",
+        { y: 18, opacity: 0, duration: 0.6, stagger: 0.15 },
+        "-=0.65"
+      )
+      .from(
+        ".sticker",
+        {
+          scale: 0.3,
+          opacity: 0,
+          y: 12,
+          duration: 0.5,
+          stagger: 0.06,
+          ease: "back.out(1.8)",
+        },
+        "-=0.4"
+      );
+  }
+</script>
