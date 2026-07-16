@@ -25,15 +25,32 @@ const { title, description } = Astro.props;
 
     <script>
       import Lenis from "lenis";
+      import { gsap } from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
       if (!reduce) {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Smooth scroll (Lenis) sincronizado con ScrollTrigger.
         const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
-        const raf = (time: number) => {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
-        };
-        requestAnimationFrame(raf);
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // Reveal genérico: cualquier elemento con [data-reveal] entra al hacer scroll.
+        gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
+          gsap.from(el, {
+            y: 40,
+            opacity: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 85%" },
+          });
+        });
       }
     </script>
   </body>

@@ -1,0 +1,68 @@
+---
+import { about } from "../data/site";
+
+// Palabras del titular que se resaltan tipo marcador (deben existir en about.headline).
+const highlights: Record<string, { bg: string; text: string }> = {
+  Estrategia: { bg: "bg-magenta", text: "text-white" },
+  cámara: { bg: "bg-violet", text: "text-white" },
+  edición: { bg: "bg-teal", text: "text-ink" },
+  métricas: { bg: "bg-yellow", text: "text-ink" },
+};
+
+// Parte el titular conservando las palabras a resaltar como tokens.
+const pattern = new RegExp(`(${Object.keys(highlights).join("|")})`, "g");
+const segments = about.headline.split(pattern).filter(Boolean);
+
+const paragraphs = about.body.split("\n\n");
+---
+
+<section id="sobre-mi" class="relative px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
+  <p
+    data-reveal
+    class="mb-8 font-mono text-xs uppercase tracking-[0.25em] text-ink/50"
+  >
+    01 — sobre mí
+  </p>
+
+  <h2
+    data-reveal
+    class="max-w-5xl font-display text-[clamp(1.9rem,5.5vw,4.5rem)] font-extrabold leading-[1.05]"
+  >
+    {
+      segments.map((seg) => {
+        const h = highlights[seg];
+        if (!h) return seg;
+        return (
+          <mark
+            class:list={[
+              "mx-0.5 inline-block rounded-md px-2 py-0.5 leading-none [box-decoration-break:clone]",
+              h.bg,
+              h.text,
+            ]}
+            style="rotate: -1.5deg"
+          >
+            {seg}
+          </mark>
+        );
+      })
+    }
+  </h2>
+
+  <div class="mt-16 grid gap-10 sm:grid-cols-[1.1fr_0.9fr] sm:gap-14">
+    <div data-reveal class="space-y-6 text-lg leading-relaxed text-ink/80 sm:text-xl">
+      {paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+
+    <aside data-reveal class="flex items-start sm:justify-end">
+      <div
+        class="inline-flex flex-col gap-1 rounded-xl border-2 border-ink bg-ink px-6 py-5 text-paper shadow-hard-lg"
+        style="rotate: 2deg"
+      >
+        <span class="font-display text-5xl font-extrabold text-yellow">+4</span>
+        <span class="font-mono text-xs uppercase tracking-widest">
+          años entre estrategia,<br />contenido y datos
+        </span>
+      </div>
+    </aside>
+  </div>
+</section>
