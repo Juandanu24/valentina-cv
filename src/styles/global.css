@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/*
+ * Tokens de diseño — PALETA Y TIPOGRAFÍAS DE REFERENCIA (versión 1).
+ * El diseño se rehace desde cero: esto es un punto de partida, no una
+ * obligación. Ajusta/reemplaza libremente para lograr algo con personalidad
+ * (evitar el look "genérico de IA").
+ */
+@theme {
+  --color-ink: #16141f;
+  --color-magenta: #ff2e7e;
+  --color-violet: #6c3ce9;
+  --color-yellow: #ffc94a;
+  --color-teal: #00c9a7;
+  --color-cloud: #f5f3fa;
+
+  /* Tipografías v1 (cargar vía @fontsource o Google Fonts si se conservan). */
+  --font-display: "Unbounded", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "Space Mono", monospace;
+}

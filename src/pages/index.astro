@@ -1,0 +1,30 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+---
+
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{site.name} — {site.role}</title>
+    <meta
+      name="description"
+      content={`${site.name}, ${site.role} en ${site.location}. Portafolio y hoja de vida.`}
+    />
+  </head>
+  <body class="min-h-screen bg-cloud text-ink font-body">
+    <main class="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-6 px-6 py-24">
+      <p class="font-mono text-sm text-violet">Scaffold listo · pendiente diseño</p>
+      <h1 class="font-display text-5xl font-bold tracking-tight">{site.name}</h1>
+      <p class="text-xl text-ink/80">{site.role}</p>
+      <p class="text-ink/60">{site.location} · {site.availability}</p>
+      <p class="max-w-prose text-ink/70">
+        Base del proyecto en marcha. El diseño creativo se construye en la
+        siguiente sesión con el input de Valentina.
+      </p>
+    </main>
+  </body>
+</html>
