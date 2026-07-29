@@ -1,102 +1,197 @@
 /**
- * Datos del sitio — CV / landing de Valentina García Florez.
- * Contenido real extraído del brief. El DISEÑO se rehace desde cero;
- * esto es solo la fuente de contenido tipada para las secciones.
+ * Datos del sitio — v2, según especificación de Valentina (jul 2026).
+ * Textos DEFINITIVOS del documento: no redactar nada nuevo.
+ * Objetivo único: conseguir empleo in-house en una marca grande (estrategia/dirección de marketing).
+ * Todo el copy en PRIMERA persona. Cinco años de experiencia, no cuatro.
  */
 
 export const site = {
-  name: "Valentina García Florez",
-  role: "Estratega de Marketing Digital · Social Media Manager",
+  name: "Valentina García Flórez",
+  role: "Estrategia de marketing y contenido",
   location: "Montería, Colombia",
-  availability: "Remoto, freelance o presencial",
-  email: "valentinagaf-21@hotmail.com",
-  phone: "321 862 2670",
-  // TODO: dominio final una vez comprado (ej. https://valentinagarcia.co)
+  email: "valentinagaf-21@hotmail.com", // TODO v3: correo con dominio propio
+  whatsapp: "https://wa.me/573218622670",
+  linkedin: "", // TODO: pendiente de Valentina
+  // TODO: dominio propio (ej. valentinagarcia.co) — actualizar también astro.config.mjs
   url: "https://valentina-cv.vercel.app",
-
-  // Personalidad / dirección de marca (para tono y copy, no para pegar literal)
-  brand: {
-    personality: [
-      "divertida",
-      "cercana",
-      "creativa",
-      "cálida",
-      "tecnológica",
-      "extrovertida",
-      "rebelde",
-      "minimalista",
-    ],
-    perception:
-      "Profesional, creativa, con ideas nuevas y diferentes; que dice lo que piensa sin miedo.",
-  },
 } as const;
 
-export const about = {
-  headline:
-    "Comunicadora social y periodista. Estrategia, cámara, edición y métricas.",
-  body: `Soy comunicadora social y periodista con más de cuatro años moviéndome entre la estrategia, la cámara, el editor de video y las métricas. He sido, en distintos momentos, la que piensa la idea, la que la ejecuta y la que mide si funcionó — y por eso sé exactamente dónde aporto más valor.
-
-Hoy busco un rol donde pueda enfocar esa energía en la estrategia y el contenido, dentro de un equipo real: gente con quien discutir ideas, repartir el trabajo y crecer una marca sin hacerlo todo yo sola.`,
+export const hero = {
+  hook: "Las marcas no necesitan más contenido. Necesitan mejores ideas.",
+  intro: [
+    "No llegué al marketing por las redes sociales, llegué porque me apasiona entender cómo piensan las marcas y las personas.",
+    "Soy Comunicadora Social y Periodista, especializada en estrategia de marketing y contenido. Disfruto transformar ideas en planes con propósito, construir marcas con personalidad y crear estrategias que generen resultados, no solo publicaciones.",
+  ],
+  cta: "Explorar mi trabajo",
 } as const;
 
-// Orden cronológico real — importa para el timeline.
-export const experience = [
+// Banner deslizante: aptitudes (no herramientas). Ocho, no más.
+export const aptitudes = [
+  "Estratégica",
+  "Creativa",
+  "Curiosa",
+  "Analítica",
+  "Detallista",
+  "Resolutiva",
+  "Autodidacta",
+  "Orientada a resultados",
+] as const;
+
+export interface Project {
+  client: string;
+  sector: string;
+  role: string;
+  description: string;
+  tags: readonly string[];
+  result: string;
+  /** "destacada": tratamiento visual mayor (04 Ciudad Manhattan). "visual": la más fotográfica (05 Palmareca gastro). */
+  emphasis?: "destacada" | "visual";
+  /** Piezas visuales. Placeholders hasta que llegue el material real (18–36 archivos). */
+  pieces: number;
+}
+
+// Seis tarjetas, en este orden. Palmareca aparece dos veces con roles distintos,
+// separadas a propósito para que no se lean seguidas.
+export const projects: readonly Project[] = [
   {
-    period: "Abr 2021 – Sep 2021",
-    role: "Community Manager",
-    org: "Fox Creativo",
-    note: "Práctica profesional",
-    summary:
-      "Creación de contenido y piezas publicitarias para redes; edición de video; estrategias de captación de seguidores.",
+    client: "Palmareca",
+    sector: "Gastrobar",
+    role: "Directora creativa & estratega de marca",
+    description:
+      "Lideré la transición forzada de nombre (de La Pérgola a Palmareca), protegiendo el ADN de la marca. Dirigí la identidad visual exigiendo elegancia en “modo noche”, reescribí el tono de comunicación para no perder la “sabrosura”, diseñé piezas clave como la gran reinauguración y ejecuté la pauta en Meta Ads optimizando campañas de tráfico vs. interacción.",
+    tags: ["Branding", "Dirección de arte", "Meta Ads", "Copywriting"],
+    result: "Conflicto de marca resuelto y rebranding premium en menos de 30 días",
+    pieces: 4,
+  },
+  {
+    client: "Dondi",
+    sector: "Plataforma transaccional",
+    role: "Directora creativa & arquitecta de marca",
+    description:
+      "Diseñé desde cero la arquitectura digital y el lenguaje para validar la compra de chance por WhatsApp frente a los puntos físicos. Creé la “Dieta Blanca” (sustituyendo palabras de alto riesgo para evitar bloqueos de Meta Ads), estructuré guiones bajo el framework Hook-Retain-Reward y diseñé el flujo de conversión que humanizó la marca a través de sus fundadores.",
+    tags: [
+      "Estrategia de lanzamiento",
+      "Política de Meta Ads",
+      "Video marketing",
+      "Embudos de conversión",
+    ],
+    result: "Cero bloqueos de cuenta publicitaria y flujo 100% convertido a WhatsApp",
+    pieces: 4,
+  },
+  {
+    client: "S Ingeniería",
+    sector: "App ARTICI RTC",
+    role: "Directora de producción & guionista",
+    description:
+      "El reto era explicar de forma atractiva a un panel de inversionistas cómo una app con inteligencia artificial (SIA) resuelve el caos operativo del mantenimiento técnico en campo. Diseñé el guion bajo una narrativa problema-solución, dirigí el rodaje en localización real y supervisé la edición para convertir procesos complejos en un video pitch B2B de alto impacto.",
+    tags: ["Guionismo B2B", "Dirección de rodaje", "Edición audiovisual", "Video para pitch"],
+    result: "Video pitch seleccionado para presentación ante inversionistas",
+    pieces: 3,
+  },
+  {
+    client: "Ciudad Manhattan",
+    sector: "Real estate & hospitality",
+    role: "Especialista en Meta Ads & media buyer",
+    description:
+      "Diseñé y ejecuté la campaña publicitaria multicanal (motel, hotel y bono gasolina) para la temporada del Mes de la Mujer. Armé la pauta orientada a la apertura de conversaciones directas por mensaje, testeando formatos en Stories y Multiposts con segmentación flexible para maximizar la relevancia creativa.",
+    tags: [
+      "Meta Ads Manager",
+      "Anuncios conversacionales",
+      "Analítica",
+      "Copywriting promocional",
+    ],
+    result: "199 conversaciones directas a $353 COP por lead",
+    emphasis: "destacada", // el dato más contundente del portafolio
+    pieces: 3,
+  },
+  {
+    client: "Palmareca",
+    sector: "Gastronomía & coctelería",
+    role: "Fotógrafa & directora de arte",
+    description:
+      "Elevé la presencia visual de los nuevos platos y cócteles de la carta. Conceptualicé la iluminación, el estilismo de alimentos y la paleta de color nocturna para capturar la esencia festiva y gastronómica del lugar, logrando imágenes con alto apetito visual que comunican la experiencia premium del sitio.",
+    tags: ["Fotografía gastronómica", "Dirección de arte", "Iluminación", "Food styling"],
+    result: "Banco visual oficial, usado en menú impreso y pauta digital",
+    emphasis: "visual", // la más visual de las seis; fotografía propia
+    pieces: 6,
+  },
+  {
+    client: "Kepagro",
+    sector: "Insumos agrícolas",
+    role: "Productora audiovisual & content creator",
+    description:
+      "Diseñé una estrategia de cobertura de eventos (serie de 5 a 8 entregas) para modernizar la imagen del sector agro. Rompí el esquema aburrido del video corporativo aplicando estructuras de storytelling, voz en off, ganchos de alto impacto y edición dinámica en tiempo real para conectar de forma humana y cercana con los agricultores.",
+    tags: ["Cobertura de eventos", "Storytelling", "Producción en campo", "Reels / TikTok"],
+    result: "Miles de reproducciones orgánicas y humanización de una marca B2B",
+    pieces: 4,
+  },
+] as const;
+
+export const filosofia = {
+  title: "Mi filosofía: creatividad con estructura y propósito",
+  body: [
+    "No creo contenido por llenar un calendario.",
+    "Cada estrategia nace de entender el negocio, conocer al cliente y encontrar una idea con propósito. Me apoyo en metodologías como storytelling, AIDA, embudos de conversión y otros modelos estratégicos para construir mensajes que conecten y generen resultados.",
+  ],
+} as const;
+
+// "De qué me encargo": cuatro módulos por capacidad, no lista plana de herramientas.
+export const capacidades = [
+  {
+    title: "Estrategia y marca",
+    items: ["Estrategia de marketing", "Branding", "Dirección creativa", "Investigación de mercado"],
+  },
+  {
+    title: "Narrativa y contenido",
+    items: ["Copywriting", "Storytelling", "Planificación de contenido", "Email marketing"],
+  },
+  {
+    title: "Producción",
+    items: ["Fotografía", "Video", "Edición en CapCut y Premiere", "Dirección de rodaje"],
+  },
+  {
+    title: "Números y pauta",
+    items: ["Meta Ads", "Análisis de métricas", "Informes de efectividad"],
+  },
+] as const;
+
+// Una sola línea pequeña y discreta. Canva y ChatGPT jamás como "nivel experto".
+export const herramientas =
+  "Canva · Illustrator · Photoshop · Premiere · CapCut · Meta Business Suite · Google Analytics · Notion · ChatGPT · Claude";
+
+// Trayectoria comprimida: función de verificación para RR.HH.
+// iClic: sin "fundadora" en el titular; el mérito va en la descripción.
+export const trayectoria = [
+  {
+    period: "Abr 2023 – hoy",
+    org: "iClic",
+    role: "Estrategia y dirección de marketing",
+    detail:
+      "Monté y opero una operación de marketing completa: clientes, presupuesto, equipo y resultados.",
   },
   {
     period: "Oct 2021 – Mar 2023",
-    role: "Comunicadora Social",
     org: "Alamedas Centro Comercial",
-    summary:
-      "Segmentación de bases de datos y email marketing masivo; cobertura fotográfica/audiovisual de eventos; informes de efectividad.",
-  },
-  {
-    period: "Abr 2023 – Actualidad",
-    role: "Fundadora y Estratega de Marketing Digital",
-    org: "iClic (agencia independiente)",
-    summary:
-      "Dirección estratégica de marca para distintos clientes; creación integral de contenido (foto, video, copy); gestión de pauta en Meta Ads.",
-  },
-] as const;
-// Nota: sin marcas/clientes específicos ni logros atribuidos a una marca (decisión de Valentina).
-
-export const education = [
-  {
-    title: "Comunicación Social y Periodismo",
-    org: "Universidad Pontificia Bolivariana",
+    role: "Comunicadora social",
     detail:
-      "Logística SIMCUM 2019 · Congreso Épico en Eafit · Proyecto Reciclandoando",
+      "Comunicación corporativa, email marketing masivo, cobertura de eventos, producción audiovisual e informes de efectividad.",
   },
   {
-    title: "Formación continua",
-    org: "Udemy · Platzi",
-    detail: "Marketing digital, herramientas creativas, IA aplicada",
+    period: "Abr 2021 – Sep 2021",
+    org: "Fox Creativo",
+    role: "Community manager",
+    detail: "Práctica profesional.",
   },
 ] as const;
 
-export const skills = {
-  expert: [
-    "Canva",
-    "CapCut",
-    "Premiere Pro",
-    "Meta Ads",
-    "Meta Business Suite",
-    "Notion",
-    "ChatGPT",
-  ],
-  intermediate: ["Illustrator", "Photoshop", "Google Analytics"],
-} as const;
-
-// Proyectos por categoría, sin nombres de marca (decisión explícita).
-export const projects = [
-  { category: "Estrategia de contenido para redes sociales" },
-  { category: "Email marketing (segmentación y campañas masivas)" },
-  { category: "Producción audiovisual (foto y video)" },
-  { category: "Gestión de pauta digital (Meta Ads)" },
+export const educacion = [
+  "Comunicación Social y Periodismo — Universidad Pontificia Bolivariana",
+  "Formación continua en Platzi y Udemy: marketing digital, herramientas creativas, IA aplicada",
 ] as const;
+
+export const contacto = {
+  title: "¿Estás armando equipo?",
+  subtitle: "Cuéntame qué marca es y qué necesitan. Respondo el mismo día.",
+  ctaPrimary: "Escríbeme por WhatsApp",
+  ctaSecondary: "Descargar mi hoja de vida en PDF", // TODO: PDF pendiente — muestra aviso "pronto disponible"
+} as const;

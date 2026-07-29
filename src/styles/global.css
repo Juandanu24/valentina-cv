@@ -1,34 +1,31 @@
 @import "tailwindcss";
 
-/* Tipografías self-hosted (sin llamadas externas). */
-@import "@fontsource-variable/unbounded";
-@import "@fontsource-variable/plus-jakarta-sans";
-@import "@fontsource/space-mono/400.css";
-@import "@fontsource/space-mono/700.css";
+/* Tipografías self-hosted v2 (sin llamadas externas). */
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/instrument-sans";
+@import "@fontsource-variable/jetbrains-mono";
 
 /*
- * Sistema de diseño — Dirección "Sticker energy" (brutalismo cálido).
- * Colores vivos en bloques, tipografía descarada, bordes marcados y
- * sombras duras (offset sólido). Nada de degradados por defecto.
+ * Sistema de diseño v2 — "Tablero de trabajo" (especificación de Valentina, jul 2026).
+ * 4 colores: dos neutros (hueso, azul marino) + dos acentos (vino tinto, oliva).
+ * El rojo quemado es SOLO hover del vino (misma familia, no cuenta como 5º color).
+ * Sin degradados, sin sombras difusas, sin glassmorphism.
+ * Regla: los dos acentos no conviven peleando en una misma pantalla.
  */
 @theme {
-  --color-ink: #16141f;
-  --color-paper: #f7f2ea; /* crema cálida de fondo */
-  --color-cloud: #f5f3fa;
-  --color-magenta: #ff2e7e;
-  --color-violet: #6c3ce9;
-  --color-yellow: #ffc94a;
-  --color-teal: #00c9a7;
+  --color-hueso: #f0e9df;
+  --color-marino: #1e2a38;
+  --color-vino: #6e1f2a;
+  --color-oliva: #55603a;
+  --color-quemado: #a33a28; /* únicamente :hover del vino */
+  /* Texto de cuerpo: versión muy oscura del marino, no negro puro. */
+  --color-tinta: #141c26;
 
-  --font-display: "Unbounded Variable", "Unbounded", sans-serif;
-  --font-body: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", sans-serif;
-  --font-mono: "Space Mono", monospace;
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", sans-serif;
+  --font-body: "Instrument Sans Variable", "Instrument Sans", sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
 
-  /* Sombras duras brutalistas. */
-  --shadow-hard: 4px 4px 0 0 #16141f;
-  --shadow-hard-lg: 8px 8px 0 0 #16141f;
-
-  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee: marquee 32s linear infinite;
 }
 
 @keyframes marquee {
@@ -40,16 +37,23 @@
 @layer base {
   body {
     font-family: var(--font-body);
+    background: var(--color-hueso);
+    color: var(--color-tinta);
   }
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  /* Piso de calidad: foco de teclado siempre visible. */
+  :focus-visible {
+    outline: 2px solid var(--color-vino);
+    outline-offset: 3px;
   }
 }
 
-/* Respeto a quien prefiere menos movimiento. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
