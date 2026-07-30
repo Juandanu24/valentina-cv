@@ -4,6 +4,10 @@
 @import "@fontsource-variable/bricolage-grotesque";
 @import "@fontsource-variable/instrument-sans";
 @import "@fontsource-variable/jetbrains-mono";
+/* Candidatas de display con más carácter — ver /tipografias */
+@import "@fontsource/anton";
+@import "@fontsource-variable/syne";
+@import "@fontsource/instrument-serif";
 
 /*
  * Sistema de diseño v2 — "Tablero de trabajo" (especificación de Valentina, jul 2026).
@@ -21,7 +25,9 @@
   /* Texto de cuerpo: versión muy oscura del marino, no negro puro. */
   --color-tinta: #141c26;
 
-  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", sans-serif;
+  /* Display = titulares. Name = el nombre de Valentina, con carácter extra. */
+  --font-display: "Syne Variable", "Syne", sans-serif;
+  --font-name: "Anton", sans-serif;
   --font-body: "Instrument Sans Variable", "Instrument Sans", sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
 

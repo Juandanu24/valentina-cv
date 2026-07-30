@@ -1,0 +1,106 @@
+---
+// Página temporal de decisión tipográfica — NO va a producción.
+// Borrar cuando Valentina elija (y quitar las fuentes descartadas del package.json).
+import "../styles/global.css";
+
+const opciones = [
+  {
+    id: "A",
+    nombre: "Anton + Syne",
+    nota: "Nombre condensado y contundente (como el PORTFOLIO de tu referencia). Titulares en Syne, una grotesca con formas peculiares. La más gráfica y moderna.",
+    name: '"Anton", sans-serif',
+    display: '"Syne Variable", sans-serif',
+  },
+  {
+    id: "B",
+    nombre: "Instrument Serif + Syne",
+    nota: "Nombre en serif elegante de alto contraste — muy editorial y sofisticado, como los títulos de tu referencia. Titulares en Syne para que no se vuelva revista.",
+    name: '"Instrument Serif", serif',
+    display: '"Syne Variable", sans-serif',
+  },
+  {
+    id: "C",
+    nombre: "Syne + Syne",
+    nota: "Todo en Syne, jugando con pesos. Más unificado y con carácter propio, sin mezclar familias.",
+    name: '"Syne Variable", sans-serif',
+    display: '"Syne Variable", sans-serif',
+  },
+];
+---
+
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Elegir tipografía — Valentina</title>
+  </head>
+  <body class="bg-hueso text-tinta">
+    <div class="mx-auto max-w-5xl px-5 py-16 sm:px-8">
+      <p class="font-mono text-xs uppercase tracking-[0.25em] text-oliva">
+        Página temporal
+      </p>
+      <h1 class="mt-3 font-display text-3xl font-extrabold text-marino">
+        ¿Cuál te gusta más, Valentina?
+      </h1>
+      <p class="mt-3 max-w-2xl text-tinta/75">
+        Tres combinaciones aplicadas a tu hero real. Dime la letra (A, B o C) y la
+        aplico en todo el sitio. Los colores no cambian.
+      </p>
+
+      <div class="mt-14 space-y-16">
+        {
+          opciones.map((o) => (
+            <section class="border border-marino/20 bg-hueso">
+              <div class="flex flex-wrap items-baseline justify-between gap-3 border-b border-marino/20 bg-marino px-6 py-3 text-hueso">
+                <p class="font-mono text-sm uppercase tracking-widest">
+                  Opción {o.id} — {o.nombre}
+                </p>
+              </div>
+
+              <div class="px-6 py-10 sm:px-10">
+                <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-oliva">
+                  Estrategia de marketing y contenido · Montería, Colombia
+                </p>
+
+                <p
+                  class="mt-4 text-[clamp(2.6rem,8vw,5rem)] uppercase leading-[0.88] tracking-tight text-marino"
+                  style={`font-family: ${o.name}`}
+                >
+                  Valentina
+                  <br />
+                  <span class="text-vino">García Flórez</span>
+                </p>
+
+                <p
+                  class="mt-6 max-w-lg text-[clamp(1.1rem,2vw,1.5rem)] font-bold leading-snug text-marino"
+                  style={`font-family: ${o.display}`}
+                >
+                  Las marcas no necesitan más contenido.
+                  <span class="text-vino">Necesitan mejores ideas.</span>
+                </p>
+
+                <p class="mt-5 max-w-lg leading-relaxed text-tinta/80">
+                  Soy Comunicadora Social y Periodista, especializada en estrategia
+                  de marketing y contenido.
+                </p>
+
+                <p
+                  class="mt-8 text-2xl font-extrabold text-marino"
+                  style={`font-family: ${o.display}`}
+                >
+                  Así se verían los títulos de sección
+                </p>
+              </div>
+
+              <p class="border-t border-marino/20 bg-marino/5 px-6 py-4 text-sm leading-relaxed text-tinta/75 sm:px-10">
+                {o.nota}
+              </p>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,32 +1,60 @@
 ---
 import { site, hero } from "../data/site";
+
+// Foto de Valentina. Guardar el archivo en public/valentina.jpg
+const foto = "/valentina.jpg";
 ---
 
-<header class="mx-auto max-w-6xl px-5 pb-20 pt-32 sm:px-8 sm:pt-40">
-  <h1
-    class="hero-hook max-w-4xl font-display text-[clamp(2.2rem,6.5vw,4.8rem)] font-extrabold leading-[1.02] text-marino"
-  >
-    Las marcas no necesitan más contenido.
-    <span class="text-vino">Necesitan mejores ideas.</span>
-  </h1>
-
-  <div class="mt-14 grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-16">
-    <div class="hero-el">
-      <p class="font-display text-xl font-bold text-marino">{site.name}</p>
-      <p class="mt-2 font-mono text-xs uppercase tracking-widest text-marino/60">
+<header class="mx-auto max-w-6xl px-5 pb-16 pt-28 sm:px-8 sm:pt-32">
+  <div class="grid items-center gap-10 md:grid-cols-[1fr_0.8fr] md:gap-16">
+    <!-- Columna de texto -->
+    <div>
+      <p
+        class="hero-el font-mono text-[11px] uppercase tracking-[0.2em] text-oliva"
+      >
         {site.role} · {site.location}
       </p>
-    </div>
 
-    <div class="hero-el space-y-4 text-lg leading-relaxed text-tinta/85">
-      {hero.intro.map((p) => <p>{p}</p>)}
+      <h1
+        class="hero-name mt-4 font-name text-[clamp(3rem,9vw,6.5rem)] uppercase leading-[0.88] tracking-tight text-marino"
+      >
+        Valentina<br /><span class="text-vino">García Flórez</span>
+      </h1>
+
+      <p
+        class="hero-el mt-7 max-w-lg font-display text-[clamp(1.15rem,2.2vw,1.6rem)] font-bold leading-snug text-marino"
+      >
+        Las marcas no necesitan más contenido.
+        <span class="text-vino">Necesitan mejores ideas.</span>
+      </p>
+
+      <div class="hero-el mt-6 max-w-lg space-y-3 leading-relaxed text-tinta/80">
+        {hero.intro.map((p) => <p>{p}</p>)}
+      </div>
+
       <a
         href="#trabajo"
-        class="mt-4 inline-block bg-vino px-6 py-3.5 font-mono text-xs uppercase tracking-widest text-hueso transition-colors hover:bg-quemado"
+        class="hero-el mt-8 inline-block bg-vino px-6 py-3.5 font-mono text-xs uppercase tracking-widest text-hueso transition-colors hover:bg-quemado"
       >
         {hero.cta} ↓
       </a>
     </div>
+
+    <!-- Retrato -->
+    <figure class="hero-foto relative mx-auto w-full max-w-xs md:max-w-none">
+      <div class="absolute -bottom-3 -right-3 h-full w-full border-2 border-oliva" aria-hidden="true"></div>
+      <div class="relative grid aspect-[4/5] w-full place-items-center bg-marino/10">
+        <span class="font-name text-6xl uppercase text-marino/25">VG</span>
+        <img
+          src={foto}
+          alt={`Retrato de ${site.name}`}
+          width="800"
+          height="1000"
+          class="absolute inset-0 h-full w-full object-cover object-top"
+          onerror="this.remove()"
+        />
+      </div>
+    </figure>
   </div>
 </header>
 
@@ -37,7 +65,8 @@ import { site, hero } from "../data/site";
   if (!reduce) {
     gsap
       .timeline({ defaults: { ease: "power3.out" } })
-      .from(".hero-hook", { y: 30, opacity: 0, duration: 0.9 })
-      .from(".hero-el", { y: 20, opacity: 0, duration: 0.7, stagger: 0.15 }, "-=0.5");
+      .from(".hero-name", { y: 28, opacity: 0, duration: 0.85 })
+      .from(".hero-foto", { opacity: 0, scale: 0.96, duration: 0.9 }, "-=0.6")
+      .from(".hero-el", { y: 16, opacity: 0, duration: 0.6, stagger: 0.12 }, "-=0.7");
   }
 </script>

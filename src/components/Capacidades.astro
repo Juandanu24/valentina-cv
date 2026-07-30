@@ -3,24 +3,46 @@ import { capacidades, herramientas } from "../data/site";
 ---
 
 <section class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
-  <p data-reveal class="font-mono text-xs uppercase tracking-[0.25em] text-marino/50">
-    De qué me encargo
-  </p>
+  <div class="flex items-center gap-4">
+    <span class="font-mono text-xs uppercase tracking-[0.25em] text-oliva">
+      De qué me encargo
+    </span>
+    <span class="h-px flex-1 bg-marino/20"></span>
+  </div>
 
-  <div class="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2">
+  <!-- Grilla con líneas continuas: se lee como un tablero -->
+  <div class="mt-12 grid gap-px bg-marino/15 sm:grid-cols-2">
     {
-      capacidades.map((c) => (
-        <div data-reveal class="border-t-2 border-oliva pt-5">
-          <h3 class="font-display text-xl font-extrabold text-marino sm:text-2xl">
+      capacidades.map((c, i) => (
+        <div
+          data-reveal
+          class="group relative bg-hueso p-7 transition-colors duration-300 hover:bg-marino sm:p-9"
+        >
+          <span class="font-name text-4xl leading-none text-oliva/35 transition-colors duration-300 group-hover:text-hueso/40 sm:text-5xl">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+
+          <h3 class="mt-4 font-display text-2xl font-extrabold leading-tight text-marino transition-colors duration-300 group-hover:text-hueso sm:text-3xl">
             {c.title}
           </h3>
-          <p class="mt-3 leading-relaxed text-tinta/75">{c.items.join(" · ")}</p>
+
+          <ul class="mt-5 space-y-1.5">
+            {c.items.map((item) => (
+              <li class="flex items-baseline gap-2.5 text-tinta/75 transition-colors duration-300 group-hover:text-hueso/80">
+                <span class="h-px w-3 shrink-0 translate-y-[-0.3em] bg-oliva transition-colors duration-300 group-hover:bg-hueso/50" />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
       ))
     }
   </div>
 
-  <p data-reveal class="mt-14 font-mono text-[11px] uppercase tracking-wider text-marino/45">
+  <p
+    data-reveal
+    class="mt-10 border-t border-marino/15 pt-5 font-mono text-[11px] uppercase leading-relaxed tracking-wider text-marino/45"
+  >
     Herramientas: {herramientas}
   </p>
 </section>

@@ -2,23 +2,61 @@
 import { filosofia } from "../data/site";
 
 const [declaracion, cuerpo] = filosofia.body;
+
+// Metodologías nombradas en el texto — se destacan como fichas del tablero.
+const metodologias = ["Storytelling", "AIDA", "Embudos de conversión", "Modelos estratégicos"];
 ---
 
-<section id="filosofia" class="bg-oliva px-5 py-24 text-hueso sm:px-8 sm:py-32">
-  <div class="mx-auto max-w-4xl">
-    <p data-reveal class="font-mono text-xs uppercase tracking-[0.25em] text-hueso/70">
-      {filosofia.title}
-    </p>
+<section id="filosofia" class="relative overflow-hidden bg-oliva text-hueso">
+  <!-- Comillas tipográficas como textura de fondo -->
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -right-6 -top-24 select-none font-name text-[22rem] leading-none text-hueso/10 sm:text-[30rem]"
+    >”</span
+  >
 
-    <p
-      data-reveal
-      class="mt-8 font-display text-[clamp(1.8rem,4.5vw,3.2rem)] font-extrabold leading-tight"
-    >
-      {declaracion}
-    </p>
+  <div class="relative mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+    <div class="flex items-center gap-4">
+      <span class="font-mono text-xs uppercase tracking-[0.25em] text-hueso/70">
+        Mi filosofía
+      </span>
+      <span class="h-px flex-1 bg-hueso/30"></span>
+    </div>
 
-    <p data-reveal class="mt-8 max-w-2xl text-lg leading-relaxed text-hueso/90 sm:text-xl">
-      {cuerpo}
-    </p>
+    <div class="mt-12 grid gap-10 md:grid-cols-[1.1fr_1fr] md:gap-16">
+      <div>
+        <p
+          data-reveal
+          class="font-display text-[clamp(2rem,5vw,3.6rem)] font-extrabold leading-[1.05]"
+        >
+          {declaracion}
+        </p>
+        <p
+          data-reveal
+          class="mt-6 font-name text-[clamp(1.4rem,3vw,2.2rem)] uppercase leading-tight text-hueso/45"
+        >
+          Creatividad con<br />estructura y propósito
+        </p>
+      </div>
+
+      <div data-reveal class="flex flex-col justify-between gap-8">
+        <p class="border-l-2 border-hueso/40 pl-6 text-lg leading-relaxed text-hueso/90">
+          {cuerpo}
+        </p>
+
+        <ul class="grid grid-cols-2 gap-px bg-hueso/25">
+          {
+            metodologias.map((m, i) => (
+              <li class="flex items-baseline gap-2 bg-oliva px-4 py-3.5">
+                <span class="font-mono text-[10px] text-hueso/50">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span class="font-display text-sm font-bold leading-tight">{m}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
