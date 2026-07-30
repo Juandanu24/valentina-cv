@@ -57,7 +57,7 @@ const tieneVideo = (p: (typeof projects)[number]) =>
                       />
                     )}
 
-                    {m.type === "video" ? (
+                    {m.type === "video" && (
                       <video
                         data-src={m.src}
                         poster={m.poster}
@@ -72,7 +72,9 @@ const tieneVideo = (p: (typeof projects)[number]) =>
                         ]}
                         data-video
                       />
-                    ) : (
+                    )}
+
+                    {m.type === "image" && (
                       <img
                         src={m.src}
                         alt={m.alt}
@@ -82,6 +84,21 @@ const tieneVideo = (p: (typeof projects)[number]) =>
                           m.fit === "contain" ? "object-contain" : "object-cover",
                         ]}
                       />
+                    )}
+
+                    {/* Dos piezas horizontales apiladas llenan el marco vertical
+                        sin recortarlas ni dejar espacios muertos. */}
+                    {m.type === "duo" && (
+                      <div class="relative grid h-full w-full grid-rows-2 gap-1.5 bg-marino/10 p-1.5">
+                        {m.src.map((s, n) => (
+                          <img
+                            src={s}
+                            alt={n === 0 ? m.alt : ""}
+                            loading="lazy"
+                            class="h-full w-full rounded-[0.3rem] object-cover"
+                          />
+                        ))}
+                      </div>
                     )}
                   </div>
                 ))
@@ -163,7 +180,26 @@ const tieneVideo = (p: (typeof projects)[number]) =>
                 {String(idx + 1).padStart(2, "0")}
               </span>
             </div>
-            <p class="mt-0.5 font-body text-sm text-marino/55">{p.sector}</p>
+
+            <div class="mt-0.5 flex items-center gap-2.5">
+              <p class="font-body text-sm text-marino/55">{p.sector}</p>
+              {p.instagram && (
+                <a
+                  href={p.instagram}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Instagram de ${p.client}`}
+                  title={`Ver el Instagram de ${p.client}`}
+                  class="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-marino/20 text-marino/60 transition-colors hover:border-vino hover:bg-vino hover:text-hueso"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="2" y="2" width="20" height="20" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />
+                  </svg>
+                </a>
+              )}
+            </div>
 
             <p class="mt-3 font-mono text-[10px] font-bold uppercase leading-relaxed tracking-[0.14em] text-vino">
               {p.role}

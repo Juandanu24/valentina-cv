@@ -37,11 +37,15 @@ export const aptitudes = [
   "Orientada a resultados",
 ] as const;
 
-/** Una pieza del carrusel: video (autoplay en mute) o imagen.
- *  fit "contain" para piezas horizontales (documentos), que con recorte se mutilan. */
+/** Una pieza del carrusel.
+ *  - video: autoplay en mute
+ *  - image: una sola imagen
+ *  - duo:   dos piezas horizontales apiladas, que juntas llenan el marco vertical
+ *  fit "contain" muestra la pieza completa sobre un fondo difuminado de sí misma. */
 export type Media = { alt: string; fit?: "cover" | "contain" } & (
   | { type: "video"; src: string; poster: string }
   | { type: "image"; src: string }
+  | { type: "duo"; src: readonly [string, string] }
 );
 
 export interface Project {
@@ -57,6 +61,8 @@ export interface Project {
   pieces: number;
   /** Piezas reales ya optimizadas en public/piezas/. Si existe, reemplaza a los placeholders. */
   media?: readonly Media[];
+  /** Instagram del cliente. El botón aparece solo si hay enlace. */
+  instagram?: string;
 }
 
 // Seis tarjetas, en este orden. Palmareca aparece dos veces con roles distintos,
@@ -78,16 +84,20 @@ export const projects: readonly Project[] = [
         alt: "Portada del menú de Palmareca",
       },
       {
-        type: "image",
-        src: "/piezas/palmareca-rebranding/manual-palmareca-01.jpg",
-        alt: "Manual de marca de Palmareca",
-        fit: "contain",
+        type: "duo",
+        src: [
+          "/piezas/palmareca-rebranding/manual-02.jpg",
+          "/piezas/palmareca-rebranding/manual-03.jpg",
+        ],
+        alt: "Manual de marca de Palmareca: logotipo y construcción",
       },
       {
-        type: "image",
-        src: "/piezas/palmareca-rebranding/palmareca-colore-marca.png",
-        alt: "Paleta de color de la marca Palmareca",
-        fit: "contain",
+        type: "duo",
+        src: [
+          "/piezas/palmareca-rebranding/manual-04.jpg",
+          "/piezas/palmareca-rebranding/manual-05.jpg",
+        ],
+        alt: "Manual de marca de Palmareca: paleta de color y tipografía",
       },
       {
         type: "image",
@@ -95,10 +105,12 @@ export const projects: readonly Project[] = [
         alt: "Página interior del menú de Palmareca",
       },
       {
-        type: "image",
-        src: "/piezas/palmareca-rebranding/manual-palmareca-03.jpg",
-        alt: "Aplicaciones de la identidad visual de Palmareca",
-        fit: "contain",
+        type: "duo",
+        src: [
+          "/piezas/palmareca-rebranding/manual-06.jpg",
+          "/piezas/palmareca-rebranding/manual-07.jpg",
+        ],
+        alt: "Manual de marca de Palmareca: aplicaciones de la identidad",
       },
     ],
   },
@@ -179,27 +191,17 @@ export const projects: readonly Project[] = [
     pieces: 3,
     media: [
       {
-        type: "image",
-        src: "/piezas/ciudad-manhattan/reporte-de-campana-manhattan-x-iclic-01.jpg",
-        alt: "Portada del reporte de campaña Meta Ads para Ciudad Manhattan",
-        fit: "contain",
+        type: "duo",
+        src: [
+          "/piezas/ciudad-manhattan/reporte-09.jpg",
+          "/piezas/ciudad-manhattan/reporte-10.jpg",
+        ],
+        alt: "Distribución por edades y resultados de la campaña de Meta Ads",
       },
       {
         type: "image",
-        src: "/piezas/ciudad-manhattan/reporte-de-campana-manhattan-x-iclic-02.jpg",
-        alt: "Resultados de la campaña del Mes de la Mujer",
-        fit: "contain",
-      },
-      {
-        type: "image",
-        src: "/piezas/ciudad-manhattan/reporte-de-campana-manhattan-x-iclic-03.jpg",
-        alt: "Métricas de conversaciones y costo por lead",
-        fit: "contain",
-      },
-      {
-        type: "image",
-        src: "/piezas/ciudad-manhattan/reporte-de-campana-manhattan-x-iclic-04.jpg",
-        alt: "Piezas publicitarias de la campaña multicanal",
+        src: "/piezas/ciudad-manhattan/reporte-11.jpg",
+        alt: "Cierre del reporte de campaña de Ciudad Manhattan",
         fit: "contain",
       },
     ],
