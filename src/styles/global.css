@@ -1,13 +1,9 @@
 @import "tailwindcss";
 
-/* Tipografías self-hosted v2 (sin llamadas externas). */
-@import "@fontsource-variable/bricolage-grotesque";
-@import "@fontsource-variable/instrument-sans";
-@import "@fontsource-variable/jetbrains-mono";
-/* Candidatas de display con más carácter — ver /tipografias */
-@import "@fontsource/anton";
-@import "@fontsource-variable/syne";
-@import "@fontsource/instrument-serif";
+/* Tipografías self-hosted (sin llamadas externas). */
+@import "@fontsource/instrument-serif"; /* nombre y titulares: serif elegante y curva */
+@import "@fontsource-variable/dm-sans"; /* cuerpo: geométrica suave */
+@import "@fontsource-variable/jetbrains-mono"; /* datos y etiquetas */
 
 /*
  * Sistema de diseño v2 — "Tablero de trabajo" (especificación de Valentina, jul 2026).
@@ -25,11 +21,15 @@
   /* Texto de cuerpo: versión muy oscura del marino, no negro puro. */
   --color-tinta: #141c26;
 
-  /* Display = titulares. Name = el nombre de Valentina, con carácter extra. */
-  --font-display: "Syne Variable", "Syne", sans-serif;
-  --font-name: "Anton", sans-serif;
-  --font-body: "Instrument Sans Variable", "Instrument Sans", sans-serif;
+  /* Display = titulares y nombre: serif elegante de trazo curvo (nada industrial). */
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-name: "Instrument Serif", Georgia, serif;
+  --font-body: "DM Sans Variable", "DM Sans", sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+
+  /* Radios: el estilo pide esquinas redondeadas en todo. */
+  --radius-suave: 0.75rem;
+  --radius-pill: 999px;
 
   --animate-marquee: marquee 32s linear infinite;
 }

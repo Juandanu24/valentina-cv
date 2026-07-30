@@ -1,35 +1,37 @@
 ---
 import { capacidades, herramientas } from "../data/site";
+
+const listaHerramientas = herramientas
+  .replace(/^Herramientas:\s*/, "")
+  .split("·")
+  .map((h) => h.trim())
+  .filter(Boolean);
 ---
 
-<section class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
-  <div class="flex items-center gap-4">
-    <span class="font-mono text-xs uppercase tracking-[0.25em] text-oliva">
-      De qué me encargo
-    </span>
-    <span class="h-px flex-1 bg-marino/20"></span>
-  </div>
+<section id="experiencia" class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+  <h2 data-reveal class="font-display text-4xl leading-tight text-marino sm:text-5xl">
+    Experiencia
+  </h2>
 
-  <!-- Grilla con líneas continuas: se lee como un tablero -->
-  <div class="mt-12 grid gap-px bg-marino/15 sm:grid-cols-2">
+  <!-- Cuatro áreas -->
+  <div class="mt-12 grid gap-5 sm:grid-cols-2">
     {
       capacidades.map((c, i) => (
         <div
           data-reveal
-          class="group relative bg-hueso p-7 transition-colors duration-300 hover:bg-marino sm:p-9"
+          class="group rounded-suave border border-marino/15 bg-hueso p-7 transition-colors duration-300 hover:border-transparent hover:bg-marino sm:p-8"
         >
-          <span class="font-name text-4xl leading-none text-oliva/35 transition-colors duration-300 group-hover:text-hueso/40 sm:text-5xl">
+          <span class="font-display text-4xl leading-none text-oliva/40 transition-colors duration-300 group-hover:text-hueso/45">
             {String(i + 1).padStart(2, "0")}
           </span>
 
-          <h3 class="mt-4 font-display text-2xl font-extrabold leading-tight text-marino transition-colors duration-300 group-hover:text-hueso sm:text-3xl">
+          <h3 class="mt-3 font-display text-2xl leading-tight text-marino transition-colors duration-300 group-hover:text-hueso sm:text-3xl">
             {c.title}
           </h3>
 
-          <ul class="mt-5 space-y-1.5">
+          <ul class="mt-4 flex flex-wrap gap-2">
             {c.items.map((item) => (
-              <li class="flex items-baseline gap-2.5 text-tinta/75 transition-colors duration-300 group-hover:text-hueso/80">
-                <span class="h-px w-3 shrink-0 translate-y-[-0.3em] bg-oliva transition-colors duration-300 group-hover:bg-hueso/50" />
+              <li class="rounded-pill bg-oliva/10 px-3 py-1 text-sm text-tinta/80 transition-colors duration-300 group-hover:bg-hueso/15 group-hover:text-hueso/90">
                 {item}
               </li>
             ))}
@@ -39,10 +41,25 @@ import { capacidades, herramientas } from "../data/site";
     }
   </div>
 
-  <p
-    data-reveal
-    class="mt-10 border-t border-marino/15 pt-5 font-mono text-[11px] uppercase leading-relaxed tracking-wider text-marino/45"
-  >
-    Herramientas: {herramientas}
-  </p>
+  <!-- Herramientas: con protagonismo propio -->
+  <div data-reveal class="mt-12 rounded-suave bg-marino px-6 py-8 text-hueso sm:px-9 sm:py-10">
+    <div class="flex flex-wrap items-baseline justify-between gap-3">
+      <h3 class="font-display text-2xl leading-tight sm:text-3xl">
+        Herramientas que manejo
+      </h3>
+      <span class="font-mono text-[11px] uppercase tracking-widest text-hueso/50">
+        {listaHerramientas.length} herramientas
+      </span>
+    </div>
+
+    <ul class="mt-6 flex flex-wrap gap-2.5">
+      {
+        listaHerramientas.map((h) => (
+          <li class="cursor-default rounded-pill border border-hueso/25 px-4 py-2 font-mono text-xs uppercase tracking-wide text-hueso/85 transition-all duration-300 hover:-translate-y-0.5 hover:border-transparent hover:bg-hueso hover:text-marino">
+            {h}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </section>

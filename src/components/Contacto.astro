@@ -6,7 +6,7 @@ import { site, contacto } from "../data/site";
   <div class="mx-auto max-w-4xl">
     <h2
       data-reveal
-      class="font-display text-[clamp(2.2rem,6vw,4.2rem)] font-extrabold leading-tight"
+      class="font-display text-[clamp(2.2rem,6vw,4.2rem)] leading-tight"
     >
       {contacto.title}
     </h2>
@@ -20,7 +20,7 @@ import { site, contacto } from "../data/site";
         href={site.whatsapp}
         target="_blank"
         rel="noopener"
-        class="bg-vino px-8 py-4 font-mono text-sm font-bold uppercase tracking-widest text-hueso transition-colors hover:bg-quemado sm:px-10 sm:py-5 sm:text-base"
+        class="rounded-pill bg-vino px-8 py-4 font-mono text-sm font-bold uppercase tracking-widest text-hueso transition-colors hover:bg-quemado sm:px-10 sm:py-5 sm:text-base"
       >
         {contacto.ctaPrimary}
       </a>
@@ -28,7 +28,7 @@ import { site, contacto } from "../data/site";
       <button
         id="btn-pdf"
         type="button"
-        class="border border-hueso/40 px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-hueso/85 transition-colors hover:border-hueso hover:text-hueso"
+        class="rounded-pill border border-hueso/40 px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-hueso/85 transition-colors hover:border-hueso hover:text-hueso"
       >
         {contacto.ctaSecondary}
       </button>

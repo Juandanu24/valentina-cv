@@ -27,13 +27,13 @@ const metodologias = ["Storytelling", "AIDA", "Embudos de conversión", "Modelos
       <div>
         <p
           data-reveal
-          class="font-display text-[clamp(2rem,5vw,3.6rem)] font-extrabold leading-[1.05]"
+          class="font-display text-[clamp(2rem,5vw,3.6rem)] leading-[1.08]"
         >
           {declaracion}
         </p>
         <p
           data-reveal
-          class="mt-6 font-name text-[clamp(1.4rem,3vw,2.2rem)] uppercase leading-tight text-hueso/45"
+          class="mt-6 font-display text-[clamp(1.4rem,3vw,2.2rem)] italic leading-tight text-hueso/55"
         >
           Creatividad con<br />estructura y propósito
         </p>
@@ -44,14 +44,14 @@ const metodologias = ["Storytelling", "AIDA", "Embudos de conversión", "Modelos
           {cuerpo}
         </p>
 
-        <ul class="grid grid-cols-2 gap-px bg-hueso/25">
+        <ul class="grid grid-cols-2 gap-2.5">
           {
             metodologias.map((m, i) => (
-              <li class="flex items-baseline gap-2 bg-oliva px-4 py-3.5">
+              <li class="flex items-baseline gap-2.5 rounded-suave bg-hueso/10 px-4 py-3.5">
                 <span class="font-mono text-[10px] text-hueso/50">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span class="font-display text-sm font-bold leading-tight">{m}</span>
+                <span class="font-display text-lg leading-tight">{m}</span>
               </li>
             ))
           }
