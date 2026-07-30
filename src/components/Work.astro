@@ -1,0 +1,376 @@
+---
+import { projects, portafolioAmpliado } from "../data/site";
+
+// Placeholders (picsum) hasta que llegue el material real de Valentina.
+const placeholder = (seed: string, i: number) =>
+  `https://picsum.photos/seed/${encodeURIComponent(seed)}-${i}/600/750`;
+
+// Proyectos cuyo material real incluye video.
+// La etiqueta "video" se deduce de las piezas reales.
+const tieneVideo = (p: (typeof projects)[number]) =>
+  p.media?.some((m) => m.type === "video") ?? false;
+---
+
+<section id="trabajo" class="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <h2 data-reveal class="font-display text-4xl leading-tight text-marino sm:text-5xl">
+      Proyectos destacados
+    </h2>
+    <p data-reveal class="font-mono text-[11px] uppercase tracking-widest text-marino/45">
+      {projects.length} proyectos
+    </p>
+  </div>
+
+  <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      projects.map((p, idx) => (
+        <article
+          data-reveal
+          class:list={[
+            "group flex flex-col overflow-hidden rounded-suave border bg-hueso shadow-[0_2px_10px_rgba(30,42,56,0.07)] transition-all duration-300 hover:-translate-y-1.5 hover:border-vino hover:shadow-[0_14px_32px_rgba(110,31,42,0.18)]",
+            p.emphasis === "destacada" ? "border-vino/60" : "border-marino/15",
+          ]}
+        >
+          {/* Carrusel automático de piezas */}
+          <div
+            class="carrusel relative aspect-[4/5] overflow-hidden bg-marino/10"
+            data-carrusel
+          >
+            {/* Piezas reales si ya existen; si no, placeholders.
+                Las horizontales (fit: contain) se muestran completas sobre un
+                fondo difuminado de sí mismas, para no dejar franjas muertas. */}
+            {p.media
+              ? p.media.map((m, i) => (
+                  <div
+                    class:list={[
+                      "absolute inset-0 transition-opacity duration-[600ms] ease-out",
+                      i === 0 ? "opacity-100" : "opacity-0",
+                    ]}
+                    data-slide
+                    data-tipo={m.type}
+                  >
+                    {m.fit === "contain" && (
+                      <span
+                        aria-hidden="true"
+                        class="absolute inset-0 scale-125 bg-cover bg-center blur-xl saturate-150"
+                        style={`background-image: url('${m.type === "video" ? m.poster : m.src}')`}
+                      />
+                    )}
+
+                    {m.type === "video" && (
+                      <video
+                        data-src={m.src}
+                        poster={m.poster}
+                        muted
+                        loop
+                        playsinline
+                        preload="none"
+                        aria-label={m.alt}
+                        class:list={[
+                          "relative h-full w-full",
+                          m.fit === "contain" ? "object-contain" : "object-cover",
+                        ]}
+                        data-video
+                      />
+                    )}
+
+                    {m.type === "image" && (
+                      <img
+                        src={m.src}
+                        alt={m.alt}
+                        loading="lazy"
+                        class:list={[
+                          "relative h-full w-full",
+                          m.fit === "contain" ? "object-contain" : "object-cover",
+                        ]}
+                      />
+                    )}
+
+                    {/* Dos piezas horizontales apiladas llenan el marco vertical
+                        sin recortarlas ni dejar espacios muertos. */}
+                    {m.type === "duo" && (
+                      <div class="relative grid h-full w-full grid-rows-2 gap-1.5 bg-marino/10 p-1.5">
+                        {m.src.map((s, n) => (
+                          <img
+                            src={s}
+                            alt={n === 0 ? m.alt : ""}
+                            loading="lazy"
+                            class="h-full w-full rounded-[0.3rem] object-cover"
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))
+              : Array.from({ length: p.pieces }, (_, i) => (
+                  <div
+                    class:list={[
+                      "absolute inset-0 transition-opacity duration-[600ms] ease-out",
+                      i === 0 ? "opacity-100" : "opacity-0",
+                    ]}
+                    data-slide
+                  >
+                    <img
+                      src={placeholder(p.client + p.role, i)}
+                      alt={`Pieza ${i + 1} — ${p.client} (material real en camino)`}
+                      loading="lazy"
+                      class="h-full w-full object-cover"
+                    />
+                  </div>
+                ))}
+
+            {tieneVideo(p) && (
+              <span class="pointer-events-none absolute left-3 top-3 flex items-center gap-1.5 rounded-pill bg-marino/75 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-hueso">
+                <svg width="8" height="9" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
+                  <path d="M0 0 L14 8 L0 16 Z" />
+                </svg>
+                video
+              </span>
+            )}
+
+            {/* Navegación manual — visible en móvil, aparece al pasar el mouse en escritorio */}
+            {(p.media?.length ?? p.pieces) > 1 && (
+              <>
+                <button
+                  type="button"
+                  data-prev
+                  aria-label={`Pieza anterior de ${p.client}`}
+                  class="absolute left-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-hueso/85 text-marino opacity-0 transition-all duration-300 hover:bg-hueso focus-visible:opacity-100 group-hover:opacity-100 max-sm:opacity-100"
+                >
+                  <svg width="8" height="13" viewBox="0 0 8 13" fill="none" aria-hidden="true">
+                    <path d="M6.5 1.5L1.5 6.5L6.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  data-next
+                  aria-label={`Pieza siguiente de ${p.client}`}
+                  class="absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-hueso/85 text-marino opacity-0 transition-all duration-300 hover:bg-hueso focus-visible:opacity-100 group-hover:opacity-100 max-sm:opacity-100"
+                >
+                  <svg width="8" height="13" viewBox="0 0 8 13" fill="none" aria-hidden="true">
+                    <path d="M1.5 1.5L6.5 6.5L1.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </>
+            )}
+
+            {/* Indicadores de posición */}
+            <div class="absolute bottom-3 left-3 flex gap-1">
+              {Array.from({ length: p.media?.length ?? p.pieces }, (_, i) => (
+                <button
+                  type="button"
+                  data-dot
+                  aria-label={`Ir a la pieza ${i + 1}`}
+                  class:list={[
+                    "h-1.5 w-5 rounded-pill transition-colors duration-500",
+                    i === 0 ? "bg-hueso" : "bg-hueso/35 hover:bg-hueso/60",
+                  ]}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Cuerpo */}
+          <div class="flex flex-1 flex-col p-5">
+            <div class="flex items-baseline justify-between gap-3">
+              <h3 class="font-display text-xl uppercase leading-tight tracking-tight text-marino transition-colors duration-300 group-hover:text-vino sm:text-2xl">
+                {p.client}
+              </h3>
+              <span class="shrink-0 font-mono text-[10px] uppercase tracking-widest text-marino/40">
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+            </div>
+
+            <div class="mt-0.5 flex items-center gap-2.5">
+              <p class="font-body text-sm text-marino/55">{p.sector}</p>
+              {p.instagram && (
+                <a
+                  href={p.instagram}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Instagram de ${p.client}`}
+                  title={`Ver el Instagram de ${p.client}`}
+                  class="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-marino/20 text-marino/60 transition-colors hover:border-vino hover:bg-vino hover:text-hueso"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="2" y="2" width="20" height="20" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />
+                  </svg>
+                </a>
+              )}
+            </div>
+
+            <p class="mt-3 font-mono text-[10px] font-bold uppercase leading-relaxed tracking-[0.14em] text-vino">
+              {p.role}
+            </p>
+
+            <p class="mt-3 text-sm leading-relaxed text-tinta/80">{p.description}</p>
+
+            <ul class="mt-4 flex flex-wrap gap-1.5">
+              {p.tags.map((t) => (
+                <li class="rounded-pill border border-marino/20 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-marino/70">
+                  {t}
+                </li>
+              ))}
+            </ul>
+
+            {/* Línea de resultado: mismo tratamiento en las seis, y siempre al pie
+                de la tarjeta para que todas queden alineadas. */}
+            <div class="mt-auto pt-5">
+              <p
+                class="flex min-h-[3.75rem] items-center rounded-suave bg-vino px-4 py-3 font-mono text-[11px] uppercase leading-snug tracking-wide text-hueso"
+              >
+                ▸ {p.result}
+              </p>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <!-- Remate de sección: puerta al portafolio ampliado -->
+  <a
+    data-reveal
+    href={portafolioAmpliado.url}
+    target="_blank"
+    rel="noopener"
+    class="group mt-16 flex flex-col items-start gap-6 overflow-hidden rounded-suave bg-oliva px-7 py-9 text-hueso shadow-[0_4px_18px_rgba(85,96,58,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(85,96,58,0.3)] sm:flex-row sm:items-center sm:justify-between sm:px-11 sm:py-12"
+  >
+    <div>
+      <h3 class="font-display text-3xl leading-tight sm:text-4xl">
+        {portafolioAmpliado.title}
+      </h3>
+      <p class="mt-3 max-w-md leading-relaxed text-hueso/75">
+        {portafolioAmpliado.body}
+      </p>
+    </div>
+
+    <span
+      class="inline-flex shrink-0 items-center gap-3 rounded-pill bg-hueso px-7 py-4 font-mono text-xs uppercase tracking-widest text-oliva transition-colors duration-300 group-hover:bg-marino group-hover:text-hueso"
+    >
+      {portafolioAmpliado.cta}
+      <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+    </span>
+  </a>
+</section>
+
+<script>
+  const T_IMAGEN = 2500; // una imagen se ve 2.5 s
+  const T_VIDEO = 7000; // un clip se deja correr más para que se aprecie
+  const PAUSA_MANUAL = 8000; // tras usar los controles, respiro antes del automático
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll<HTMLElement>("[data-carrusel]").forEach((box) => {
+    const slides = Array.from(box.querySelectorAll<HTMLElement>("[data-slide]"));
+    const dots = Array.from(box.querySelectorAll<HTMLElement>("[data-dot]"));
+    if (!slides.length) return;
+
+    let actual = 0;
+    let timer: number | undefined;
+    let visible = false;
+
+    const videoDe = (slide: HTMLElement) =>
+      slide.querySelector<HTMLVideoElement>("[data-video]");
+
+    // Carga diferida real: el archivo solo se descarga cuando se va a ver.
+    const cargar = (slide: HTMLElement) => {
+      const v = videoDe(slide);
+      if (v && !v.src && v.dataset.src) v.src = v.dataset.src;
+    };
+
+    const reproducir = (slide: HTMLElement) => {
+      const v = videoDe(slide);
+      if (!v) return;
+      cargar(slide);
+      v.play().catch(() => {}); // si el navegador lo bloquea, queda el póster
+    };
+
+    const detener = (slide: HTMLElement) => videoDe(slide)?.pause();
+
+    const mostrar = (i: number) => {
+      if (i === actual) return;
+      slides[actual]?.classList.replace("opacity-100", "opacity-0");
+      dots[actual]?.classList.replace("bg-hueso", "bg-hueso/35");
+      detener(slides[actual]);
+
+      actual = (i + slides.length) % slides.length;
+      slides[actual]?.classList.replace("opacity-0", "opacity-100");
+      dots[actual]?.classList.replace("bg-hueso/35", "bg-hueso");
+      reproducir(slides[actual]);
+
+      // Precarga la siguiente para que el cambio sea fluido.
+      cargar(slides[(actual + 1) % slides.length]);
+    };
+
+    const programar = () => {
+      window.clearTimeout(timer);
+      if (!visible || slides.length < 2 || reduce) return;
+      const espera = videoDe(slides[actual]) ? T_VIDEO : T_IMAGEN;
+      timer = window.setTimeout(() => {
+        mostrar(actual + 1);
+        programar();
+      }, espera);
+    };
+
+    const parar = () => {
+      window.clearTimeout(timer);
+      timer = undefined;
+    };
+
+    // Tras tocar un control, se da una pausa antes de retomar el automático.
+    const irManual = (i: number) => {
+      mostrar(i);
+      parar();
+      window.setTimeout(programar, PAUSA_MANUAL);
+    };
+
+    box.querySelector("[data-prev]")?.addEventListener("click", () => irManual(actual - 1));
+    box.querySelector("[data-next]")?.addEventListener("click", () => irManual(actual + 1));
+    dots.forEach((d, i) => d.addEventListener("click", () => irManual(i)));
+
+    // Gestos táctiles: deslizar de lado cambia de pieza.
+    let inicioX = 0;
+    let inicioY = 0;
+    box.addEventListener(
+      "touchstart",
+      (e) => {
+        inicioX = e.changedTouches[0].clientX;
+        inicioY = e.changedTouches[0].clientY;
+      },
+      { passive: true }
+    );
+    box.addEventListener(
+      "touchend",
+      (e) => {
+        const dx = e.changedTouches[0].clientX - inicioX;
+        const dy = e.changedTouches[0].clientY - inicioY;
+        // Solo si el gesto fue claramente horizontal, para no pelear con el scroll.
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+          irManual(dx < 0 ? actual + 1 : actual - 1);
+        }
+      },
+      { passive: true }
+    );
+
+    // Solo carga, reproduce y rota mientras la tarjeta está en pantalla.
+    new IntersectionObserver(
+      ([e]) => {
+        visible = e.isIntersecting;
+        if (visible) {
+          reproducir(slides[actual]);
+          programar();
+        } else {
+          parar();
+          slides.forEach(detener);
+        }
+      },
+      { threshold: 0.25 }
+    ).observe(box);
+
+    // Pausa el avance al pasar el mouse (el video sigue corriendo).
+    box.addEventListener("mouseenter", parar);
+    box.addEventListener("mouseleave", programar);
+  });
+</script>

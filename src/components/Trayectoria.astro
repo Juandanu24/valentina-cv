@@ -1,0 +1,32 @@
+---
+import { trayectoria, educacion } from "../data/site";
+---
+
+<section class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+  <p data-reveal class="font-mono text-xs uppercase tracking-[0.25em] text-marino/50">
+    Trayectoria
+  </p>
+
+  <div class="mt-10">
+    {
+      trayectoria.map((t) => (
+        <div
+          data-reveal
+          class="grid gap-2 border-b border-oliva/30 py-6 sm:grid-cols-[11rem_1fr] sm:gap-8"
+        >
+          <p class="font-mono text-xs uppercase tracking-wider text-oliva">{t.period}</p>
+          <div>
+            <h3 class="font-display text-xl text-marino">
+              {t.org} <span class="font-body font-normal text-marino/60">— {t.role}</span>
+            </h3>
+            <p class="mt-1.5 max-w-2xl leading-relaxed text-tinta/75">{t.detail}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div data-reveal class="mt-8 space-y-1 text-sm text-marino/60">
+    {educacion.map((e) => <p>{e}</p>)}
+  </div>
+</section>

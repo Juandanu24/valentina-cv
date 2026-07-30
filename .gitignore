@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# material bruto de Vale (se optimiza y lo final va a public/)
+material-vale/

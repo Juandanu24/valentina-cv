@@ -1,0 +1,20 @@
+---
+import { aptitudes } from "../data/site";
+---
+
+<div class="overflow-hidden border-y border-marino/15 bg-marino py-3 text-hueso">
+  <div class="flex w-max animate-marquee">
+    {
+      [0, 1].map(() => (
+        <div class="flex shrink-0 items-center" aria-hidden={true}>
+          {aptitudes.map((a) => (
+            <span class="flex items-center gap-6 whitespace-nowrap px-6 font-mono text-sm uppercase tracking-wider">
+              {a}
+              <span class="text-hueso/50">✦</span>
+            </span>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
