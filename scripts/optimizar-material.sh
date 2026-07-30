@@ -18,9 +18,19 @@ DURACION=12   # segundos por clip
 ALTURA=720    # resolución de salida
 CRF=30        # 28 = más calidad/peso · 32 = más liviano
 
-for cmd in ffmpeg magick pdftoppm; do
+# ImageMagick 7 trae 'magick'; la 6 (la de Ubuntu) trae 'convert' e 'identify'.
+if command -v magick >/dev/null 2>&1; then
+  IM_CONVERT="magick"; IM_IDENTIFY="magick identify"
+elif command -v convert >/dev/null 2>&1; then
+  IM_CONVERT="convert"; IM_IDENTIFY="identify"
+else
+  echo "✗ Falta ImageMagick. Instala con: sudo apt install imagemagick"
+  exit 1
+fi
+
+for cmd in ffmpeg pdftoppm; do
   command -v "$cmd" >/dev/null 2>&1 || {
-    echo "✗ Falta '$cmd'. Instala con: sudo apt install ffmpeg imagemagick poppler-utils"
+    echo "✗ Falta '$cmd'. Instala con: sudo apt install ffmpeg poppler-utils"
     exit 1
   }
 done
@@ -59,7 +69,7 @@ find "$ORIGEN" -mindepth 1 -maxdepth 1 -type d | sort | while read -r carpeta; d
     salida="$destino_dir/$base.mp4"
     poster="$destino_dir/$base.jpg"
 
-    ffmpeg -y -loglevel error -i "$v" \
+    ffmpeg -nostdin -y -loglevel error -i "$v" \
       -t "$DURACION" \
       -vf "scale=-2:$ALTURA,fps=24" \
       -c:v libx264 -crf "$CRF" -preset slow -pix_fmt yuv420p \
@@ -67,7 +77,7 @@ find "$ORIGEN" -mindepth 1 -maxdepth 1 -type d | sort | while read -r carpeta; d
       "$salida"
 
     # Póster: primer fotograma, para mostrar mientras el video carga.
-    ffmpeg -y -loglevel error -i "$salida" -vframes 1 -vf "scale=-2:600" -q:v 4 "$poster"
+    ffmpeg -nostdin -y -loglevel error -i "$salida" -vframes 1 -vf "scale=-2:600" -q:v 4 "$poster"
 
     antes=$(stat -c%s "$v"); despues=$(stat -c%s "$salida")
     printf "   🎬 %-34s %5s MB → %4s KB\n" "$base.mp4" \
@@ -80,12 +90,12 @@ find "$ORIGEN" -mindepth 1 -maxdepth 1 -type d | sort | while read -r carpeta; d
     | sort | while read -r img; do
     base="$(slug "$(basename "${img%.*}")")"
 
-    if [ "$(magick identify -format '%[opaque]' "$img[0]" 2>/dev/null)" = "false" ]; then
+    if [ "$($IM_IDENTIFY -format '%[opaque]' "$img[0]" 2>/dev/null)" = "false" ]; then
       salida="$destino_dir/$base.png"
-      magick "$img" -auto-orient -resize '1200x1200>' -strip "$salida"
+      $IM_CONVERT "$img" -auto-orient -resize '1200x1200>' -strip "$salida"
     else
       salida="$destino_dir/$base.jpg"
-      magick "$img" -auto-orient -resize '1200x1200>' -strip -quality 82 "$salida"
+      $IM_CONVERT "$img" -auto-orient -resize '1200x1200>' -strip -quality 82 "$salida"
     fi
 
     antes=$(stat -c%s "$img"); despues=$(stat -c%s "$salida")
@@ -98,7 +108,7 @@ find "$ORIGEN" -mindepth 1 -maxdepth 1 -type d | sort | while read -r carpeta; d
     base="$(slug "$(basename "${pdf%.*}")")"
     pdftoppm -jpeg -r 110 -f 1 -l 4 -jpegopt quality=82 "$pdf" "$destino_dir/$base"
     for p in "$destino_dir/$base"-*.jpg; do
-      [ -f "$p" ] && magick "$p" -resize '1200x1200>' -strip -quality 82 "$p"
+      [ -f "$p" ] && $IM_CONVERT "$p" -resize '1200x1200>' -strip -quality 82 "$p"
     done
     printf "   📄 %-34s → páginas exportadas\n" "$base"
   done
@@ -112,7 +122,7 @@ if [ -d "$ORIGEN/retratos" ]; then
   recorte="$(find "$ORIGEN/retratos" -maxdepth 1 -type f -iname '*.png' | head -1)"
   if [ -n "$recorte" ]; then
     # -trim recorta el sobrante transparente para que la figura llene el marco.
-    magick "$recorte" -auto-orient -trim +repage -resize '900x900>' -strip \
+    $IM_CONVERT "$recorte" -auto-orient -trim +repage -resize '900x900>' -strip \
       "$RAIZ/public/valentina.png"
     antes=$(stat -c%s "$recorte"); despues=$(stat -c%s "$RAIZ/public/valentina.png")
     printf "   👤 %-34s %5s MB → %4s KB\n" "valentina.png (sin fondo)" \

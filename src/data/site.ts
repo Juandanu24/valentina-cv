@@ -37,10 +37,12 @@ export const aptitudes = [
   "Orientada a resultados",
 ] as const;
 
-/** Una pieza del carrusel: video (autoplay en mute) o imagen. */
-export type Media =
-  | { type: "video"; src: string; poster: string; alt: string }
-  | { type: "image"; src: string; alt: string };
+/** Una pieza del carrusel: video (autoplay en mute) o imagen.
+ *  fit "contain" para piezas horizontales (documentos), que con recorte se mutilan. */
+export type Media = { alt: string; fit?: "cover" | "contain" } & (
+  | { type: "video"; src: string; poster: string }
+  | { type: "image"; src: string }
+);
 
 export interface Project {
   client: string;
@@ -69,6 +71,36 @@ export const projects: readonly Project[] = [
     tags: ["Branding", "Dirección de arte", "Meta Ads", "Copywriting"],
     result: "Conflicto de marca resuelto y rebranding premium en menos de 30 días",
     pieces: 4,
+    media: [
+      {
+        type: "image",
+        src: "/piezas/palmareca-rebranding/menu-palmareca-v3-1.jpg",
+        alt: "Portada del menú de Palmareca",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-rebranding/manual-palmareca-01.jpg",
+        alt: "Manual de marca de Palmareca",
+        fit: "contain",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-rebranding/palmareca-colore-marca.png",
+        alt: "Paleta de color de la marca Palmareca",
+        fit: "contain",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-rebranding/menu-palmareca-v3-2.jpg",
+        alt: "Página interior del menú de Palmareca",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-rebranding/manual-palmareca-03.jpg",
+        alt: "Aplicaciones de la identidad visual de Palmareca",
+        fit: "contain",
+      },
+    ],
   },
   {
     client: "Dondi",
@@ -84,6 +116,32 @@ export const projects: readonly Project[] = [
     ],
     result: "Cero bloqueos de cuenta publicitaria y flujo 100% convertido a WhatsApp",
     pieces: 4,
+    media: [
+      {
+        type: "video",
+        src: "/piezas/dondi/como-jugar-chance.mp4",
+        poster: "/piezas/dondi/como-jugar-chance.jpg",
+        alt: "Video: cómo jugar chance por WhatsApp",
+      },
+      {
+        type: "video",
+        src: "/piezas/dondi/plan-referidos.mp4",
+        poster: "/piezas/dondi/plan-referidos.jpg",
+        alt: "Video: plan de referidos de Dondi",
+      },
+      {
+        type: "video",
+        src: "/piezas/dondi/no-mas-chances-perdidos.mp4",
+        poster: "/piezas/dondi/no-mas-chances-perdidos.jpg",
+        alt: "Video: no más chances perdidos",
+      },
+      {
+        type: "video",
+        src: "/piezas/dondi/paso-a-paso-para-jugar.mp4",
+        poster: "/piezas/dondi/paso-a-paso-para-jugar.jpg",
+        alt: "Video: paso a paso para jugar",
+      },
+    ],
   },
   {
     client: "S Ingeniería",
@@ -94,6 +152,14 @@ export const projects: readonly Project[] = [
     tags: ["Guionismo B2B", "Dirección de rodaje", "Edición audiovisual", "Video para pitch"],
     result: "Video pitch seleccionado para presentación ante inversionistas",
     pieces: 3,
+    media: [
+      {
+        type: "video",
+        src: "/piezas/s-ingenieria/artici-rtc-video-v2.mp4",
+        poster: "/piezas/s-ingenieria/artici-rtc-video-v2.jpg",
+        alt: "Video pitch de la app ARTICI RTC para inversionistas",
+      },
+    ],
   },
   {
     client: "Ciudad Manhattan",
@@ -110,6 +176,32 @@ export const projects: readonly Project[] = [
     result: "199 conversaciones directas a $353 COP por lead",
     emphasis: "destacada", // el dato más contundente del portafolio
     pieces: 3,
+    media: [
+      {
+        type: "image",
+        src: "/piezas/ciudad-manhattan/reporte-de-campana-manhattan-x-iclic-01.jpg",
+        alt: "Portada del reporte de campaña Meta Ads para Ciudad Manhattan",
+        fit: "contain",
+      },
+      {
+        type: "image",
+        src: "/piezas/ciudad-manhattan/reporte-de-campana-manhattan-x-iclic-02.jpg",
+        alt: "Resultados de la campaña del Mes de la Mujer",
+        fit: "contain",
+      },
+      {
+        type: "image",
+        src: "/piezas/ciudad-manhattan/reporte-de-campana-manhattan-x-iclic-03.jpg",
+        alt: "Métricas de conversaciones y costo por lead",
+        fit: "contain",
+      },
+      {
+        type: "image",
+        src: "/piezas/ciudad-manhattan/reporte-de-campana-manhattan-x-iclic-04.jpg",
+        alt: "Piezas publicitarias de la campaña multicanal",
+        fit: "contain",
+      },
+    ],
   },
   {
     client: "Palmareca",
@@ -121,6 +213,33 @@ export const projects: readonly Project[] = [
     result: "Banco visual oficial, usado en menú impreso y pauta digital",
     emphasis: "visual", // la más visual de las seis; fotografía propia
     pieces: 6,
+    media: [
+      {
+        type: "image",
+        src: "/piezas/palmareca-fotos/copia-de-dsc01228.jpg",
+        alt: "Fotografía gastronómica de plato de Palmareca",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-fotos/copia-de-dsc05253.jpg",
+        alt: "Coctelería de Palmareca en clave nocturna",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-fotos/copia-de-dsc01217.jpg",
+        alt: "Plato de la carta de Palmareca",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-fotos/copia-de-dsc00908.jpg",
+        alt: "Detalle gastronómico con iluminación de estudio",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-fotos/copia-de-dsc03106.jpg",
+        alt: "Cóctel de la carta de Palmareca",
+      },
+    ],
   },
   {
     client: "Kepagro",
@@ -131,6 +250,32 @@ export const projects: readonly Project[] = [
     tags: ["Cobertura de eventos", "Storytelling", "Producción en campo", "Reels / TikTok"],
     result: "Miles de reproducciones orgánicas y humanización de una marca B2B",
     pieces: 4,
+    media: [
+      {
+        type: "video",
+        src: "/piezas/kepagro/evento-1-lanzamiento-cotorra.mp4",
+        poster: "/piezas/kepagro/evento-1-lanzamiento-cotorra.jpg",
+        alt: "Cobertura del lanzamiento en Cotorra",
+      },
+      {
+        type: "video",
+        src: "/piezas/kepagro/evento-chinu.mp4",
+        poster: "/piezas/kepagro/evento-chinu.jpg",
+        alt: "Cobertura del evento en Chinú",
+      },
+      {
+        type: "video",
+        src: "/piezas/kepagro/bingo-patillero-final.mp4",
+        poster: "/piezas/kepagro/bingo-patillero-final.jpg",
+        alt: "Cobertura del bingo patillero",
+      },
+      {
+        type: "video",
+        src: "/piezas/kepagro/evento-san-carlos-v1.mp4",
+        poster: "/piezas/kepagro/evento-san-carlos-v1.jpg",
+        alt: "Cobertura del evento en San Carlos",
+      },
+    ],
   },
 ] as const;
 
