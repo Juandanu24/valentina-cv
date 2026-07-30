@@ -7,7 +7,7 @@
 
 export const site = {
   name: "Valentina García Flórez",
-  role: "Estrategia de marketing y contenido",
+  role: "Social Media Manager · Content Marketing",
   location: "Montería, Colombia",
   email: "valentinagaf-21@hotmail.com", // TODO v3: correo con dominio propio
   whatsapp: "https://wa.me/573218622670",
