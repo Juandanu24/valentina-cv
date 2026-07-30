@@ -34,23 +34,55 @@ const hasVideo = new Set(["Dondi", "S Ingeniería", "Kepagro"]);
             class="carrusel relative aspect-[4/5] overflow-hidden bg-marino/10"
             data-carrusel
           >
-            {Array.from({ length: p.pieces }, (_, i) => (
-              <img
-                src={placeholder(p.client + p.role, i)}
-                alt={`Pieza ${i + 1} — ${p.client} (material real en camino)`}
-                loading="lazy"
-                width="600"
-                height="750"
-                class:list={[
-                  "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
-                  i === 0 ? "opacity-100" : "opacity-0",
-                ]}
-                data-slide
-              />
-            ))}
+            {/* Piezas reales si ya existen; si no, placeholders */}
+            {p.media
+              ? p.media.map((m, i) =>
+                  m.type === "video" ? (
+                    <video
+                      data-src={m.src}
+                      poster={m.poster}
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                      aria-label={m.alt}
+                      class:list={[
+                        "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
+                        i === 0 ? "opacity-100" : "opacity-0",
+                      ]}
+                      data-slide
+                      data-video
+                    />
+                  ) : (
+                    <img
+                      src={m.src}
+                      alt={m.alt}
+                      loading="lazy"
+                      class:list={[
+                        "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
+                        i === 0 ? "opacity-100" : "opacity-0",
+                      ]}
+                      data-slide
+                    />
+                  )
+                )
+              : Array.from({ length: p.pieces }, (_, i) => (
+                  <img
+                    src={placeholder(p.client + p.role, i)}
+                    alt={`Pieza ${i + 1} — ${p.client} (material real en camino)`}
+                    loading="lazy"
+                    width="600"
+                    height="750"
+                    class:list={[
+                      "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
+                      i === 0 ? "opacity-100" : "opacity-0",
+                    ]}
+                    data-slide
+                  />
+                ))}
 
             {hasVideo.has(p.client) && (
-              <span class="pointer-events-none absolute left-3 top-3 flex items-center gap-1.5 bg-marino/75 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-hueso">
+              <span class="pointer-events-none absolute left-3 top-3 flex items-center gap-1.5 rounded-pill bg-marino/75 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-hueso">
                 <svg width="8" height="9" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
                   <path d="M0 0 L14 8 L0 16 Z" />
                 </svg>
@@ -60,10 +92,10 @@ const hasVideo = new Set(["Dondi", "S Ingeniería", "Kepagro"]);
 
             {/* Indicadores de posición */}
             <div class="pointer-events-none absolute bottom-3 left-3 flex gap-1">
-              {Array.from({ length: p.pieces }, (_, i) => (
+              {Array.from({ length: p.media?.length ?? p.pieces }, (_, i) => (
                 <span
                   class:list={[
-                    "h-1 w-4 transition-colors duration-500",
+                    "h-1 w-4 rounded-pill transition-colors duration-500",
                     i === 0 ? "bg-hueso" : "bg-hueso/35",
                   ]}
                   data-dot
@@ -128,46 +160,86 @@ const hasVideo = new Set(["Dondi", "S Ingeniería", "Kepagro"]);
 </section>
 
 <script>
-  const INTERVALO = 2500;
+  const T_IMAGEN = 2500; // una imagen se ve 2.5 s
+  const T_VIDEO = 7000; // un clip se deja correr más para que se aprecie
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   document.querySelectorAll<HTMLElement>("[data-carrusel]").forEach((box) => {
-    const slides = box.querySelectorAll<HTMLElement>("[data-slide]");
+    const slides = Array.from(box.querySelectorAll<HTMLElement>("[data-slide]"));
     const dots = box.querySelectorAll<HTMLElement>("[data-dot]");
-    if (slides.length < 2 || reduce) return;
+    if (!slides.length) return;
 
     let actual = 0;
     let timer: number | undefined;
+    let visible = false;
+
+    const esVideo = (el: HTMLElement): el is HTMLVideoElement =>
+      el.hasAttribute("data-video");
+
+    // Carga diferida real: el archivo solo se descarga cuando se va a ver.
+    const cargar = (el: HTMLElement) => {
+      if (esVideo(el) && !el.src) {
+        const src = el.dataset.src;
+        if (src) el.src = src;
+      }
+    };
+
+    const reproducir = (el: HTMLElement) => {
+      if (!esVideo(el)) return;
+      cargar(el);
+      el.play().catch(() => {}); // si el navegador lo bloquea, queda el póster
+    };
+
+    const detener = (el: HTMLElement) => {
+      if (esVideo(el)) el.pause();
+    };
 
     const mostrar = (i: number) => {
       slides[actual]?.classList.replace("opacity-100", "opacity-0");
       dots[actual]?.classList.replace("bg-hueso", "bg-hueso/35");
+      detener(slides[actual]);
+
       actual = i;
       slides[actual]?.classList.replace("opacity-0", "opacity-100");
       dots[actual]?.classList.replace("bg-hueso/35", "bg-hueso");
+      reproducir(slides[actual]);
+
+      // Precarga la siguiente para que el cambio sea fluido.
+      cargar(slides[(actual + 1) % slides.length]);
     };
 
-    const arrancar = () => {
-      timer ??= window.setInterval(
-        () => mostrar((actual + 1) % slides.length),
-        INTERVALO
-      );
+    const programar = () => {
+      if (!visible || slides.length < 2 || reduce) return;
+      window.clearTimeout(timer);
+      const espera = esVideo(slides[actual]) ? T_VIDEO : T_IMAGEN;
+      timer = window.setTimeout(() => {
+        mostrar((actual + 1) % slides.length);
+        programar();
+      }, espera);
     };
+
     const parar = () => {
-      window.clearInterval(timer);
+      window.clearTimeout(timer);
       timer = undefined;
     };
 
-    // Solo rota mientras la tarjeta está en pantalla.
+    // Solo carga, reproduce y rota mientras la tarjeta está en pantalla.
     new IntersectionObserver(
-      ([e]) => (e.isIntersecting ? arrancar() : parar()),
-      { threshold: 0.2 }
+      ([e]) => {
+        visible = e.isIntersecting;
+        if (visible) {
+          reproducir(slides[actual]);
+          programar();
+        } else {
+          parar();
+          slides.forEach(detener);
+        }
+      },
+      { threshold: 0.25 }
     ).observe(box);
 
-    // Pausa al pasar el mouse para poder apreciar la pieza.
+    // Pausa el avance al pasar el mouse (el video sigue corriendo).
     box.addEventListener("mouseenter", parar);
-    box.addEventListener("mouseleave", () => {
-      if (box.getBoundingClientRect().top < window.innerHeight) arrancar();
-    });
+    box.addEventListener("mouseleave", programar);
   });
 </script>

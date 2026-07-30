@@ -37,6 +37,11 @@ export const aptitudes = [
   "Orientada a resultados",
 ] as const;
 
+/** Una pieza del carrusel: video (autoplay en mute) o imagen. */
+export type Media =
+  | { type: "video"; src: string; poster: string; alt: string }
+  | { type: "image"; src: string; alt: string };
+
 export interface Project {
   client: string;
   sector: string;
@@ -46,8 +51,10 @@ export interface Project {
   result: string;
   /** "destacada": tratamiento visual mayor (04 Ciudad Manhattan). "visual": la más fotográfica (05 Palmareca gastro). */
   emphasis?: "destacada" | "visual";
-  /** Piezas visuales. Placeholders hasta que llegue el material real (18–36 archivos). */
+  /** Cantidad de placeholders mientras no haya material real. */
   pieces: number;
+  /** Piezas reales ya optimizadas en public/piezas/. Si existe, reemplaza a los placeholders. */
+  media?: readonly Media[];
 }
 
 // Seis tarjetas, en este orden. Palmareca aparece dos veces con roles distintos,
