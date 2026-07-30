@@ -44,6 +44,10 @@ total_despues=0
 
 find "$ORIGEN" -mindepth 1 -maxdepth 1 -type d | sort | while read -r carpeta; do
   nombre="$(basename "$carpeta")"
+
+  # 'retratos' se procesa aparte al final (necesita conservar transparencia).
+  [ "$nombre" = "retratos" ] && continue
+
   destino_dir="$DESTINO/$(slug "$nombre")"
   mkdir -p "$destino_dir"
   echo "── $nombre"
@@ -71,15 +75,21 @@ find "$ORIGEN" -mindepth 1 -maxdepth 1 -type d | sort | while read -r carpeta; d
   done
 
   # ---- Imágenes ----
+  # Un PNG con transparencia se mantiene PNG: pasarlo a JPG le pondría fondo negro.
   find "$carpeta" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) \
     | sort | while read -r img; do
     base="$(slug "$(basename "${img%.*}")")"
-    salida="$destino_dir/$base.jpg"
 
-    magick "$img" -auto-orient -resize '1200x1200>' -strip -quality 82 "$salida"
+    if [ "$(magick identify -format '%[opaque]' "$img[0]" 2>/dev/null)" = "false" ]; then
+      salida="$destino_dir/$base.png"
+      magick "$img" -auto-orient -resize '1200x1200>' -strip "$salida"
+    else
+      salida="$destino_dir/$base.jpg"
+      magick "$img" -auto-orient -resize '1200x1200>' -strip -quality 82 "$salida"
+    fi
 
     antes=$(stat -c%s "$img"); despues=$(stat -c%s "$salida")
-    printf "   🖼  %-34s %5s MB → %4s KB\n" "$base.jpg" \
+    printf "   🖼  %-34s %5s MB → %4s KB\n" "$(basename "$salida")" \
       "$((antes/1048576))" "$((despues/1024))"
   done
 
@@ -95,6 +105,23 @@ find "$ORIGEN" -mindepth 1 -maxdepth 1 -type d | sort | while read -r carpeta; d
 
   echo ""
 done
+
+# ---- Retrato del hero: conserva transparencia, va a public/ ----
+if [ -d "$ORIGEN/retratos" ]; then
+  echo "── retratos"
+  recorte="$(find "$ORIGEN/retratos" -maxdepth 1 -type f -iname '*.png' | head -1)"
+  if [ -n "$recorte" ]; then
+    # -trim recorta el sobrante transparente para que la figura llene el marco.
+    magick "$recorte" -auto-orient -trim +repage -resize '900x900>' -strip \
+      "$RAIZ/public/valentina.png"
+    antes=$(stat -c%s "$recorte"); despues=$(stat -c%s "$RAIZ/public/valentina.png")
+    printf "   👤 %-34s %5s MB → %4s KB\n" "valentina.png (sin fondo)" \
+      "$((antes/1048576))" "$((despues/1024))"
+  else
+    echo "   ⚠ No hay PNG en retratos/ — el hero necesita la versión sin fondo."
+  fi
+  echo ""
+fi
 
 echo "▸ Listo. Resultado en public/piezas/"
 du -sh "$DESTINO" 2>/dev/null || true
