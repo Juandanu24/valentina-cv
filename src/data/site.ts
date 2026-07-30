@@ -145,7 +145,7 @@ export const projects: readonly Project[] = [
   },
   {
     client: "S Ingeniería",
-    sector: "App ARTICI RTC",
+    sector: "App RTC",
     role: "Directora de producción & guionista",
     description:
       "El reto era explicar de forma atractiva a un panel de inversionistas cómo una app con inteligencia artificial (SIA) resuelve el caos operativo del mantenimiento técnico en campo. Diseñé el guion bajo una narrativa problema-solución, dirigí el rodaje en localización real y supervisé la edición para convertir procesos complejos en un video pitch B2B de alto impacto.",
@@ -157,7 +157,8 @@ export const projects: readonly Project[] = [
         type: "video",
         src: "/piezas/s-ingenieria/artici-rtc-video-v2.mp4",
         poster: "/piezas/s-ingenieria/artici-rtc-video-v2.jpg",
-        alt: "Video pitch de la app ARTICI RTC para inversionistas",
+        alt: "Video pitch de la app RTC para inversionistas",
+        fit: "contain",
       },
     ],
   },
