@@ -1,0 +1,23 @@
+---
+import { site } from "../data/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-hueso/15 bg-marino px-5 py-8 text-hueso/60 sm:px-8">
+  <div
+    class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-widest"
+  >
+    <span>{site.name}</span>
+    <span>{site.location} · {year}</span>
+    {
+      site.linkedin ? (
+        <a href={site.linkedin} target="_blank" rel="noopener" class="transition-colors hover:text-hueso">
+          LinkedIn
+        </a>
+      ) : (
+        <span aria-hidden="true" />
+      )
+    }
+  </div>
+</footer>

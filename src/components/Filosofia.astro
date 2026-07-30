@@ -1,0 +1,24 @@
+---
+import { filosofia } from "../data/site";
+
+const [declaracion, cuerpo] = filosofia.body;
+---
+
+<section id="filosofia" class="bg-oliva px-5 py-24 text-hueso sm:px-8 sm:py-32">
+  <div class="mx-auto max-w-4xl">
+    <p data-reveal class="font-mono text-xs uppercase tracking-[0.25em] text-hueso/70">
+      {filosofia.title}
+    </p>
+
+    <p
+      data-reveal
+      class="mt-8 font-display text-[clamp(1.8rem,4.5vw,3.2rem)] font-extrabold leading-tight"
+    >
+      {declaracion}
+    </p>
+
+    <p data-reveal class="mt-8 max-w-2xl text-lg leading-relaxed text-hueso/90 sm:text-xl">
+      {cuerpo}
+    </p>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+---
+import { capacidades, herramientas } from "../data/site";
+---
+
+<section class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+  <p data-reveal class="font-mono text-xs uppercase tracking-[0.25em] text-marino/50">
+    De qué me encargo
+  </p>
+
+  <div class="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2">
+    {
+      capacidades.map((c) => (
+        <div data-reveal class="border-t-2 border-oliva pt-5">
+          <h3 class="font-display text-xl font-extrabold text-marino sm:text-2xl">
+            {c.title}
+          </h3>
+          <p class="mt-3 leading-relaxed text-tinta/75">{c.items.join(" · ")}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <p data-reveal class="mt-14 font-mono text-[11px] uppercase tracking-wider text-marino/45">
+    Herramientas: {herramientas}
+  </p>
+</section>

@@ -1,0 +1,122 @@
+---
+import { projects, site } from "../data/site";
+
+// Placeholders (picsum) hasta que llegue el material real de Valentina.
+// Proporción vertical 4:5 tipo pieza de red social.
+const placeholder = (seed: string, i: number) =>
+  `https://picsum.photos/seed/${encodeURIComponent(seed)}-${i}/600/750`;
+
+// Proyectos cuyo material real incluye video: la primera pieza se marca como video.
+const hasVideo = new Set(["Dondi", "S Ingeniería", "Kepagro"]);
+---
+
+<section id="trabajo" class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+  <p data-reveal class="font-mono text-xs uppercase tracking-[0.25em] text-marino/50">
+    Mi trabajo
+  </p>
+  <h2
+    data-reveal
+    class="mt-3 max-w-2xl font-display text-3xl font-extrabold text-marino sm:text-4xl"
+  >
+    Proyectos con nombre, piezas y resultado
+  </h2>
+
+  <div class="mt-16 space-y-20 sm:space-y-28">
+    {
+      projects.map((p, idx) => (
+        <article
+          data-reveal
+          class:list={[
+            "border border-marino/15 bg-hueso",
+            p.emphasis === "destacada" && "border-2 border-vino",
+          ]}
+        >
+          {/* Encabezado de tarjeta */}
+          <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-marino/15 px-6 py-5 sm:px-8">
+            <h3 class="font-display text-2xl font-extrabold text-marino sm:text-3xl">
+              {p.client}
+              <span class="ml-3 font-body text-base font-normal text-marino/55">
+                {p.sector}
+              </span>
+            </h3>
+            <span class="font-mono text-[11px] uppercase tracking-widest text-marino/60">
+              {String(idx + 1).padStart(2, "0")}
+            </span>
+          </div>
+
+          <div class="grid gap-8 px-6 py-7 sm:px-8 md:grid-cols-[1.1fr_1fr] md:gap-12">
+            {/* Columna de texto */}
+            <div>
+              <p class="font-mono text-xs font-bold uppercase tracking-[0.18em] text-vino">
+                {p.role}
+              </p>
+              <p class="mt-4 leading-relaxed text-tinta/85">{p.description}</p>
+              <ul class="mt-5 flex flex-wrap gap-2">
+                {p.tags.map((t) => (
+                  <li class="border border-marino/25 px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide text-marino/75">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Piezas visuales (placeholders) */}
+            <div
+              class:list={[
+                "grid gap-2 self-start",
+                p.pieces <= 3 ? "grid-cols-3" : "grid-cols-3 sm:grid-cols-3",
+              ]}
+            >
+              {Array.from({ length: p.pieces }, (_, i) => (
+                <div class="relative aspect-[4/5] overflow-hidden bg-marino/10">
+                  <img
+                    src={placeholder(p.client + p.role, i)}
+                    alt={`Pieza ${i + 1} — ${p.client} (material real en camino)`}
+                    loading="lazy"
+                    width="600"
+                    height="750"
+                    class="h-full w-full object-cover"
+                  />
+                  {i === 0 && hasVideo.has(p.client) && (
+                    <span class="absolute inset-0 grid place-items-center bg-marino/40">
+                      <span class="grid h-11 w-11 place-items-center rounded-full bg-hueso/90 text-marino">
+                        <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
+                          <path d="M0 0 L14 8 L0 16 Z" />
+                        </svg>
+                      </span>
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Línea de resultado: el remate del argumento */}
+          <p
+            class:list={[
+              "bg-vino px-6 py-4 font-mono uppercase tracking-wide text-hueso sm:px-8",
+              p.emphasis === "destacada"
+                ? "text-base font-bold sm:text-xl"
+                : "text-xs sm:text-sm",
+            ]}
+          >
+            ▸ {p.result}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+
+  <!-- Remate de sección: CTA de temperatura alta -->
+  <p data-reveal class="mt-16 text-center">
+    <a
+      href={site.whatsapp}
+      target="_blank"
+      rel="noopener"
+      class="group font-display text-xl font-bold text-vino transition-colors hover:text-quemado sm:text-2xl"
+    >
+      ¿Quieres resultados así para tu marca? Escríbeme
+      <span class="inline-block transition-transform group-hover:translate-x-1">→</span>
+    </a>
+  </p>
+</section>
