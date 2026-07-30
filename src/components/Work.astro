@@ -25,7 +25,7 @@ const hasVideo = new Set(["Dondi", "S Ingeniería", "Kepagro"]);
         <article
           data-reveal
           class:list={[
-            "flex flex-col overflow-hidden rounded-suave border bg-hueso transition-transform duration-300 hover:-translate-y-1",
+            "group flex flex-col overflow-hidden rounded-suave border bg-hueso shadow-[0_2px_10px_rgba(30,42,56,0.07)] transition-all duration-300 hover:-translate-y-1.5 hover:border-vino hover:shadow-[0_14px_32px_rgba(110,31,42,0.18)]",
             p.emphasis === "destacada" ? "border-vino/60" : "border-marino/15",
           ]}
         >
@@ -75,7 +75,7 @@ const hasVideo = new Set(["Dondi", "S Ingeniería", "Kepagro"]);
           {/* Cuerpo */}
           <div class="flex flex-1 flex-col p-5">
             <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-display text-2xl leading-tight text-marino">
+              <h3 class="font-display text-2xl leading-tight text-marino transition-colors duration-300 group-hover:text-vino">
                 {p.client}
               </h3>
               <span class="shrink-0 font-mono text-[10px] uppercase tracking-widest text-marino/40">

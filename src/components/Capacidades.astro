@@ -1,11 +1,12 @@
 ---
 import { capacidades, herramientas } from "../data/site";
 
-const listaHerramientas = herramientas
-  .replace(/^Herramientas:\s*/, "")
-  .split("·")
-  .map((h) => h.trim())
-  .filter(Boolean);
+// Colores de la paleta rotando, para que las fichas tengan vida sin salirse de la identidad.
+const fichas = [
+  "bg-vino text-hueso",
+  "bg-oliva text-hueso",
+  "bg-marino text-hueso",
+];
 ---
 
 <section id="experiencia" class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
@@ -19,7 +20,7 @@ const listaHerramientas = herramientas
       capacidades.map((c, i) => (
         <div
           data-reveal
-          class="group rounded-suave border border-marino/15 bg-hueso p-7 transition-colors duration-300 hover:border-transparent hover:bg-marino sm:p-8"
+          class="group rounded-suave border border-marino/15 bg-hueso p-7 shadow-[0_2px_10px_rgba(30,42,56,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:bg-marino hover:shadow-[0_14px_30px_rgba(30,42,56,0.18)] sm:p-8"
         >
           <span class="font-display text-4xl leading-none text-oliva/40 transition-colors duration-300 group-hover:text-hueso/45">
             {String(i + 1).padStart(2, "0")}
@@ -41,22 +42,31 @@ const listaHerramientas = herramientas
     }
   </div>
 
-  <!-- Herramientas: con protagonismo propio -->
-  <div data-reveal class="mt-12 rounded-suave bg-marino px-6 py-8 text-hueso sm:px-9 sm:py-10">
-    <div class="flex flex-wrap items-baseline justify-between gap-3">
-      <h3 class="font-display text-2xl leading-tight sm:text-3xl">
-        Herramientas que manejo
-      </h3>
-      <span class="font-mono text-[11px] uppercase tracking-widest text-hueso/50">
-        {listaHerramientas.length} herramientas
-      </span>
-    </div>
+  <!-- Herramientas: fichas tipo icono -->
+  <div
+    data-reveal
+    class="mt-12 rounded-suave border border-marino/15 bg-hueso px-6 py-9 shadow-[0_2px_10px_rgba(30,42,56,0.06)] sm:px-9 sm:py-10"
+  >
+    <h3 class="font-display text-2xl leading-tight text-marino sm:text-3xl">
+      Herramientas
+    </h3>
 
-    <ul class="mt-6 flex flex-wrap gap-2.5">
+    <ul class="mt-8 grid grid-cols-3 gap-x-4 gap-y-7 sm:grid-cols-5 lg:grid-cols-10">
       {
-        listaHerramientas.map((h) => (
-          <li class="cursor-default rounded-pill border border-hueso/25 px-4 py-2 font-mono text-xs uppercase tracking-wide text-hueso/85 transition-all duration-300 hover:-translate-y-0.5 hover:border-transparent hover:bg-hueso hover:text-marino">
-            {h}
+        herramientas.map((h, i) => (
+          <li class="group flex flex-col items-center gap-2.5 text-center">
+            <span
+              class:list={[
+                "grid h-14 w-14 place-items-center rounded-[1.1rem] font-display text-lg leading-none shadow-[0_3px_10px_rgba(30,42,56,0.14)] transition-transform duration-300 group-hover:-translate-y-1.5 group-hover:rotate-[-5deg]",
+                fichas[i % fichas.length],
+              ]}
+              aria-hidden="true"
+            >
+              {h.sigla}
+            </span>
+            <span class="font-mono text-[10px] uppercase leading-tight tracking-wide text-marino/65 transition-colors duration-300 group-hover:text-vino">
+              {h.name}
+            </span>
           </li>
         ))
       }

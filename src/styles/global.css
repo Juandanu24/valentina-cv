@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 /* Tipografías self-hosted (sin llamadas externas). */
-@import "@fontsource/instrument-serif"; /* nombre y titulares: serif elegante y curva */
+/* Fraunces: serif display con trazo grueso y curvas suaves (elegante, no rígida).
+   Alternativa libre al espíritu de Brasika Display / Dorris. */
+@import "@fontsource-variable/fraunces";
 @import "@fontsource-variable/dm-sans"; /* cuerpo: geométrica suave */
 @import "@fontsource-variable/jetbrains-mono"; /* datos y etiquetas */
 
@@ -21,9 +23,9 @@
   /* Texto de cuerpo: versión muy oscura del marino, no negro puro. */
   --color-tinta: #141c26;
 
-  /* Display = titulares y nombre: serif elegante de trazo curvo (nada industrial). */
-  --font-display: "Instrument Serif", Georgia, serif;
-  --font-name: "Instrument Serif", Georgia, serif;
+  /* Display = titulares y nombre: serif de trazo grueso pero elegante. */
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --font-name: "Fraunces Variable", "Fraunces", Georgia, serif;
   --font-body: "DM Sans Variable", "DM Sans", sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
 
@@ -50,8 +52,15 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    /* SOFT redondea las terminaciones; WONK activa las curvas con carácter. */
+    font-variation-settings: "SOFT" 40, "WONK" 1;
+    letter-spacing: -0.015em;
     text-wrap: balance;
+  }
+  .font-display,
+  .font-name {
+    font-variation-settings: "SOFT" 40, "WONK" 1;
   }
   /* Piso de calidad: foco de teclado siempre visible. */
   :focus-visible {

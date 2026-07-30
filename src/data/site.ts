@@ -155,9 +155,20 @@ export const capacidades = [
   },
 ] as const;
 
-// Una sola línea pequeña y discreta. Canva y ChatGPT jamás como "nivel experto".
-export const herramientas =
-  "Canva · Illustrator · Photoshop · Premiere · CapCut · Meta Business Suite · Google Analytics · Notion · ChatGPT · Claude";
+// Herramientas con sigla para las fichas tipo icono.
+// Canva y ChatGPT jamás se presentan como "nivel experto".
+export const herramientas = [
+  { name: "Canva", sigla: "Cv" },
+  { name: "Illustrator", sigla: "Ai" },
+  { name: "Photoshop", sigla: "Ps" },
+  { name: "Premiere", sigla: "Pr" },
+  { name: "CapCut", sigla: "Cc" },
+  { name: "Meta Business Suite", sigla: "M" },
+  { name: "Google Analytics", sigla: "GA" },
+  { name: "Notion", sigla: "N" },
+  { name: "ChatGPT", sigla: "GPT" },
+  { name: "Claude", sigla: "Cl" },
+] as const;
 
 // Trayectoria comprimida: función de verificación para RR.HH.
 // iClic: sin "fundadora" en el titular; el mérito va en la descripción.
