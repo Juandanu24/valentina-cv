@@ -193,16 +193,18 @@ export const projects: readonly Project[] = [
       {
         type: "duo",
         src: [
-          "/piezas/ciudad-manhattan/reporte-09.jpg",
-          "/piezas/ciudad-manhattan/reporte-10.jpg",
+          "/piezas/ciudad-manhattan/slide-01.jpg",
+          "/piezas/ciudad-manhattan/slide-08.jpg",
         ],
-        alt: "Distribución por edades y resultados de la campaña de Meta Ads",
+        alt: "Reporte de campaña Meta Ads: portada y enfoque estratégico",
       },
       {
-        type: "image",
-        src: "/piezas/ciudad-manhattan/reporte-11.jpg",
-        alt: "Cierre del reporte de campaña de Ciudad Manhattan",
-        fit: "contain",
+        type: "duo",
+        src: [
+          "/piezas/ciudad-manhattan/slide-09.jpg",
+          "/piezas/ciudad-manhattan/slide-13.jpg",
+        ],
+        alt: "Distribución por edades y lectura estratégica de resultados",
       },
     ],
   },
@@ -354,6 +356,14 @@ export const educacion = [
   "Comunicación Social y Periodismo — Universidad Pontificia Bolivariana",
   "Formación continua en Platzi y Udemy: marketing digital, herramientas creativas, IA aplicada",
 ] as const;
+
+// Portafolio ampliado (site público hecho en Canva) — más clientes y videos.
+export const portafolioAmpliado = {
+  url: "https://valentinagarcia-socialmediamanager.my.canva.site/conoce-nuestro-trabajo",
+  title: "¿Quieres ver más?",
+  body: "Este es solo un recorte. Tengo más campañas, videos y piezas de otros clientes esperándote.",
+  cta: "Conoce todo mi trabajo",
+} as const;
 
 export const contacto = {
   title: "¿Estás armando equipo?",
