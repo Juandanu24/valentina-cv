@@ -75,6 +75,7 @@ export const projects: readonly Project[] = [
     description:
       "Lideré la transición forzada de nombre (de La Pérgola a Palmareca), protegiendo el ADN de la marca. Dirigí la identidad visual exigiendo elegancia en “modo noche”, reescribí el tono de comunicación para no perder la “sabrosura”, diseñé piezas clave como la gran reinauguración y ejecuté la pauta en Meta Ads optimizando campañas de tráfico vs. interacción.",
     tags: ["Branding", "Dirección de arte", "Meta Ads", "Copywriting"],
+    instagram: "https://www.instagram.com/palmarecamtr/",
     result: "Conflicto de marca resuelto y rebranding premium en menos de 30 días",
     pieces: 4,
     media: [
@@ -127,6 +128,7 @@ export const projects: readonly Project[] = [
       "Embudos de conversión",
     ],
     result: "Cero bloqueos de cuenta publicitaria y flujo 100% convertido a WhatsApp",
+    instagram: "https://www.instagram.com/somosdondi/",
     pieces: 4,
     media: [
       {
@@ -162,6 +164,7 @@ export const projects: readonly Project[] = [
     description:
       "El reto era explicar de forma atractiva a un panel de inversionistas cómo una app con inteligencia artificial (SIA) resuelve el caos operativo del mantenimiento técnico en campo. Diseñé el guion bajo una narrativa problema-solución, dirigí el rodaje en localización real y supervisé la edición para convertir procesos complejos en un video pitch B2B de alto impacto.",
     tags: ["Guionismo B2B", "Dirección de rodaje", "Edición audiovisual", "Video para pitch"],
+    instagram: "https://www.instagram.com/singenieriasas/",
     result: "Video pitch seleccionado para presentación ante inversionistas",
     pieces: 3,
     media: [
@@ -187,6 +190,7 @@ export const projects: readonly Project[] = [
       "Copywriting promocional",
     ],
     result: "199 conversaciones directas a $353 COP por lead",
+    instagram: "https://www.instagram.com/motelmanhattanc/",
     emphasis: "destacada", // el dato más contundente del portafolio
     pieces: 3,
     media: [
@@ -215,6 +219,7 @@ export const projects: readonly Project[] = [
     description:
       "Elevé la presencia visual de los nuevos platos y cócteles de la carta. Conceptualicé la iluminación, el estilismo de alimentos y la paleta de color nocturna para capturar la esencia festiva y gastronómica del lugar, logrando imágenes con alto apetito visual que comunican la experiencia premium del sitio.",
     tags: ["Fotografía gastronómica", "Dirección de arte", "Iluminación", "Food styling"],
+    instagram: "https://www.instagram.com/palmarecamtr/",
     result: "Banco visual oficial, usado en menú impreso y pauta digital",
     emphasis: "visual", // la más visual de las seis; fotografía propia
     pieces: 6,
@@ -253,6 +258,7 @@ export const projects: readonly Project[] = [
     description:
       "Diseñé una estrategia de cobertura de eventos (serie de 5 a 8 entregas) para modernizar la imagen del sector agro. Rompí el esquema aburrido del video corporativo aplicando estructuras de storytelling, voz en off, ganchos de alto impacto y edición dinámica en tiempo real para conectar de forma humana y cercana con los agricultores.",
     tags: ["Cobertura de eventos", "Storytelling", "Producción en campo", "Reels / TikTok"],
+    instagram: "https://www.instagram.com/kepagrosas/",
     result: "Miles de reproducciones orgánicas y humanización de una marca B2B",
     pieces: 4,
     media: [
