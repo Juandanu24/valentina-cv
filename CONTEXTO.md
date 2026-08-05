@@ -60,11 +60,21 @@ mantenerse cerca de **450 KB**.
 
 **Flujo:**
 
-1. Valentina elige en Drive qué piezas quiere.
-2. Se descargan **solo esas** a una carpeta temporal (nunca al repo).
+1. Valentina elige en Drive qué piezas quiere y las **descarga a `material-vale/`**.
+2. Le avisa al agente: *"ya dejé material nuevo"* y de qué proyecto es.
 3. Se optimizan (abajo).
 4. El resultado va a `public/piezas/<proyecto>/` y se declara en el array `media`
    del proyecto en `src/data/site.ts`.
+
+**`material-vale/` es la carpeta de entrada**, en la raíz del repo e ignorada por
+git (`.gitignore`). Ahí Valentina deja los originales tal cual: pesados, con
+tildes o espacios en el nombre, da igual. Contiene un `LEEME.txt` escrito para
+ella. **Usar siempre esta carpeta**, no inventar rutas temporales: si cada sesión
+elige un sitio distinto, el material termina disperso.
+
+El conector de Drive sirve para *ubicar* material y decirle a Valentina qué
+archivo bajar y de qué subcarpeta — útil porque son 2.4 GB. Bajar archivos de
+cientos de MB desde el agente es lento: preferir que los descargue ella.
 
 ### En WSL (Juan)
 
@@ -74,8 +84,12 @@ bash scripts/optimizar-material.sh
 
 ### En Windows (Valentina)
 
-El script es bash y **no corre en Windows nativo**, pero los comandos sí. Instalar
-una vez y reabrir VS Code:
+El script es bash y **no corre en Windows nativo**, pero los comandos sí.
+
+**Ya están instaladas en el equipo de Valentina** (verificadas el 2026-08-05 con
+material real: FFmpeg 9.0, ImageMagick 7.1.2-29, Poppler 25.07.0). Si en una
+máquina nueva faltan, se instalan una vez y **se reabre VS Code** — winget cambia
+el `PATH` y una terminal ya abierta no lo toma:
 
 ```powershell
 winget install Gyan.FFmpeg
@@ -125,7 +139,8 @@ y no tiene relación con ellos.
 - **No hay secretos ni variables de entorno.** El sitio es estático: después de
   `pnpm install` ya funciona, no falta ningún `.env`.
 - Al clonar no vienen `node_modules/`, `dist/`, `.astro/` ni `material-vale/`. Los
-  tres primeros se generan solos; el último vive en Drive.
+  tres primeros se generan solos; el último se crea vacío y lo llena Valentina con
+  lo que baje de Drive.
 - Windows descomprime ZIP de forma nativa, no hace falta instalar nada.
 - Al descomprimir en WSL algo bajado de Windows aparecen archivos `Zone.Identifier`:
   son basura de Windows, se borran sin riesgo.
