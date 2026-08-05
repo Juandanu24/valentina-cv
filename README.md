@@ -36,6 +36,28 @@ Cuando algo te gusta, se publica y ahí sí queda en internet.
    npm install -g pnpm
    ```
 
+### Conectar tu cuenta de GitHub (una sola vez)
+
+GitHub es donde vive el proyecto. Necesitas dos cosas:
+
+**a) Que tu correo quede privado.** Como el proyecto es público, el correo que
+uses quedaría visible para cualquiera (y los bots lo usan para spam):
+
+1. En GitHub, entra a **Settings → Emails**
+2. Marca **"Keep my email addresses private"**
+3. Ahí mismo GitHub te muestra un correo que termina en `@users.noreply.github.com`.
+   Cópialo, lo necesitas en el paso siguiente.
+
+**b) Identificarte.** En la terminal de VS Code:
+
+```bash
+git config --global user.name "Valentina García Flórez"
+git config --global user.email "EL-CORREO-NOREPLY-QUE-COPIASTE"
+```
+
+Y para poder guardar cambios, inicia sesión. La forma más simple es desde VS Code:
+abajo a la izquierda, ícono de **Accounts → Sign in with GitHub**.
+
 ### Bajar el proyecto (una sola vez)
 
 ```bash
