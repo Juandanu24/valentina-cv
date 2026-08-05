@@ -13,7 +13,7 @@ export const site = {
   whatsapp: "https://wa.me/573218622670",
   linkedin: "", // TODO: pendiente de Valentina
   // TODO: dominio propio (ej. valentinagarcia.co) — actualizar también astro.config.mjs
-  url: "https://valentina-cv.vercel.app",
+  url: "https://valentinagarciaflorez.vercel.app",
 } as const;
 
 export const hero = {
