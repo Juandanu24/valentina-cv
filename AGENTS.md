@@ -116,11 +116,27 @@ micro-interacciones, nada más).
 
 ## Git
 
-- `main` siempre desplegable → despliega a producción en Vercel.
-- `develop` es la rama de integración. Toda rama abre **preview propio** en Vercel.
+- `main` siempre desplegable → despliega a producción en Vercel. Está **protegido**:
+  no se le hace push directo.
+- `develop` es la rama de integración y **el destino de todos los PR**. De ahí Juan
+  promueve a `main`. Toda rama abre **preview propio** en Vercel.
 - Rama por cambio, commits pequeños, mensajes en español.
+- Flujo: rama nueva → commit → **PR contra `develop`** → Juan aprueba desde su usuario.
 - **Nunca hacer push ni abrir PR sin confirmación explícita.** A Valentina se le
   pregunta así: *"¿guardamos los cambios en la web?"*.
+
+## Entornos
+
+Juan trabaja en **WSL**; Valentina en **Windows nativo**. Valentina **no usa la
+terminal**: cuando quiera probar algo, el agente le levanta el servidor local y le
+pasa la URL (http://localhost:4321) para que lo vea en el navegador.
+
+En Astro 7 `pnpm dev` **se desprende y queda en segundo plano** (no bloquea la
+terminal). Se controla con `pnpm exec astro dev status | stop | logs`.
+
+El permiso de build de `esbuild` está declarado en `pnpm-workspace.yaml`
+(`allowBuilds`). Sin él, pnpm 11 bloquea el postinstall y `pnpm dev` falla con
+`ERR_PNPM_IGNORED_BUILDS`.
 
 ## Pendientes conocidos
 
