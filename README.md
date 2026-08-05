@@ -68,18 +68,18 @@ pnpm install
 
 ### Cada vez que trabajes
 
-```bash
-pnpm dev
-```
+No necesitas la terminal. Abre Claude en VS Code y pídele:
 
-Abre **http://localhost:4321** en el navegador: ahí está tu página.
-Déjalo corriendo — cada cambio se ve al refrescar.
-Para cerrarlo: `Ctrl + C` en la terminal.
+> *"Ábreme la página para verla"*
+
+Él la prende y te pasa el enlace: **http://localhost:4321**. Ábrelo en el
+navegador — ahí está tu página, la versión que solo ves tú.
+Cada cambio se ve al refrescar. Queda prendida sola; si quieres apagarla,
+pídeselo a Claude.
 
 ### Cómo pedir cambios
 
-Abre Claude en VS Code y **pídele las cosas con tus palabras**, como se las dirías
-a un diseñador:
+Pídele las cosas **con tus palabras**, como se las dirías a un diseñador:
 
 > *"El título del inicio se ve muy grande, hazlo un poco más pequeño"*
 > *"Cambia la foto de la tarjeta de Kepagro"*
@@ -117,5 +117,8 @@ pnpm preview  # sirve el build
 
 ### Ramas
 
-`main` es lo publicado · `develop` integra los cambios · cada rama genera su propio
-preview en Vercel.
+`main` es lo publicado (protegido, sin push directo) · `develop` integra los
+cambios y es **el destino de todos los PR** · cada rama genera su propio preview
+en Vercel.
+
+Flujo: rama nueva → commit → PR contra `develop` → Juan aprueba.
