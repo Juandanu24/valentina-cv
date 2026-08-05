@@ -6,6 +6,9 @@ Guía para agentes de IA en este repo. Proyecto **personal**, sin relación con 
 > **Valentina no es técnica.** Si quien escribe es ella, explicar sin jerga: nada de
 > "rama", "commit" o "build" sin traducir. Juan sí es desarrollador.
 
+> **Leer también `CONTEXTO.md`**: qué se probó y se descartó (para no volver a
+> proponerlo), cómo agregar fotos y videos nuevos, y qué conectores hacen falta.
+
 ## Qué es
 
 Landing de una sola página que funciona como **hoja de vida no tradicional**.
