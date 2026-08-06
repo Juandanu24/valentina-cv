@@ -1,5 +1,11 @@
 ---
 import { site } from "../data/site";
+
+const enlaces = [
+  { href: "#trabajo", texto: "Proyectos" },
+  { href: "#capacidades", texto: "Capacidades" },
+  { href: "#sobre-mi", texto: "Sobre mí" },
+];
 ---
 
 <nav
@@ -7,15 +13,38 @@ import { site } from "../data/site";
   aria-label="Principal"
 >
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
-    <a href="#" class="font-display text-sm font-bold tracking-tight text-marino">
+    <!-- Botón de menú: solo en celular, donde no cabe la barra de enlaces. -->
+    <button
+      type="button"
+      id="btn-menu"
+      aria-expanded="false"
+      aria-controls="menu-movil"
+      aria-label="Abrir menú"
+      class="grid h-10 w-10 place-items-center rounded-suave border border-marino/20 text-marino transition-colors hover:border-vino hover:bg-vino hover:text-hueso md:hidden"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18"></path>
+      </svg>
+    </button>
+
+    <!-- El nombre completo solo en pantalla ancha: en celular se come el espacio. -->
+    <a href="#" class="hidden font-display text-sm font-bold tracking-tight text-marino md:block">
       {site.name}
     </a>
 
-    <div class="hidden items-center gap-6 font-mono text-[11px] uppercase tracking-widest text-marino/70 md:flex">
-      <a href="#trabajo" class="transition-colors hover:text-vino">Proyectos</a>
-      <a href="#experiencia" class="transition-colors hover:text-vino">Experiencia</a>
-      <a href="#filosofia" class="transition-colors hover:text-vino">Mi filosofía</a>
-      <a href="#contacto" class="transition-colors hover:text-vino">Contacto</a>
+    <div
+      class="hidden items-center gap-5 font-mono text-[11px] uppercase tracking-widest text-marino/70 md:flex"
+    >
+      {
+        enlaces.map((e, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true" class="text-marino/25">|</span>}
+            <a href={e.href} class="transition-colors hover:text-vino">
+              {e.texto}
+            </a>
+          </>
+        ))
+      }
     </div>
 
     <a
@@ -27,4 +56,56 @@ import { site } from "../data/site";
       Escríbeme
     </a>
   </div>
+
+  <!-- Panel desplegable de celular -->
+  <div id="menu-movil" hidden class="border-t border-marino/10 bg-hueso md:hidden">
+    <ul class="mx-auto max-w-6xl px-5 py-2">
+      {
+        enlaces.map((e) => (
+          <li class="border-b border-marino/10 last:border-b-0">
+            <a
+              href={e.href}
+              data-enlace-menu
+              class="block py-3.5 font-mono text-xs uppercase tracking-widest text-marino transition-colors hover:text-vino"
+            >
+              {e.texto}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </nav>
+
+<script>
+  const boton = document.getElementById("btn-menu");
+  const panel = document.getElementById("menu-movil");
+
+  if (boton && panel) {
+    const cerrar = () => {
+      panel.hidden = true;
+      boton.setAttribute("aria-expanded", "false");
+      boton.setAttribute("aria-label", "Abrir menú");
+    };
+
+    boton.addEventListener("click", () => {
+      const abierto = boton.getAttribute("aria-expanded") === "true";
+      if (abierto) {
+        cerrar();
+      } else {
+        panel.hidden = false;
+        boton.setAttribute("aria-expanded", "true");
+        boton.setAttribute("aria-label", "Cerrar menú");
+      }
+    });
+
+    // Al elegir una sección, el menú se recoge solo.
+    panel
+      .querySelectorAll<HTMLAnchorElement>("[data-enlace-menu]")
+      .forEach((a) => a.addEventListener("click", cerrar));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") cerrar();
+    });
+  }
+</script>

@@ -1,0 +1,151 @@
+---
+import { masTrabajo } from "../data/site";
+---
+
+<!--
+  Remate de la sección de proyectos. El botón abre una ventana dentro de la misma
+  página (<dialog> nativo: cierra con Esc, atrapa el foco y trae su propio fondo).
+  Los videos no se descargan hasta que la ventana se abre.
+-->
+<button
+  type="button"
+  data-abrir-mas
+  data-reveal
+  class="group mt-16 flex w-full flex-col items-start gap-6 overflow-hidden rounded-suave bg-oliva px-7 py-9 text-left text-hueso shadow-[0_4px_18px_rgba(85,96,58,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(85,96,58,0.3)] sm:flex-row sm:items-center sm:justify-between sm:px-11 sm:py-12"
+>
+  <span>
+    <span class="block font-display text-3xl leading-tight sm:text-4xl">
+      {masTrabajo.title}
+    </span>
+    <span class="mt-3 block max-w-md leading-relaxed text-hueso/75">
+      {masTrabajo.body}
+    </span>
+  </span>
+
+  <span
+    class="inline-flex shrink-0 items-center gap-3 rounded-pill bg-hueso px-7 py-4 font-mono text-xs uppercase tracking-widest text-oliva transition-colors duration-300 group-hover:bg-marino group-hover:text-hueso"
+  >
+    {masTrabajo.cta}
+    <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">
+      →
+    </span>
+  </span>
+</button>
+
+<dialog
+  id="mas-trabajo"
+  aria-labelledby="mas-trabajo-titulo"
+  class="m-auto max-h-[86vh] w-[min(72rem,92vw)] overflow-hidden rounded-suave bg-hueso p-0 text-tinta shadow-[0_24px_60px_rgba(30,42,56,0.3)] backdrop:bg-marino/70 backdrop:backdrop-blur-sm"
+>
+  <!-- La altura se controla en este envoltorio y no en el <dialog>: así el
+       desplazamiento vive dentro de la ventana y no se va a la página de atrás. -->
+  <div class="flex max-h-[86vh] flex-col">
+  <div
+    class="flex shrink-0 items-start justify-between gap-4 border-b border-marino/12 px-5 py-5 sm:px-8"
+  >
+    <div>
+      <h2 id="mas-trabajo-titulo" class="font-display text-2xl text-marino sm:text-3xl">
+        {masTrabajo.title}
+      </h2>
+      <p class="mt-1 font-mono text-[10px] uppercase tracking-widest text-marino/50">
+        {masTrabajo.piezas.length} piezas
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-cerrar-mas
+      aria-label="Cerrar"
+      class="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-marino/20 text-marino transition-colors hover:border-vino hover:bg-vino hover:text-hueso"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <path d="M5 5l14 14M19 5L5 19"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- min-h-0 permite que este bloque se encoja y tenga su propio desplazamiento.
+       overscroll-contain evita que, al llegar al final, el gesto se contagie a
+       la página de atrás. -->
+  <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-6 sm:px-8 sm:py-8">
+    <!-- Tres por fila. La pieza de formato distinto ocupa la fila entera al final. -->
+    <ul class="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3">
+      {
+        masTrabajo.piezas.map((pieza) => (
+          <li
+            class:list={[
+              "overflow-hidden rounded-suave border border-marino/15 bg-hueso shadow-[0_2px_10px_rgba(30,42,56,0.07)]",
+              pieza.ancho && "col-span-full",
+            ]}
+          >
+            <div
+              class:list={[
+                "overflow-hidden bg-marino",
+                pieza.ancho ? "aspect-[64/15]" : "aspect-[9/16]",
+              ]}
+            >
+              {pieza.type === "video" ? (
+                <video
+                  data-src={pieza.src}
+                  poster={pieza.poster}
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  class="h-full w-full object-cover"
+                />
+              ) : (
+                <img
+                  src={pieza.src}
+                  alt={pieza.label}
+                  loading="lazy"
+                  class="h-full w-full object-cover"
+                />
+              )}
+            </div>
+            {/* Sin nombre de cliente: aquí el material va en conjunto, no por marca. */}
+            <div class="px-3 py-2.5 sm:px-4 sm:py-3">
+              <p class="font-mono text-[10px] uppercase leading-tight tracking-wide text-marino/55">
+                {pieza.label}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  </div>
+</dialog>
+
+<script>
+  const dialogo = document.getElementById("mas-trabajo") as HTMLDialogElement | null;
+  const abrir = document.querySelector<HTMLButtonElement>("[data-abrir-mas]");
+  const cerrar = document.querySelector<HTMLButtonElement>("[data-cerrar-mas]");
+
+  if (dialogo && abrir) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    abrir.addEventListener("click", () => {
+      // Carga diferida real: los videos solo se descargan al abrir la ventana.
+      dialogo.querySelectorAll<HTMLVideoElement>("video[data-src]").forEach((v) => {
+        if (!v.src && v.dataset.src) v.src = v.dataset.src;
+        if (!reduce) v.play().catch(() => {});
+      });
+      dialogo.showModal();
+      document.body.style.overflow = "hidden";
+    });
+
+    const cerrarVentana = () => dialogo.close();
+    cerrar?.addEventListener("click", cerrarVentana);
+
+    // Clic en el fondo (fuera del contenido) también cierra.
+    dialogo.addEventListener("click", (e) => {
+      if (e.target === dialogo) cerrarVentana();
+    });
+
+    dialogo.addEventListener("close", () => {
+      document.body.style.overflow = "";
+      dialogo.querySelectorAll<HTMLVideoElement>("video").forEach((v) => v.pause());
+    });
+  }
+</script>

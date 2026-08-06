@@ -1,0 +1,74 @@
+---
+import { site, sobreMi } from "../data/site";
+
+const foto = "/valentina-sobre-mi.png";
+const [uno, dos, tres, cuatro] = sobreMi.bloques;
+
+// Énfasis solo por color y grosor: sin fondo, sin caja, sin subrayado.
+const vino = "font-semibold text-vino";
+const oliva = "font-semibold text-oliva";
+const parrafo = "text-center text-[1.05rem] leading-[1.85] text-tinta/85";
+---
+
+<!--
+  El retrato manda: va en primer plano, grande y al centro, con su nombre completo
+  detrás en gran formato. Los cuatro textos quedan alrededor, centrados, y la
+  figura los pisa. Sin garabatos ni manuscritas: el contorno es un trazo gráfico
+  que sigue la silueta real del PNG recortado.
+-->
+<section id="sobre-mi" class="relative overflow-hidden pt-24 sm:pt-32">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <h2 data-reveal class="font-display text-4xl leading-tight text-marino sm:text-5xl">
+      {sobreMi.title}
+    </h2>
+
+    <div class="relative mt-10 sm:mt-14">
+      <!-- Nombre completo detrás de todo -->
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-x-0 top-10 select-none text-center font-name text-[2.6rem] font-semibold uppercase leading-[1.05] tracking-tight text-vino/10 sm:text-[4.4rem] lg:top-20 lg:text-[6.5rem]"
+      >
+        Valentina García Flórez
+      </span>
+
+      <div
+        class="relative grid items-center gap-y-12 lg:grid-cols-[1fr_minmax(20rem,26rem)_1fr] lg:gap-x-6"
+      >
+        <!-- Columna izquierda -->
+        <div class="order-2 flex flex-col gap-12 lg:order-none lg:gap-28 lg:pb-24">
+          <p data-reveal class={parrafo}>
+            {uno.map((f) => (f.fuerte ? <strong class={vino}>{f.t}</strong> : f.t))}
+          </p>
+          <p data-reveal class={parrafo}>
+            {dos.map((f) => (f.fuerte ? <strong class={oliva}>{f.t}</strong> : f.t))}
+          </p>
+        </div>
+
+        <!-- Retrato en primer plano: se sale de su columna y pisa los textos -->
+        <figure
+          class="relative z-10 order-1 mx-auto w-full max-w-[19rem] sm:max-w-sm lg:order-none lg:-mx-12 lg:max-w-none"
+        >
+          <img
+            src={foto}
+            alt={`Retrato de ${site.name}`}
+            width="640"
+            height="915"
+            loading="lazy"
+            class="contorno-figura mx-auto block w-full object-contain"
+            onerror="this.style.display='none'"
+          />
+        </figure>
+
+        <!-- Columna derecha -->
+        <div class="order-3 flex flex-col gap-12 lg:order-none lg:gap-28 lg:pt-24">
+          <p data-reveal class={parrafo}>
+            {tres.map((f) => (f.fuerte ? <strong class={oliva}>{f.t}</strong> : f.t))}
+          </p>
+          <p data-reveal class={parrafo}>
+            {cuatro.map((f) => (f.fuerte ? <strong class={vino}>{f.t}</strong> : f.t))}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

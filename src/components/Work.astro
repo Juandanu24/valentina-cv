@@ -1,5 +1,6 @@
 ---
-import { projects, portafolioAmpliado } from "../data/site";
+import { projects } from "../data/site";
+import MasTrabajo from "./MasTrabajo.astro";
 
 // Placeholders (picsum) hasta que llegue el material real de Valentina.
 const placeholder = (seed: string, i: number) =>
@@ -16,9 +17,6 @@ const tieneVideo = (p: (typeof projects)[number]) =>
     <h2 data-reveal class="font-display text-4xl leading-tight text-marino sm:text-5xl">
       Proyectos destacados
     </h2>
-    <p data-reveal class="font-mono text-[11px] uppercase tracking-widest text-marino/45">
-      {projects.length} proyectos
-    </p>
   </div>
 
   <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -205,7 +203,24 @@ const tieneVideo = (p: (typeof projects)[number]) =>
               {p.role}
             </p>
 
-            <p class="mt-3 text-sm leading-relaxed text-tinta/80">{p.description}</p>
+            {/* Descripción recortada a dos líneas: el texto completo existe y es
+                legible, pero no obliga a nadie a desplazarse por seis párrafos. */}
+            <div class="mt-3" data-desc-caja>
+              <p
+                class="text-sm leading-relaxed text-tinta/80 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] overflow-hidden"
+                data-desc
+              >
+                {p.description}
+              </p>
+              <button
+                type="button"
+                data-desc-mas
+                aria-expanded="false"
+                class="mt-1.5 font-mono text-[10px] uppercase tracking-widest text-vino underline-offset-4 transition-colors hover:text-quemado hover:underline"
+              >
+                Ver más...
+              </button>
+            </div>
 
             <ul class="mt-4 flex flex-wrap gap-1.5">
               {p.tags.map((t) => (
@@ -230,33 +245,32 @@ const tieneVideo = (p: (typeof projects)[number]) =>
     }
   </div>
 
-  <!-- Remate de sección: puerta al portafolio ampliado -->
-  <a
-    data-reveal
-    href={portafolioAmpliado.url}
-    target="_blank"
-    rel="noopener"
-    class="group mt-16 flex flex-col items-start gap-6 overflow-hidden rounded-suave bg-oliva px-7 py-9 text-hueso shadow-[0_4px_18px_rgba(85,96,58,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(85,96,58,0.3)] sm:flex-row sm:items-center sm:justify-between sm:px-11 sm:py-12"
-  >
-    <div>
-      <h3 class="font-display text-3xl leading-tight sm:text-4xl">
-        {portafolioAmpliado.title}
-      </h3>
-      <p class="mt-3 max-w-md leading-relaxed text-hueso/75">
-        {portafolioAmpliado.body}
-      </p>
-    </div>
-
-    <span
-      class="inline-flex shrink-0 items-center gap-3 rounded-pill bg-hueso px-7 py-4 font-mono text-xs uppercase tracking-widest text-oliva transition-colors duration-300 group-hover:bg-marino group-hover:text-hueso"
-    >
-      {portafolioAmpliado.cta}
-      <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
-    </span>
-  </a>
+  <!-- Remate de sección: abre la ventana con el resto del material -->
+  <MasTrabajo />
 </section>
 
 <script>
+  // "Ver más" de cada descripción. El texto siempre está en el HTML —solo se
+  // recorta visualmente—, así que buscadores y lectores de pantalla lo leen igual.
+  document.querySelectorAll<HTMLElement>("[data-desc-caja]").forEach((caja) => {
+    const texto = caja.querySelector<HTMLElement>("[data-desc]");
+    const boton = caja.querySelector<HTMLButtonElement>("[data-desc-mas]");
+    if (!texto || !boton) return;
+
+    // Si el texto cabe entero en dos líneas, el botón sobra.
+    if (texto.scrollHeight <= texto.clientHeight + 1) {
+      boton.remove();
+      return;
+    }
+
+    boton.addEventListener("click", () => {
+      const abierto = boton.getAttribute("aria-expanded") === "true";
+      texto.style.webkitLineClamp = abierto ? "2" : "unset";
+      boton.setAttribute("aria-expanded", String(!abierto));
+      boton.textContent = abierto ? "Ver más..." : "Ver menos";
+    });
+  });
+
   const T_IMAGEN = 2500; // una imagen se ve 2.5 s
   const T_VIDEO = 7000; // un clip se deja correr más para que se aprecie
   const PAUSA_MANUAL = 8000; // tras usar los controles, respiro antes del automático

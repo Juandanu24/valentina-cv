@@ -6,6 +6,9 @@
 @import "@fontsource-variable/fraunces";
 @import "@fontsource-variable/dm-sans"; /* cuerpo: geométrica suave */
 @import "@fontsource-variable/jetbrains-mono"; /* datos y etiquetas */
+/* Cursiva caligráfica: solo el saludo del inicio y el título de Mi filosofía.
+   Dos apariciones y nada más; repartida por la página deja de sentirse especial. */
+@import "@fontsource/petit-formal-script";
 
 /*
  * Sistema de diseño v2 — "Tablero de trabajo" (especificación de Valentina, jul 2026).
@@ -28,17 +31,27 @@
   --font-name: "Fraunces Variable", "Fraunces", Georgia, serif;
   --font-body: "DM Sans Variable", "DM Sans", sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  /* Cursiva del saludo y de Mi filosofía. */
+  --font-cursiva: "Petit Formal Script", cursive;
 
   /* Radios: el estilo pide esquinas redondeadas en todo. */
   --radius-suave: 0.75rem;
   --radius-pill: 999px;
 
   --animate-marquee: marquee 32s linear infinite;
+  /* Sello circular del retrato: gira despacio, casi imperceptible. */
+  --animate-girar: girar 24s linear infinite;
 }
 
 @keyframes marquee {
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -67,6 +80,16 @@
     outline: 2px solid var(--color-vino);
     outline-offset: 3px;
   }
+}
+
+/* Contorno del retrato de "Sobre mí": ocho sombras planas sin desenfoque siguen
+   el canal de transparencia del PNG, así que la línea abraza la silueta real.
+   Es un trazo gráfico limpio, no un dibujo a mano. */
+.contorno-figura {
+  filter: drop-shadow(3px 0 0 var(--color-marino)) drop-shadow(-3px 0 0 var(--color-marino))
+    drop-shadow(0 3px 0 var(--color-marino)) drop-shadow(0 -3px 0 var(--color-marino))
+    drop-shadow(2px 2px 0 var(--color-marino)) drop-shadow(-2px 2px 0 var(--color-marino))
+    drop-shadow(2px -2px 0 var(--color-marino)) drop-shadow(-2px -2px 0 var(--color-marino));
 }
 
 @media (prefers-reduced-motion: reduce) {

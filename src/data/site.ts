@@ -7,7 +7,12 @@
 
 export const site = {
   name: "Valentina García Flórez",
-  role: "Social Media Manager · Content Marketing",
+  // El cargo tiene que servir desde una vacante de community manager hasta una de
+  // dirección: el título nombra el oficio y la línea de alcance abre el abanico,
+  // sin declarar un nivel que encasille hacia arriba o hacia abajo.
+  role: "Estratega de marketing y contenido",
+  // En lista, no en una cadena: así ningún término se parte a mitad de línea.
+  alcance: ["Marca", "Campañas", "Pauta digital", "Producción audiovisual"],
   location: "Montería, Colombia",
   email: "valentinagaf-21@hotmail.com", // TODO v3: correo con dominio propio
   whatsapp: "https://wa.me/573218622670",
@@ -16,13 +21,55 @@ export const site = {
   url: "https://valentinagarciaflorez.vercel.app",
 } as const;
 
+// El titular va partido en dos tipografías: el saludo en cursiva y el nombre en
+// Fraunces al tamaño grande. La ciudad salió de aquí y vive solo en el pie.
 export const hero = {
+  saludo: "¡Hola, soy",
+  nombre: "Valentina García!",
+  // Frase gancho: ya no es un bloque de texto, va como etiqueta junto al retrato.
   hook: "Las marcas no necesitan más contenido. Necesitan mejores ideas.",
-  intro: [
+  // Solo el abreboca. El párrafo descriptivo se movió a la sección "Sobre mí".
+  intro:
     "No llegué al marketing por las redes sociales, llegué porque me apasiona entender cómo piensan las marcas y las personas.",
-    "Soy Comunicadora Social y Periodista, especializada en estrategia de marketing y contenido. Disfruto transformar ideas en planes con propósito, construir marcas con personalidad y crear estrategias que generen resultados, no solo publicaciones.",
-  ],
-  cta: "Explorar mi trabajo",
+  ctaPrimary: "Ver mi trabajo",
+  ctaSecondary: "Sobre mí",
+} as const;
+
+// Composición alrededor del retrato: cuatro ideas sueltas, sin título ni número.
+// Es la sección más personal de la página, pero sigue siendo una hoja de vida:
+// el carácter viene del contenido y la composición, nunca de adornos.
+export const sobreMi = {
+  title: "Sobre mí",
+  // Cada bloque se parte en tramos para poder resaltar las palabras que cargan
+  // la idea. El énfasis es tipográfico y de color: nunca adornos.
+  bloques: [
+    [
+      { t: "Graduada de comunicación social y periodismo, pero " },
+      { t: "apasionada por el marketing", fuerte: true },
+      { t: " desde las prácticas hasta hoy. Mi camino siempre ha estado en lo digital, en la tecnología y en encontrar " },
+      { t: "formas nuevas de contar", fuerte: true },
+      { t: " lo que una marca quiere decir." },
+    ],
+    [
+      { t: "Montar " },
+      { t: "iClic", fuerte: true },
+      { t: " me hizo ver el mundo de las agencias desde adentro. Fui " },
+      { t: "la que graba, la que edita, la que publica y la que dirige", fuerte: true },
+      { t: ". Ese recorrido me enseñó todo lo que pasa entre una idea y un resultado." },
+    ],
+    [
+      { t: "Trabajo con " },
+      { t: "estructura", fuerte: true },
+      { t: ": planifico, organizo y anoto todo. Soy detallista hasta el final; el tono, el encuadre, el lenguaje; porque ahí, " },
+      { t: "en lo que casi nadie nota", fuerte: true },
+      { t: ", es donde una marca se ve bien hecha." },
+    ],
+    [
+      { t: "Me gusta el trabajo en equipo y los rodajes largos. Si toca maquillar, maquillo; si toca ser la modelo, lo soy. " },
+      { t: "No me encasillo en un cargo", fuerte: true },
+      { t: " cuando hay algo que sacar adelante." },
+    ],
+  ] as readonly (readonly { t: string; fuerte?: boolean }[])[],
 } as const;
 
 // Banner deslizante: aptitudes (no herramientas). Ocho, no más.
@@ -73,16 +120,23 @@ export const projects: readonly Project[] = [
     sector: "Gastrobar",
     role: "Directora creativa & estratega de marca",
     description:
-      "Lideré la transición forzada de nombre (de La Pérgola a Palmareca), protegiendo el ADN de la marca. Dirigí la identidad visual exigiendo elegancia en “modo noche”, reescribí el tono de comunicación para no perder la “sabrosura”, diseñé piezas clave como la gran reinauguración y ejecuté la pauta en Meta Ads optimizando campañas de tráfico vs. interacción.",
+      "Dirigí el cambio forzado de nombre de La Pérgola a Palmareca sin perder el ADN de la marca. Lideré al equipo de diseño hacia una identidad en clave nocturna, reescribí el tono para conservar la sabrosura del lugar y ejecuté la pauta de la reinauguración.",
     tags: ["Branding", "Dirección de arte", "Meta Ads", "Copywriting"],
     instagram: "https://www.instagram.com/palmarecamtr/",
     result: "Conflicto de marca resuelto y rebranding premium en menos de 30 días",
     pieces: 4,
+    // Material nuevo (menú y moodboard) + las páginas del manual que ya estaban:
+    // en esta carpeta solo llegaron 2 archivos y la tarjeta se quedaba corta.
     media: [
       {
         type: "image",
-        src: "/piezas/palmareca-rebranding/menu-palmareca-v3-1.jpg",
-        alt: "Portada del menú de Palmareca",
+        src: "/piezas/palmareca-rebranding/menu-palmareca-01.jpg",
+        alt: "Menú de Palmareca",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-rebranding/moodboard-palmareca.jpg",
+        alt: "Moodboard de la identidad de Palmareca",
       },
       {
         type: "duo",
@@ -101,11 +155,6 @@ export const projects: readonly Project[] = [
         alt: "Manual de marca de Palmareca: paleta de color y tipografía",
       },
       {
-        type: "image",
-        src: "/piezas/palmareca-rebranding/menu-palmareca-v3-2.jpg",
-        alt: "Página interior del menú de Palmareca",
-      },
-      {
         type: "duo",
         src: [
           "/piezas/palmareca-rebranding/manual-06.jpg",
@@ -116,79 +165,108 @@ export const projects: readonly Project[] = [
     ],
   },
   {
-    client: "Dondi",
-    sector: "Plataforma transaccional",
-    role: "Directora creativa & arquitecta de marca",
+    // Sector belleza temprano: es la categoría a la que Valentina quiere llegar.
+    // TODO antes de publicar: confirmar autorización de la Dra. Garnica para
+    // usar su nombre, y reemplazar los marcadores por las piezas reales.
+    client: "Dra. Natalia Garnica",
+    sector: "Medicina estética",
+    role: "Directora creativa & estratega de marca personal",
     description:
-      "Diseñé desde cero la arquitectura digital y el lenguaje para validar la compra de chance por WhatsApp frente a los puntos físicos. Creé la “Dieta Blanca” (sustituyendo palabras de alto riesgo para evitar bloqueos de Meta Ads), estructuré guiones bajo el framework Hook-Retain-Reward y diseñé el flujo de conversión que humanizó la marca a través de sus fundadores.",
+      "Construí la marca personal de una médica estética en una categoría donde nadie admite en público lo que consume y la venta depende por completo de la confianza. Traduje procedimientos clínicos a un lenguaje cercano y diseñé campañas que venden desde la seguridad, no desde la inseguridad.",
+    tags: [
+      "Marca personal",
+      "Dirección creativa",
+      "Copywriting",
+      "Guion y producción",
+      "Campañas estacionales",
+    ],
+    result: "Construcción de marca personal y colaboraciones con marcas de skincare",
+    pieces: 4,
+    media: [
+      {
+        type: "video",
+        src: "/piezas/dra-natalia/rutina-de-skincare-de-dia-final.mp4",
+        poster: "/piezas/dra-natalia/rutina-de-skincare-de-dia-final.jpg",
+        alt: "Rutina de skincare de día",
+      },
+      {
+        type: "video",
+        src: "/piezas/dra-natalia/nctf.mp4",
+        poster: "/piezas/dra-natalia/nctf.jpg",
+        alt: "Tratamiento NCTF",
+      },
+      {
+        type: "video",
+        src: "/piezas/dra-natalia/nanopore.mp4",
+        poster: "/piezas/dra-natalia/nanopore.jpg",
+        alt: "Tratamiento nanopore",
+      },
+      {
+        type: "video",
+        src: "/piezas/dra-natalia/que-hay-en-mi-bolso.mp4",
+        poster: "/piezas/dra-natalia/que-hay-en-mi-bolso.jpg",
+        alt: "Qué hay en mi bolso",
+      },
+    ],
+  },
+  {
+    client: "Dondi",
+    sector: "Chance digital",
+    role: "Directora creativa & estratega de contenido",
+    description:
+      "Diseñé la campaña de lanzamiento en redes de una nueva forma de comprar chance por WhatsApp. El reto era traducir una costumbre de toda la vida a un lenguaje digital que funcionara para dos públicos opuestos: el que ya compra en el punto físico y el joven que ni siquiera sabe qué es el chance. Dirigí guiones, storytelling y la comunicación entre las marcas aliadas que hacían posible la estrategia.",
     tags: [
       "Estrategia de lanzamiento",
-      "Política de Meta Ads",
-      "Video marketing",
-      "Embudos de conversión",
+      "Storytelling",
+      "Guion y video",
+      "Dirección creativa",
     ],
-    result: "Cero bloqueos de cuenta publicitaria y flujo 100% convertido a WhatsApp",
+    result:
+      "Dos audiencias en un solo lenguaje: el comprador de toda la vida y el que nunca ha comprado",
     instagram: "https://www.instagram.com/somosdondi/",
     pieces: 4,
     media: [
       {
         type: "video",
-        src: "/piezas/dondi/como-jugar-chance.mp4",
-        poster: "/piezas/dondi/como-jugar-chance.jpg",
-        alt: "Video: cómo jugar chance por WhatsApp",
+        src: "/piezas/dondi/como-jugar-chance-con-dondi.mp4",
+        poster: "/piezas/dondi/como-jugar-chance-con-dondi.jpg",
+        alt: "Cómo jugar chance con Dondi",
+      },
+      {
+        type: "video",
+        src: "/piezas/dondi/las-senales-de-la-suerte.mp4",
+        poster: "/piezas/dondi/las-senales-de-la-suerte.jpg",
+        alt: "Las señales de la suerte",
+      },
+      {
+        type: "video",
+        src: "/piezas/dondi/noticia-plan-referidos-dondi.mp4",
+        poster: "/piezas/dondi/noticia-plan-referidos-dondi.jpg",
+        alt: "Noticia del plan de referidos",
       },
       {
         type: "video",
         src: "/piezas/dondi/plan-referidos.mp4",
         poster: "/piezas/dondi/plan-referidos.jpg",
-        alt: "Video: plan de referidos de Dondi",
-      },
-      {
-        type: "video",
-        src: "/piezas/dondi/no-mas-chances-perdidos.mp4",
-        poster: "/piezas/dondi/no-mas-chances-perdidos.jpg",
-        alt: "Video: no más chances perdidos",
-      },
-      {
-        type: "video",
-        src: "/piezas/dondi/paso-a-paso-para-jugar.mp4",
-        poster: "/piezas/dondi/paso-a-paso-para-jugar.jpg",
-        alt: "Video: paso a paso para jugar",
-      },
-    ],
-  },
-  {
-    client: "S Ingeniería",
-    sector: "App RTC",
-    role: "Directora de producción & guionista",
-    description:
-      "El reto era explicar de forma atractiva a un panel de inversionistas cómo una app con inteligencia artificial (SIA) resuelve el caos operativo del mantenimiento técnico en campo. Diseñé el guion bajo una narrativa problema-solución, dirigí el rodaje en localización real y supervisé la edición para convertir procesos complejos en un video pitch B2B de alto impacto.",
-    tags: ["Guionismo B2B", "Dirección de rodaje", "Edición audiovisual", "Video para pitch"],
-    instagram: "https://www.instagram.com/singenieriasas/",
-    result: "Video pitch seleccionado para presentación ante inversionistas",
-    pieces: 3,
-    media: [
-      {
-        type: "video",
-        src: "/piezas/s-ingenieria/artici-rtc-video-v2.mp4",
-        poster: "/piezas/s-ingenieria/artici-rtc-video-v2.jpg",
-        alt: "Video pitch de la app RTC para inversionistas",
-        fit: "contain",
+        alt: "Plan de referidos de Dondi",
       },
     ],
   },
   {
     client: "Ciudad Manhattan",
     sector: "Real estate & hospitality",
-    role: "Especialista en Meta Ads & media buyer",
+    role: "Campaña multicanal & pauta digital",
     description:
-      "Diseñé y ejecuté la campaña publicitaria multicanal (motel, hotel y bono gasolina) para la temporada del Mes de la Mujer. Armé la pauta orientada a la apertura de conversaciones directas por mensaje, testeando formatos en Stories y Multiposts con segmentación flexible para maximizar la relevancia creativa.",
+      "Diseñé y ejecuté la campaña multicanal de temporada para motel, hotel y bono gasolina. Orienté toda la pauta a abrir conversación directa por mensaje, testeando formatos y segmentaciones para maximizar la relevancia creativa.",
     tags: [
       "Meta Ads Manager",
       "Anuncios conversacionales",
       "Analítica",
       "Copywriting promocional",
     ],
+    // TODO: la versión final pide "X% de las conversaciones terminaron en reserva".
+    // Ese porcentaje todavía no existe: hay que pedírselo al cliente. Hasta
+    // entonces se queda el dato verificado — nunca un marcador en producción.
     result: "199 conversaciones directas a $353 COP por lead",
     instagram: "https://www.instagram.com/motelmanhattanc/",
     emphasis: "destacada", // el dato más contundente del portafolio
@@ -217,7 +295,7 @@ export const projects: readonly Project[] = [
     sector: "Gastronomía & coctelería",
     role: "Fotógrafa & directora de arte",
     description:
-      "Elevé la presencia visual de los nuevos platos y cócteles de la carta. Conceptualicé la iluminación, el estilismo de alimentos y la paleta de color nocturna para capturar la esencia festiva y gastronómica del lugar, logrando imágenes con alto apetito visual que comunican la experiencia premium del sitio.",
+      "Construí el banco visual de la nueva carta. Definí la iluminación, el estilismo de alimentos y una paleta nocturna que traduce la experiencia premium del lugar en imágenes con alto apetito visual.",
     tags: ["Fotografía gastronómica", "Dirección de arte", "Iluminación", "Food styling"],
     instagram: "https://www.instagram.com/palmarecamtr/",
     result: "Banco visual oficial, usado en menú impreso y pauta digital",
@@ -231,13 +309,18 @@ export const projects: readonly Project[] = [
       },
       {
         type: "image",
-        src: "/piezas/palmareca-fotos/copia-de-dsc05253.jpg",
-        alt: "Coctelería de Palmareca en clave nocturna",
+        src: "/piezas/palmareca-fotos/dsc06003.jpg",
+        alt: "Plato de la carta de Palmareca",
       },
       {
         type: "image",
         src: "/piezas/palmareca-fotos/copia-de-dsc01217.jpg",
         alt: "Plato de la carta de Palmareca",
+      },
+      {
+        type: "image",
+        src: "/piezas/palmareca-fotos/dsc09850.jpg",
+        alt: "Detalle gastronómico de Palmareca",
       },
       {
         type: "image",
@@ -256,7 +339,7 @@ export const projects: readonly Project[] = [
     sector: "Insumos agrícolas",
     role: "Productora audiovisual & content creator",
     description:
-      "Diseñé una estrategia de cobertura de eventos (serie de 5 a 8 entregas) para modernizar la imagen del sector agro. Rompí el esquema aburrido del video corporativo aplicando estructuras de storytelling, voz en off, ganchos de alto impacto y edición dinámica en tiempo real para conectar de forma humana y cercana con los agricultores.",
+      "Diseñé una serie de cobertura de eventos para modernizar la imagen del sector agro. Saqué el video corporativo de su fórmula habitual con estructura narrativa, voz en off y edición en tiempo real para conectar de forma cercana con los agricultores.",
     tags: ["Cobertura de eventos", "Storytelling", "Producción en campo", "Reels / TikTok"],
     instagram: "https://www.instagram.com/kepagrosas/",
     result: "Miles de reproducciones orgánicas y humanización de una marca B2B",
@@ -270,9 +353,9 @@ export const projects: readonly Project[] = [
       },
       {
         type: "video",
-        src: "/piezas/kepagro/evento-chinu.mp4",
-        poster: "/piezas/kepagro/evento-chinu.jpg",
-        alt: "Cobertura del evento en Chinú",
+        src: "/piezas/kepagro/lanzamiento-maiz-sahagun.mp4",
+        poster: "/piezas/kepagro/lanzamiento-maiz-sahagun.jpg",
+        alt: "Lanzamiento de maíz en Sahagún",
       },
       {
         type: "video",
@@ -282,9 +365,9 @@ export const projects: readonly Project[] = [
       },
       {
         type: "video",
-        src: "/piezas/kepagro/evento-san-carlos-v1.mp4",
-        poster: "/piezas/kepagro/evento-san-carlos-v1.jpg",
-        alt: "Cobertura del evento en San Carlos",
+        src: "/piezas/kepagro/lanzamiento-tierralta.mp4",
+        poster: "/piezas/kepagro/lanzamiento-tierralta.jpg",
+        alt: "Lanzamiento en Tierralta",
       },
     ],
   },
@@ -318,19 +401,20 @@ export const capacidades = [
   },
 ] as const;
 
-// Herramientas con sigla para las fichas tipo icono.
+// Herramientas. Las que tienen `logo` usan el archivo real que trajo Valentina;
+// las de Adobe no llegaron, así que van con su monograma sobre
+// el color de la marca (en el caso de Adobe el icono oficial es justamente eso).
 // Canva y ChatGPT jamás se presentan como "nivel experto".
 export const herramientas = [
-  { name: "Canva", sigla: "Cv" },
-  { name: "Illustrator", sigla: "Ai" },
-  { name: "Photoshop", sigla: "Ps" },
-  { name: "Premiere", sigla: "Pr" },
-  { name: "CapCut", sigla: "Cc" },
-  { name: "Meta Business Suite", sigla: "M" },
-  { name: "Google Analytics", sigla: "GA" },
-  { name: "Notion", sigla: "N" },
-  { name: "ChatGPT", sigla: "GPT" },
-  { name: "Claude", sigla: "Cl" },
+  { name: "Canva", sigla: "C", bg: "#FFFFFF", fg: "#00C4CC", logo: "/logos/canva-logo-png.png" },
+  { name: "Illustrator", sigla: "Ai", bg: "#330000", fg: "#FF9A00" },
+  { name: "Photoshop", sigla: "Ps", bg: "#001E36", fg: "#31A8FF" },
+  { name: "Premiere", sigla: "Pr", bg: "#00005B", fg: "#9999FF" },
+  { name: "CapCut", sigla: "Cc", bg: "#FFFFFF", fg: "#000000", logo: "/logos/capcut-logo-png.png" },
+  { name: "Meta Business Suite", sigla: "M", bg: "#FFFFFF", fg: "#0081FB", logo: "/logos/logo-meta.png" },
+  { name: "Notion", sigla: "N", bg: "#FFFFFF", fg: "#111111", logo: "/logos/notion-app-logo.png" },
+  { name: "ChatGPT", sigla: "GPT", bg: "#FFFFFF", fg: "#000000", logo: "/logos/chatgpt-logo.png" },
+  { name: "Claude", sigla: "Cl", bg: "#FFFFFF", fg: "#D97757", logo: "/logos/claude-icon-logo.png" },
 ] as const;
 
 // Trayectoria comprimida: función de verificación para RR.HH.
@@ -363,17 +447,65 @@ export const educacion = [
   "Formación continua en Platzi y Udemy: marketing digital, herramientas creativas, IA aplicada",
 ] as const;
 
-// Portafolio ampliado (site público hecho en Canva) — más clientes y videos.
-export const portafolioAmpliado = {
-  url: "https://valentinagarcia-socialmediamanager.my.canva.site/conoce-nuestro-trabajo",
-  title: "¿Quieres ver más?",
+// Remate de la sección de proyectos. Antes llevaba a un sitio hecho en Canva:
+// se retiró porque sacaba al visitante del sitio propio y su URL y su copy
+// ("conoce NUESTRO trabajo", /socialmediamanager) volvían al lenguaje de agencia.
+// Ahora abre una ventana dentro de la misma página: nadie sale del sitio.
+// `ancho` marca la pieza que no es formato reel: ocupa la fila entera al final.
+export type PiezaSuelta = { label: string; ancho?: boolean } & (
+  | { type: "video"; src: string; poster: string }
+  | { type: "image"; src: string }
+);
+
+const reel = (slug: string, label: string): PiezaSuelta => ({
+  type: "video",
+  label,
+  src: `/piezas/conoce-mas/${slug}.mp4`,
+  poster: `/piezas/conoce-mas/${slug}.jpg`,
+});
+
+export const masTrabajo = {
+  title: "Conoce más de mi trabajo",
   body: "Este es solo un recorte. Tengo más campañas, videos y piezas de otros clientes esperándote.",
-  cta: "Conoce todo mi trabajo",
+  cta: "Conoce más de mi trabajo",
+  // Material de la carpeta "ventana conoce más": 20 reels + la pieza ancha final.
+  piezas: [
+    reel('25-gestiona-tu-creditos', 'Gestiona tus créditos'),
+    reel('cancer-de-piel-v2', 'Cáncer de piel'),
+    reel('caserola-de-carne', 'Cacerola de carne'),
+    reel('compra-lo-que-necesitas', 'Compra lo que necesitas'),
+    reel('desde-donde-estes', 'Desde donde estés'),
+    reel('dia-de-control', 'Día de control'),
+    reel('dia-de-grabacion-vlog', 'Día de grabación · vlog'),
+    reel('domicilios-el-faro', 'Domicilios El Faro'),
+    reel('el-amigo-que-ve-numeros', 'El amigo que ve números'),
+    reel('exoses-sesderma-v5', 'Exosomas Sesderma'),
+    reel('la-inchetera-v2', 'La inchetera'),
+    reel('madurito-desmechado', 'Madurito desmechado'),
+    reel('maiz-hibrido-especial', 'Maíz híbrido especial'),
+    reel('nueva-camara-intraoral', 'Nueva cámara intraoral'),
+    reel('nutrisem-v1', 'Nutrisem'),
+    reel('pitch-dondi-record-v2', 'Pitch Dondi'),
+    reel('productos-dia-y-noche', 'Productos día y noche'),
+    reel('que-pedir-por-primera-vez', 'Qué pedir por primera vez'),
+    reel('te-duermes-sin-cepillarte', 'Te duermes sin cepillarte'),
+    reel('tu-amigo-el-ganadero', 'Tu amigo el ganadero'),
+    reel('vendes-tu-carro', 'Vendes tu carro'),
+    // Formato distinto al resto: va sola, cerrando la ventana.
+    {
+      type: 'video',
+      label: 'Maíz SV 1035',
+      src: '/piezas/conoce-mas/maiz-sv-1035.mp4',
+      poster: '/piezas/conoce-mas/maiz-sv-1035.jpg',
+      ancho: true,
+    },
+  ] as readonly PiezaSuelta[],
 } as const;
 
 export const contacto = {
   title: "¿Estás armando equipo?",
   subtitle: "Cuéntame qué marca es y qué necesitan. Respondo el mismo día.",
   ctaPrimary: "Escríbeme por WhatsApp",
-  ctaSecondary: "Descargar mi hoja de vida en PDF", // TODO: PDF pendiente — muestra aviso "pronto disponible"
+  // El botón del PDF se retiró hasta que exista el archivo: un botón que anuncia
+  // "pronto disponible" resta más de lo que suma. Al volver, va como enlace real.
 } as const;

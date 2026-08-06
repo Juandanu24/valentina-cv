@@ -25,17 +25,6 @@ import { site, contacto } from "../data/site";
         {contacto.ctaPrimary}
       </a>
 
-      <button
-        id="btn-pdf"
-        type="button"
-        class="rounded-pill border border-hueso/40 px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-hueso/85 transition-colors hover:border-hueso hover:text-hueso"
-      >
-        {contacto.ctaSecondary}
-      </button>
-      <p id="pdf-aviso" class="hidden font-mono text-xs text-hueso/60" role="status">
-        Pronto estará disponible esta función.
-      </p>
-
       <p class="mt-2 font-mono text-xs tracking-wide text-hueso/60">
         <a href={`mailto:${site.email}`} class="underline-offset-4 transition-colors hover:text-hueso hover:underline">
           {site.email}
@@ -52,11 +41,3 @@ import { site, contacto } from "../data/site";
     </div>
   </div>
 </section>
-
-<script>
-  const btn = document.getElementById("btn-pdf");
-  const aviso = document.getElementById("pdf-aviso");
-  btn?.addEventListener("click", () => {
-    aviso?.classList.remove("hidden");
-  });
-</script>

@@ -4,14 +4,16 @@ import { filosofia } from "../data/site";
 const [declaracion, cuerpo] = filosofia.body;
 
 // Metodologías nombradas en el texto — se destacan como fichas del tablero.
-const metodologias = ["Storytelling", "AIDA", "Embudos de conversión", "Modelos estratégicos"];
+const metodologias = ["Storytelling", "AIDA", "Embudos de conversión", "Hook-Retain-Reward"];
 ---
 
 <section id="filosofia" class="relative overflow-hidden bg-oliva text-hueso">
   <!-- Comillas tipográficas como textura de fondo -->
+  <!-- El glifo se salía del bloque por arriba y quedaba guillotinado.
+       Anclado a top-0 con su propia altura de línea, se ve completo. -->
   <span
     aria-hidden="true"
-    class="pointer-events-none absolute -right-6 -top-24 select-none font-name text-[22rem] leading-none text-hueso/10 sm:text-[30rem]"
+    class="pointer-events-none absolute right-2 top-0 select-none font-name text-[13rem] leading-[0.85] text-hueso/10 sm:right-8 sm:text-[20rem]"
     >”</span
   >
 
@@ -33,7 +35,7 @@ const metodologias = ["Storytelling", "AIDA", "Embudos de conversión", "Modelos
         </p>
         <p
           data-reveal
-          class="mt-6 font-display text-[clamp(1.4rem,3vw,2.2rem)] italic leading-tight text-hueso/55"
+          class="mt-6 font-cursiva text-[clamp(2.2rem,4.6vw,3.4rem)] font-medium leading-[1.15] text-hueso/70"
         >
           Creatividad con<br />estructura y propósito
         </p>
