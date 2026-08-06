@@ -82,14 +82,57 @@
   }
 }
 
-/* Contorno del retrato de "Sobre mí": ocho sombras planas sin desenfoque siguen
-   el canal de transparencia del PNG, así que la línea abraza la silueta real.
-   Es un trazo gráfico limpio, no un dibujo a mano. */
-.contorno-figura {
-  filter: drop-shadow(3px 0 0 var(--color-marino)) drop-shadow(-3px 0 0 var(--color-marino))
-    drop-shadow(0 3px 0 var(--color-marino)) drop-shadow(0 -3px 0 var(--color-marino))
-    drop-shadow(2px 2px 0 var(--color-marino)) drop-shadow(-2px 2px 0 var(--color-marino))
-    drop-shadow(2px -2px 0 var(--color-marino)) drop-shadow(-2px -2px 0 var(--color-marino));
+/*
+ * Entrada y salida de la ventana "Conoce más de mi trabajo".
+ * La curva es la de las hojas de iOS: arranca rápido y frena largo.
+ * `allow-discrete` + `@starting-style` permiten animar un <dialog> sin JS,
+ * incluida la salida. Donde no haya soporte, aparece de golpe: nada se rompe.
+ */
+#mas-trabajo,
+#mas-trabajo::backdrop {
+  transition:
+    opacity 280ms ease,
+    transform 280ms cubic-bezier(0.32, 0.72, 0, 1),
+    overlay 280ms allow-discrete,
+    display 280ms allow-discrete;
+}
+
+#mas-trabajo {
+  opacity: 0;
+  transform: scale(0.96) translateY(10px);
+}
+#mas-trabajo::backdrop {
+  opacity: 0;
+}
+
+#mas-trabajo[open] {
+  opacity: 1;
+  transform: none;
+}
+#mas-trabajo[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  #mas-trabajo[open] {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  #mas-trabajo[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* En celular la hoja sube desde abajo, como en iOS. */
+@media (max-width: 640px) {
+  #mas-trabajo {
+    transform: translateY(14%);
+  }
+  @starting-style {
+    #mas-trabajo[open] {
+      transform: translateY(14%);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -39,6 +39,12 @@ const { title, description } = Astro.props;
         const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
         lenis.on("scroll", ScrollTrigger.update);
         gsap.ticker.add((time) => lenis.raf(time * 1000));
+
+        // Lenis desplaza la página por JS, no con el scroll nativo: por eso
+        // `body { overflow: hidden }` no lo detiene. Cualquier capa que se abra
+        // encima avisa por evento para que suelte la rueda.
+        document.addEventListener("capa:abrir", () => lenis.stop());
+        document.addEventListener("capa:cerrar", () => lenis.start());
         gsap.ticker.lagSmoothing(0);
 
         // Reveal genérico: cualquier elemento con [data-reveal] entra al hacer scroll.

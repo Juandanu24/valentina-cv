@@ -71,16 +71,25 @@ import { masTrabajo } from "../data/site";
     <!-- Tres por fila. La pieza de formato distinto ocupa la fila entera al final. -->
     <ul class="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3">
       {
-        masTrabajo.piezas.map((pieza) => (
+        masTrabajo.piezas.map((pieza, i) => (
           <li
             class:list={[
-              "overflow-hidden rounded-suave border border-marino/15 bg-hueso shadow-[0_2px_10px_rgba(30,42,56,0.07)]",
+              "relative rounded-suave border border-marino/15 bg-hueso shadow-[0_2px_10px_rgba(30,42,56,0.07)]",
               pieza.ancho && "col-span-full",
             ]}
+            data-pieza
           >
+            {/* Toda la ficha es el disparador del desplegable: el clic no navega. */}
+            <button
+              type="button"
+              data-abrir-menu
+              aria-expanded="false"
+              aria-controls={`menu-pieza-${i}`}
+              class="block w-full cursor-pointer rounded-t-suave text-left"
+            >
             <div
               class:list={[
-                "overflow-hidden bg-marino",
+                "overflow-hidden rounded-t-suave bg-marino",
                 pieza.ancho ? "aspect-[64/15]" : "aspect-[9/16]",
               ]}
             >
@@ -104,10 +113,42 @@ import { masTrabajo } from "../data/site";
               )}
             </div>
             {/* Sin nombre de cliente: aquí el material va en conjunto, no por marca. */}
-            <div class="px-3 py-2.5 sm:px-4 sm:py-3">
+            <div class="flex items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3">
               <p class="font-mono text-[10px] uppercase leading-tight tracking-wide text-marino/55">
                 {pieza.label}
               </p>
+              <span
+                aria-hidden="true"
+                data-punta
+                class="shrink-0 text-marino/40 transition-transform duration-200"
+              >
+                ⌄
+              </span>
+            </div>
+            </button>
+
+            {/* Desplegable: aparece bajo la ficha, no navega de inmediato. */}
+            <div
+              id={`menu-pieza-${i}`}
+              data-menu
+              hidden
+              class="absolute inset-x-2 bottom-2 z-10 rounded-suave border border-marino/15 bg-hueso p-1.5 shadow-[0_10px_28px_rgba(30,42,56,0.22)]"
+            >
+              {pieza.instagram && pieza.instagram !== "#" ? (
+                <a
+                  href={pieza.instagram}
+                  target="_blank"
+                  rel="noopener"
+                  class="flex items-center justify-between gap-2 rounded-[0.5rem] px-3 py-2.5 font-mono text-[10px] uppercase tracking-wide text-marino transition-colors hover:bg-vino hover:text-hueso"
+                >
+                  Ver en Instagram
+                  <span aria-hidden="true">↗</span>
+                </a>
+              ) : (
+                <p class="px-3 py-2.5 font-mono text-[10px] uppercase leading-tight tracking-wide text-marino/40">
+                  Enlace pendiente
+                </p>
+              )}
             </div>
           </li>
         ))
@@ -132,6 +173,9 @@ import { masTrabajo } from "../data/site";
         if (!reduce) v.play().catch(() => {});
       });
       dialogo.showModal();
+      // Sin esto Lenis sigue moviendo la página de atrás: no usa scroll nativo,
+      // así que `overflow: hidden` en el body no lo frena.
+      document.dispatchEvent(new CustomEvent("capa:abrir"));
       document.body.style.overflow = "hidden";
     });
 
@@ -144,8 +188,59 @@ import { masTrabajo } from "../data/site";
     });
 
     dialogo.addEventListener("close", () => {
+      document.dispatchEvent(new CustomEvent("capa:cerrar"));
       document.body.style.overflow = "";
       dialogo.querySelectorAll<HTMLVideoElement>("video").forEach((v) => v.pause());
+      cerrarMenus();
+    });
+
+    // --- Desplegable por pieza --------------------------------------------
+    // El clic en una ficha no navega: abre un menú con el enlace al Instagram
+    // del cliente. Solo uno abierto a la vez.
+    const fichas = [...dialogo.querySelectorAll<HTMLElement>("[data-pieza]")];
+
+    function cerrarMenus(excepto?: HTMLElement) {
+      fichas.forEach((ficha) => {
+        if (ficha === excepto) return;
+        const menu = ficha.querySelector<HTMLElement>("[data-menu]");
+        const boton = ficha.querySelector<HTMLButtonElement>("[data-abrir-menu]");
+        const punta = ficha.querySelector<HTMLElement>("[data-punta]");
+        if (menu) menu.hidden = true;
+        boton?.setAttribute("aria-expanded", "false");
+        punta?.classList.remove("rotate-180");
+      });
+    }
+
+    fichas.forEach((ficha) => {
+      const boton = ficha.querySelector<HTMLButtonElement>("[data-abrir-menu]");
+      const menu = ficha.querySelector<HTMLElement>("[data-menu]");
+      const punta = ficha.querySelector<HTMLElement>("[data-punta]");
+      if (!boton || !menu) return;
+
+      boton.addEventListener("click", () => {
+        const abierto = boton.getAttribute("aria-expanded") === "true";
+        cerrarMenus(ficha);
+        menu.hidden = abierto;
+        boton.setAttribute("aria-expanded", String(!abierto));
+        punta?.classList.toggle("rotate-180", !abierto);
+      });
+    });
+
+    // Clic fuera de cualquier ficha: se recogen todos.
+    dialogo.addEventListener("click", (e) => {
+      if (!(e.target as HTMLElement).closest("[data-pieza]")) cerrarMenus();
+    });
+
+    // Esc recoge el menú antes de cerrar la ventana entera.
+    dialogo.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      const hayAbierto = fichas.some(
+        (f) => f.querySelector<HTMLElement>("[data-menu]")?.hidden === false
+      );
+      if (hayAbierto) {
+        e.preventDefault();
+        cerrarMenus();
+      }
     });
   }
 </script>

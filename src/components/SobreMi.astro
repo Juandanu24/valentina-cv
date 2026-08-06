@@ -2,73 +2,223 @@
 import { site, sobreMi } from "../data/site";
 
 const foto = "/valentina-sobre-mi.png";
-const [uno, dos, tres, cuatro] = sobreMi.bloques;
 
-// Énfasis solo por color y grosor: sin fondo, sin caja, sin subrayado.
-const vino = "font-semibold text-vino";
-const oliva = "font-semibold text-oliva";
-const parrafo = "text-center text-[1.05rem] leading-[1.85] text-tinta/85";
+// Un solo tratamiento de énfasis: vino, en negrilla, sin fondo. Nada de oliva aquí.
+const fuerte = "font-semibold text-vino";
+const parrafo = "text-center text-[1.05rem] leading-[1.8] text-tinta/85";
+
+// Seis bloques. Los dos breves (índices 4 y 5) van en esquinas opuestas —arriba a
+// la derecha y abajo a la izquierda— para que la asimetría se note. Ninguno queda
+// emparejado con el del lado contrario: ancho, altura y curva cambian en todos.
+// `curva` es el desvío del arco respecto a la recta: el signo invierte el sentido.
+// `orden` solo manda en celular: ahí las columnas se disuelven (display:contents)
+// y los seis bloques se leen en el orden en que están escritos en site.ts, no
+// primero los tres de un lado y luego los del otro.
+const izquierda = [
+  { i: 0, ancho: "lg:max-w-[16rem]", lado: "lg:self-start", curva: -0.18, orden: "order-2" },
+  { i: 2, ancho: "lg:max-w-[20rem]", lado: "lg:self-end", curva: 0.1, orden: "order-4" },
+  { i: 5, ancho: "lg:max-w-[13.5rem]", lado: "lg:self-start", curva: 0.22, orden: "order-7" },
+];
+const derecha = [
+  { i: 4, ancho: "lg:max-w-[13rem]", lado: "lg:self-end", curva: 0.2, orden: "order-6" },
+  { i: 1, ancho: "lg:max-w-[18.5rem]", lado: "lg:self-start", curva: -0.12, orden: "order-3" },
+  { i: 3, ancho: "lg:max-w-[15.5rem]", lado: "lg:self-end", curva: -0.24, orden: "order-5" },
+];
 ---
 
 <!--
-  El retrato manda: va en primer plano, grande y al centro, con su nombre completo
-  detrás en gran formato. Los cuatro textos quedan alrededor, centrados, y la
-  figura los pisa. Sin garabatos ni manuscritas: el contorno es un trazo gráfico
-  que sigue la silueta real del PNG recortado.
+  Composición asimétrica: seis ideas a alturas y anchos distintos, tres por lado,
+  con los dos textos breves en esquinas opuestas. El retrato manda en el centro.
+
+  Las flechas NO están dibujadas a mano: un único SVG superpuesto las calcula
+  midiendo las cajas reales del retrato y de cada bloque. Por eso el copy se puede
+  cambiar libremente sin que ninguna quede apuntando al vacío. Van encima del
+  rectángulo de la foto y su sentido es del retrato hacia el texto.
 -->
-<section id="sobre-mi" class="relative overflow-hidden pt-24 sm:pt-32">
+<section id="sobre-mi" class="relative pb-4 pt-24 sm:pt-32 lg:pb-0">
   <div class="mx-auto max-w-6xl px-5 sm:px-8">
     <h2 data-reveal class="font-display text-4xl leading-tight text-marino sm:text-5xl">
       {sobreMi.title}
     </h2>
 
-    <div class="relative mt-10 sm:mt-14">
-      <!-- Nombre completo detrás de todo -->
-      <span
+    <div class="relative mt-12" data-zona-flechas>
+      <!-- Capa de flechas: se rellena desde el script, solo en pantalla ancha. -->
+      <svg
         aria-hidden="true"
-        class="pointer-events-none absolute inset-x-0 top-10 select-none text-center font-name text-[2.6rem] font-semibold uppercase leading-[1.05] tracking-tight text-vino/10 sm:text-[4.4rem] lg:top-20 lg:text-[6.5rem]"
-      >
-        Valentina García Flórez
-      </span>
+        data-flechas
+        class="pointer-events-none absolute inset-0 z-20 hidden h-full w-full text-vino lg:block"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.4"
+        stroke-linecap="round"
+        stroke-linejoin="round"></svg>
 
-      <div
-        class="relative grid items-center gap-y-12 lg:grid-cols-[1fr_minmax(20rem,26rem)_1fr] lg:gap-x-6"
-      >
+      <div class="grid gap-y-10 lg:grid-cols-[0.9fr_1.7fr_0.9fr] lg:items-start lg:gap-x-8">
         <!-- Columna izquierda -->
-        <div class="order-2 flex flex-col gap-12 lg:order-none lg:gap-28 lg:pb-24">
-          <p data-reveal class={parrafo}>
-            {uno.map((f) => (f.fuerte ? <strong class={vino}>{f.t}</strong> : f.t))}
-          </p>
-          <p data-reveal class={parrafo}>
-            {dos.map((f) => (f.fuerte ? <strong class={oliva}>{f.t}</strong> : f.t))}
-          </p>
+        <div class="contents lg:flex lg:flex-col lg:gap-24 lg:pt-4">
+          {
+            izquierda.map(({ i, ancho, lado, curva, orden }) => (
+              <div
+                class:list={["relative", orden, "lg:order-none", ancho, lado]}
+                data-bloque
+                data-lado="izq"
+                data-curva={curva}
+              >
+                <p data-reveal class={parrafo}>
+                  {sobreMi.bloques[i].map((f) =>
+                    f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
+                  )}
+                </p>
+              </div>
+            ))
+          }
         </div>
 
-        <!-- Retrato en primer plano: se sale de su columna y pisa los textos -->
-        <figure
-          class="relative z-10 order-1 mx-auto w-full max-w-[19rem] sm:max-w-sm lg:order-none lg:-mx-12 lg:max-w-none"
-        >
+        <!-- Retrato: sin fondo, sin borde, sin recorte. Se ve entero. -->
+        <figure class="order-1 w-full lg:order-none lg:self-end" data-foto>
           <img
             src={foto}
             alt={`Retrato de ${site.name}`}
-            width="640"
-            height="915"
+            width="834"
+            height="900"
             loading="lazy"
-            class="contorno-figura mx-auto block w-full object-contain"
+            class="block w-full"
             onerror="this.style.display='none'"
           />
         </figure>
 
-        <!-- Columna derecha -->
-        <div class="order-3 flex flex-col gap-12 lg:order-none lg:gap-28 lg:pt-24">
-          <p data-reveal class={parrafo}>
-            {tres.map((f) => (f.fuerte ? <strong class={oliva}>{f.t}</strong> : f.t))}
-          </p>
-          <p data-reveal class={parrafo}>
-            {cuatro.map((f) => (f.fuerte ? <strong class={vino}>{f.t}</strong> : f.t))}
-          </p>
+        <!-- Columna derecha: arranca mucho más abajo que la izquierda -->
+        <div class="contents lg:flex lg:flex-col lg:gap-20 lg:pt-32">
+          {
+            derecha.map(({ i, ancho, lado, curva, orden }) => (
+              <div
+                class:list={["relative", orden, "lg:order-none", ancho, lado]}
+                data-bloque
+                data-lado="der"
+                data-curva={curva}
+              >
+                <p data-reveal class={parrafo}>
+                  {sobreMi.bloques[i].map((f) =>
+                    f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
+                  )}
+                </p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  const NS = "http://www.w3.org/2000/svg";
+  const ANCHO_MINIMO = 1024; // debajo de lg no hay flechas: el texto va bajo la foto
+  const HOLGURA = 14; // aire entre la punta y el texto
+
+  const zona = document.querySelector<HTMLElement>("[data-zona-flechas]");
+  const svg = zona?.querySelector<SVGSVGElement>("[data-flechas]");
+  const figura = zona?.querySelector<HTMLElement>("[data-foto]");
+  const bloques = zona ? [...zona.querySelectorAll<HTMLElement>("[data-bloque]")] : [];
+
+  if (zona && svg && figura && bloques.length) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let animado = false;
+
+    /** Bezier cúbico entre dos puntos, arqueado por la perpendicular a la recta. */
+    const curvaEntre = (
+      ox: number, oy: number, dx: number, dy: number, arco: number
+    ) => {
+      const vx = dx - ox;
+      const vy = dy - oy;
+      const largo = Math.hypot(vx, vy) || 1;
+      const nx = -vy / largo;
+      const ny = vx / largo;
+      const desvio = arco * largo;
+      const c1x = ox + vx * 0.3 + nx * desvio;
+      const c1y = oy + vy * 0.3 + ny * desvio;
+      const c2x = ox + vx * 0.7 + nx * desvio;
+      const c2y = oy + vy * 0.7 + ny * desvio;
+      return { d: `M ${ox} ${oy} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${dx} ${dy}`, c2x, c2y };
+    };
+
+    /** Punta: dos trazos cortos siguiendo la tangente del final de la curva. */
+    const punta = (dx: number, dy: number, c2x: number, c2y: number) => {
+      const ang = Math.atan2(dy - c2y, dx - c2x);
+      const L = 10;
+      const ab = 0.44;
+      const x1 = dx - L * Math.cos(ang - ab);
+      const y1 = dy - L * Math.sin(ang - ab);
+      const x2 = dx - L * Math.cos(ang + ab);
+      const y2 = dy - L * Math.sin(ang + ab);
+      return `M ${x1} ${y1} L ${dx} ${dy} L ${x2} ${y2}`;
+    };
+
+    const dibujar = () => {
+      svg.replaceChildren();
+      if (window.innerWidth < ANCHO_MINIMO) return;
+
+      const z = zona.getBoundingClientRect();
+      const f = figura.getBoundingClientRect();
+      svg.setAttribute("viewBox", `0 0 ${z.width} ${z.height}`);
+
+      const trazos: SVGPathElement[] = [];
+
+      bloques.forEach((b, idx) => {
+        const r = b.getBoundingClientRect();
+        const izq = b.dataset.lado === "izq";
+        const arco = Number(b.dataset.curva ?? 0.15);
+
+        // Origen repartido por el borde del retrato, no todos del mismo punto:
+        // seis flechas saliendo de un solo sitio se leen como estallido.
+        const t = 0.28 + (idx % 3) * 0.22;
+        const ox = (izq ? f.left : f.right) - z.left;
+        const oy = f.top - z.top + f.height * t;
+
+        // Destino: el borde interior del bloque, a media altura.
+        const dx = (izq ? r.right + HOLGURA : r.left - HOLGURA) - z.left;
+        const dy = r.top - z.top + r.height / 2;
+
+        const { d, c2x, c2y } = curvaEntre(ox, oy, dx, dy, izq ? arco : -arco);
+
+        const linea = document.createElementNS(NS, "path");
+        linea.setAttribute("d", d);
+        const cabeza = document.createElementNS(NS, "path");
+        cabeza.setAttribute("d", punta(dx, dy, c2x, c2y));
+
+        svg.append(linea, cabeza);
+        trazos.push(linea, cabeza);
+      });
+
+      if (reduce || animado || !trazos.length) return;
+      animado = true;
+
+      // Entrada: se dibuja el trazo. Escalonada, de la primera a la última.
+      gsap.registerPlugin(ScrollTrigger);
+      trazos.forEach((p) => {
+        const largo = p.getTotalLength();
+        gsap.set(p, { strokeDasharray: largo, strokeDashoffset: largo });
+      });
+      gsap.to(trazos, {
+        strokeDashoffset: 0,
+        duration: 0.7,
+        ease: "power2.out",
+        stagger: 0.08,
+        scrollTrigger: { trigger: zona, start: "top 70%" },
+      });
+    };
+
+    // Medir con la tipografía definitiva: con la de reserva las cajas cambian.
+    if (document.fonts?.ready) document.fonts.ready.then(dibujar);
+    else window.addEventListener("load", dibujar);
+
+    let temporizador: number | undefined;
+    window.addEventListener("resize", () => {
+      window.clearTimeout(temporizador);
+      temporizador = window.setTimeout(dibujar, 150);
+    });
+  }
+</script>

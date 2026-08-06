@@ -35,40 +35,37 @@ export const hero = {
   ctaSecondary: "Sobre mí",
 } as const;
 
-// Composición alrededor del retrato: cuatro ideas sueltas, sin título ni número.
+// Composición alrededor del retrato: seis ideas sueltas, sin título ni número.
 // Es la sección más personal de la página, pero sigue siendo una hoja de vida:
 // el carácter viene del contenido y la composición, nunca de adornos.
 export const sobreMi = {
   title: "Sobre mí",
-  // Cada bloque se parte en tramos para poder resaltar las palabras que cargan
-  // la idea. El énfasis es tipográfico y de color: nunca adornos.
+  // Cada bloque se parte en tramos para poder resaltar UNA sola frase corta.
+  // El énfasis es tipográfico y de color (vino), nunca fondo ni adorno.
+  // Los dos bloques breves van sin resaltado: son el respiro de la composición.
   bloques: [
     [
       { t: "Graduada de comunicación social y periodismo, pero " },
       { t: "apasionada por el marketing", fuerte: true },
-      { t: " desde las prácticas hasta hoy. Mi camino siempre ha estado en lo digital, en la tecnología y en encontrar " },
+      { t: " desde las prácticas hasta hoy." },
+    ],
+    [
+      { t: "Mi camino siempre ha estado en lo digital, en la tecnología y en encontrar " },
       { t: "formas nuevas de contar", fuerte: true },
       { t: " lo que una marca quiere decir." },
     ],
     [
-      { t: "Montar " },
-      { t: "iClic", fuerte: true },
-      { t: " me hizo ver el mundo de las agencias desde adentro. Fui " },
+      { t: "Tener iClic me hizo ver el mundo de las agencias desde adentro. Fui " },
       { t: "la que graba, la que edita, la que publica y la que dirige", fuerte: true },
-      { t: ". Ese recorrido me enseñó todo lo que pasa entre una idea y un resultado." },
+      { t: "." },
     ],
     [
-      { t: "Trabajo con " },
-      { t: "estructura", fuerte: true },
-      { t: ": planifico, organizo y anoto todo. Soy detallista hasta el final; el tono, el encuadre, el lenguaje; porque ahí, " },
-      { t: "en lo que casi nadie nota", fuerte: true },
-      { t: ", es donde una marca se ve bien hecha." },
+      { t: "Trabajo con estructura: planifico, organizo y anoto todo. Soy detallista hasta el final; " },
+      { t: "el tono, el encuadre, el lenguaje", fuerte: true },
+      { t: "." },
     ],
-    [
-      { t: "Me gusta el trabajo en equipo y los rodajes largos. Si toca maquillar, maquillo; si toca ser la modelo, lo soy. " },
-      { t: "No me encasillo en un cargo", fuerte: true },
-      { t: " cuando hay algo que sacar adelante." },
-    ],
+    [{ t: "Me gusta el trabajo en equipo, liderar y aportar ideas." }],
+    [{ t: "No me encasillo en un cargo cuando hay algo que sacar adelante." }],
   ] as readonly (readonly { t: string; fuerte?: boolean }[])[],
 } as const;
 
@@ -452,14 +449,19 @@ export const educacion = [
 // ("conoce NUESTRO trabajo", /socialmediamanager) volvían al lenguaje de agencia.
 // Ahora abre una ventana dentro de la misma página: nadie sale del sitio.
 // `ancho` marca la pieza que no es formato reel: ocupa la fila entera al final.
-export type PiezaSuelta = { label: string; ancho?: boolean } & (
-  | { type: "video"; src: string; poster: string }
-  | { type: "image"; src: string }
-);
+// `instagram`: enlace a la cuenta del cliente. "#" = pendiente de Valentina;
+// mientras siga así, el desplegable lo muestra deshabilitado y NO se publica un
+// enlace muerto. Al reemplazarlo por una URL real se activa solo.
+export type PiezaSuelta = {
+  label: string;
+  ancho?: boolean;
+  instagram?: string;
+} & ({ type: "video"; src: string; poster: string } | { type: "image"; src: string });
 
-const reel = (slug: string, label: string): PiezaSuelta => ({
+const reel = (slug: string, label: string, instagram = "#"): PiezaSuelta => ({
   type: "video",
   label,
+  instagram,
   src: `/piezas/conoce-mas/${slug}.mp4`,
   poster: `/piezas/conoce-mas/${slug}.jpg`,
 });
@@ -498,6 +500,7 @@ export const masTrabajo = {
       src: '/piezas/conoce-mas/maiz-sv-1035.mp4',
       poster: '/piezas/conoce-mas/maiz-sv-1035.jpg',
       ancho: true,
+      instagram: '#',
     },
   ] as readonly PiezaSuelta[],
 } as const;
