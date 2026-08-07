@@ -5,47 +5,121 @@ import { site, hero } from "../data/site";
 const foto = "/valentina.png";
 ---
 
-<header class="mx-auto max-w-6xl px-5 pb-16 pt-28 sm:px-8 sm:pt-32">
-  <div class="grid items-end gap-8 md:grid-cols-[1.05fr_0.95fr] md:gap-14">
-    <!-- Columna de texto -->
-    <div class="pb-4">
-      <p class="hero-el font-mono text-[11px] uppercase tracking-[0.2em] text-oliva">
-        {site.role} · {site.location}
+<!--
+  Orden en celular (una columna): nombre → cargo → foto → abreboca → botones.
+  En pantalla ancha vuelve a dos columnas: identidad y abreboca a la izquierda,
+  retrato a la derecha ocupando las dos filas.
+-->
+<header class="mx-auto max-w-6xl px-5 pb-16 pt-24 sm:px-8 sm:pt-32">
+  <div
+    class="grid gap-5 md:grid-cols-[1.05fr_0.95fr] md:items-end md:gap-x-14 md:gap-y-6"
+  >
+    <!-- Identidad -->
+    <div class="md:col-start-1 md:row-start-1">
+      <!-- Saludo en cursiva -->
+      <p
+        class="hero-el font-cursiva text-[clamp(2.3rem,6.4vw,3.6rem)] font-medium leading-none text-vino"
+      >
+        {hero.saludo}
       </p>
 
       <h1
-        class="hero-name mt-4 font-name text-[clamp(2.4rem,6.4vw,4.6rem)] font-semibold uppercase leading-[1.04] tracking-tight text-marino"
+        class="hero-name mt-1 font-name text-[clamp(2.7rem,7vw,5.2rem)] font-semibold uppercase leading-[1.02] tracking-tight text-marino"
       >
-        ¡Hola,<br />soy <span class="text-vino">Valentina!</span>
+        {hero.nombre}
       </h1>
 
       <p
-        class="hero-el mt-6 max-w-lg font-display text-[clamp(1.25rem,2.4vw,1.8rem)] leading-snug text-marino"
+        class="hero-el mt-4 font-mono text-xs font-bold uppercase tracking-[0.2em] text-oliva sm:text-sm"
       >
-        Las marcas no necesitan más contenido.
-        <strong class="font-bold text-vino">Necesitan mejores ideas.</strong>
+        {site.role}
       </p>
-
-      <div class="hero-el mt-5 max-w-lg space-y-3 leading-relaxed text-tinta/80">
-        {hero.intro.map((p) => <p>{p}</p>)}
-      </div>
-
-      <a
-        href="#trabajo"
-        class="hero-el mt-7 inline-block rounded-pill bg-vino px-7 py-3.5 font-mono text-xs uppercase tracking-widest text-hueso transition-colors hover:bg-quemado"
+      <!-- Línea de alcance: abre el abanico de vacantes sin declarar un nivel.
+           Cada término va entero: nada de "PRODUCCIÓN" arriba y "AUDIOVISUAL" abajo. -->
+      <p
+        class="hero-el mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-marino/55 sm:text-[11px]"
       >
-        {hero.cta} ↓
-      </a>
+        {
+          site.alcance.map((termino, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true" class="text-marino/30">·</span>}
+              <span class="whitespace-nowrap">{termino}</span>
+            </>
+          ))
+        }
+      </p>
     </div>
 
-    <!-- Retrato recortado sobre forma de color -->
-    <figure class="hero-foto relative mx-auto w-full max-w-sm md:max-w-none">
+    <!-- Retrato con decoración -->
+    <figure
+      class="hero-foto relative mx-auto mb-10 w-full max-w-[17rem] sm:max-w-sm md:col-start-2 md:row-span-2 md:row-start-1 md:mb-0 md:max-w-none"
+    >
       <!-- Arco de fondo -->
       <div
         aria-hidden="true"
         class="absolute inset-x-4 bottom-0 top-8 rounded-t-full bg-oliva/20"
       >
       </div>
+
+      <!-- Trama de puntos, arriba a la izquierda -->
+      <svg
+        aria-hidden="true"
+        class="absolute -left-2 top-10 h-16 w-16 text-oliva/45 sm:h-24 sm:w-24"
+        viewBox="0 0 100 100"
+      >
+        <defs>
+          <pattern id="puntos" width="12.5" height="12.5" patternUnits="userSpaceOnUse">
+            <circle cx="2.5" cy="2.5" r="2" fill="currentColor"></circle>
+          </pattern>
+        </defs>
+        <rect width="100" height="100" fill="url(#puntos)"></rect>
+      </svg>
+
+      <!-- Destellos -->
+      <svg
+        aria-hidden="true"
+        class="absolute right-2 top-2 h-7 w-7 text-vino sm:h-11 sm:w-11"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 0c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12C8 11 11 8 12 0Z"
+        ></path>
+      </svg>
+      <svg
+        aria-hidden="true"
+        class="absolute -left-1 bottom-24 h-5 w-5 text-vino/70 sm:h-8 sm:w-8"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 0c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12C8 11 11 8 12 0Z"
+        ></path>
+      </svg>
+
+      <!-- Sello circular: gira despacio. Se detiene con prefers-reduced-motion. -->
+      <div
+        aria-hidden="true"
+        class="absolute -right-1 top-16 hidden h-24 w-24 items-center justify-center rounded-full bg-hueso shadow-[0_4px_14px_rgba(30,42,56,0.12)] sm:flex md:top-20 md:h-28 md:w-28"
+      >
+        <svg class="h-full w-full animate-girar" viewBox="0 0 100 100">
+          <defs>
+            <path
+              id="aro"
+              d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"
+              fill="none"></path>
+          </defs>
+          <text
+            class="fill-marino/70 font-mono uppercase"
+            style="font-size:9px;letter-spacing:0.18em"
+          >
+            <textPath href="#aro"> Estrategia · Marca · Contenido · </textPath>
+          </text>
+        </svg>
+        <svg class="absolute h-6 w-6 text-oliva" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12C8 11 11 8 12 0Z"
+          ></path>
+        </svg>
+      </div>
+
       <img
         src={foto}
         alt={`Retrato de ${site.name}`}
@@ -54,19 +128,39 @@ const foto = "/valentina.png";
         class="relative mx-auto block w-full max-w-[22rem] object-contain md:max-w-none"
         onerror="this.style.display='none'"
       />
+
+      <!-- Frase gancho, en etiqueta sobre el retrato -->
+      <figcaption
+        class="absolute -bottom-6 left-0 max-w-[11.5rem] rounded-suave bg-marino px-4 py-3 font-display text-sm leading-snug text-hueso shadow-[0_10px_28px_rgba(30,42,56,0.22)] sm:max-w-[17rem] sm:px-5 sm:py-4 sm:text-lg"
+      >
+        Las marcas no necesitan más contenido.{" "}
+        <strong class="font-bold text-hueso">Necesitan mejores ideas.</strong>
+      </figcaption>
     </figure>
+
+    <!-- Abreboca y botones -->
+    <div class="md:col-start-1 md:row-start-2">
+      <p class="hero-el max-w-lg text-lg leading-relaxed text-tinta/80">
+        {hero.intro}
+      </p>
+
+      <!-- Dos puertas: el trabajo y ella. -->
+      <div class="hero-el mt-7 flex flex-wrap items-center gap-3">
+        <a
+          href="#trabajo"
+          class="inline-flex items-center gap-2 rounded-pill bg-vino px-7 py-3.5 font-mono text-xs uppercase tracking-widest text-hueso transition-colors hover:bg-quemado"
+        >
+          {hero.ctaPrimary}
+          <span aria-hidden="true">↓</span>
+        </a>
+        <a
+          href="#sobre-mi"
+          class="inline-flex items-center gap-2 rounded-pill border border-marino/25 px-7 py-3.5 font-mono text-xs uppercase tracking-widest text-marino transition-colors hover:border-marino hover:bg-marino hover:text-hueso"
+        >
+          {hero.ctaSecondary}
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
   </div>
 </header>
-
-<script>
-  import { gsap } from "gsap";
-
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!reduce) {
-    gsap
-      .timeline({ defaults: { ease: "power3.out" } })
-      .from(".hero-name", { y: 24, opacity: 0, duration: 0.85 })
-      .from(".hero-foto", { opacity: 0, y: 20, duration: 0.9 }, "-=0.6")
-      .from(".hero-el", { y: 14, opacity: 0, duration: 0.6, stagger: 0.12 }, "-=0.7");
-  }
-</script>
