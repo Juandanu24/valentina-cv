@@ -65,9 +65,14 @@ import { masTrabajo } from "../data/site";
   </div>
 
   <!-- min-h-0 permite que este bloque se encoja y tenga su propio desplazamiento.
-       overscroll-contain evita que, al llegar al final, el gesto se contagie a
-       la página de atrás. -->
-  <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-6 sm:px-8 sm:py-8">
+       data-lenis-prevent es imprescindible: Lenis intercepta la rueda y llama a
+       preventDefault, así que sin este atributo el contenedor no se desplaza
+       aunque tenga overflow-y:auto. Detener Lenis no basta; hay que decirle que
+       ignore los gestos que ocurren aquí dentro. -->
+  <div
+    data-lenis-prevent
+    class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-6 sm:px-8 sm:py-8"
+  >
     <!-- Tres por fila. La pieza de formato distinto ocupa la fila entera al final. -->
     <ul class="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3">
       {
@@ -85,7 +90,7 @@ import { masTrabajo } from "../data/site";
               data-abrir-menu
               aria-expanded="false"
               aria-controls={`menu-pieza-${i}`}
-              class="block w-full cursor-pointer rounded-t-suave text-left"
+              class="block h-full w-full cursor-pointer rounded-suave text-left transition-colors hover:bg-marino/5"
             >
             <div
               class:list={[
@@ -132,7 +137,7 @@ import { masTrabajo } from "../data/site";
               id={`menu-pieza-${i}`}
               data-menu
               hidden
-              class="absolute inset-x-2 bottom-2 z-10 rounded-suave border border-marino/15 bg-hueso p-1.5 shadow-[0_10px_28px_rgba(30,42,56,0.22)]"
+              class="absolute left-1/2 top-1/2 z-10 w-[min(88%,13rem)] -translate-x-1/2 -translate-y-1/2 rounded-suave border border-marino/15 bg-hueso p-1.5 shadow-[0_10px_28px_rgba(30,42,56,0.28)]"
             >
               {pieza.instagram && pieza.instagram !== "#" ? (
                 <a

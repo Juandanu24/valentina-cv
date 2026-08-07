@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 # material bruto de Vale (se optimiza y lo final va a public/)
 material-vale/
+.capturas/
