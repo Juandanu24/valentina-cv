@@ -6,6 +6,9 @@
 @import "@fontsource-variable/fraunces";
 @import "@fontsource-variable/dm-sans"; /* cuerpo: geométrica suave */
 @import "@fontsource-variable/jetbrains-mono"; /* datos y etiquetas */
+/* Cursiva caligráfica: solo el saludo del inicio y el título de Mi filosofía.
+   Dos apariciones y nada más; repartida por la página deja de sentirse especial. */
+@import "@fontsource/petit-formal-script";
 
 /*
  * Sistema de diseño v2 — "Tablero de trabajo" (especificación de Valentina, jul 2026).
@@ -28,17 +31,27 @@
   --font-name: "Fraunces Variable", "Fraunces", Georgia, serif;
   --font-body: "DM Sans Variable", "DM Sans", sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  /* Cursiva del saludo y de Mi filosofía. */
+  --font-cursiva: "Petit Formal Script", cursive;
 
   /* Radios: el estilo pide esquinas redondeadas en todo. */
   --radius-suave: 0.75rem;
   --radius-pill: 999px;
 
   --animate-marquee: marquee 32s linear infinite;
+  /* Sello circular del retrato: gira despacio, casi imperceptible. */
+  --animate-girar: girar 24s linear infinite;
 }
 
 @keyframes marquee {
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -62,10 +75,74 @@
   .font-name {
     font-variation-settings: "SOFT" 40, "WONK" 1;
   }
+  /* Cuando el desplazamiento suave no corre (reduced-motion, o JS aún cargando)
+     el salto lo hace el navegador: sin esto el titular queda bajo la barra fija. */
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+  /* Tailwind v4 dejó de poner cursor:pointer en los botones. Aquí todos los que
+     no están deshabilitados son accionables, así que se restituye. */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
   /* Piso de calidad: foco de teclado siempre visible. */
   :focus-visible {
     outline: 2px solid var(--color-vino);
     outline-offset: 3px;
+  }
+}
+
+/*
+ * Entrada y salida de la ventana "Conoce más de mi trabajo".
+ * La curva es la de las hojas de iOS: arranca rápido y frena largo.
+ * `allow-discrete` + `@starting-style` permiten animar un <dialog> sin JS,
+ * incluida la salida. Donde no haya soporte, aparece de golpe: nada se rompe.
+ */
+#mas-trabajo,
+#mas-trabajo::backdrop {
+  transition:
+    opacity 280ms ease,
+    transform 280ms cubic-bezier(0.32, 0.72, 0, 1),
+    overlay 280ms allow-discrete,
+    display 280ms allow-discrete;
+}
+
+#mas-trabajo {
+  opacity: 0;
+  transform: scale(0.96) translateY(10px);
+}
+#mas-trabajo::backdrop {
+  opacity: 0;
+}
+
+#mas-trabajo[open] {
+  opacity: 1;
+  transform: none;
+}
+#mas-trabajo[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  #mas-trabajo[open] {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  #mas-trabajo[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* En celular la hoja sube desde abajo, como en iOS. */
+@media (max-width: 640px) {
+  #mas-trabajo {
+    transform: translateY(14%);
+  }
+  @starting-style {
+    #mas-trabajo[open] {
+      transform: translateY(14%);
+    }
   }
 }
 

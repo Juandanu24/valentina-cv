@@ -1,0 +1,44 @@
+---
+import { herramientas } from "../data/site";
+---
+
+<!--
+  Cinta de herramientas, hermana del banner de aptitudes. SOLO EN CELULAR:
+  reemplaza a la rejilla de diez fichas, que ahí quedaba apretada y fea. En
+  pantalla ancha la rejilla se ve bien y se conserva (ver Capacidades.astro).
+-->
+<section
+  aria-label="Herramientas que manejo"
+  class="overflow-hidden bg-hueso pb-16 pt-2 sm:hidden"
+>
+  <!-- Nombres para lectores de pantalla y buscadores; en pantalla van los iconos. -->
+  <p class="sr-only">
+    Herramientas: {herramientas.map((h) => h.name).join(", ")}.
+  </p>
+
+  <div class="flex w-max animate-marquee">
+    {
+      [0, 1].map(() => (
+        <div class="flex shrink-0 items-center gap-5 px-2.5 sm:gap-7" aria-hidden={true}>
+          {herramientas.map((h) => (
+            <span
+              title={h.name}
+              style={`background:${h.bg};color:${h.fg}`}
+              class:list={[
+                "grid h-14 w-14 shrink-0 place-items-center rounded-[1.1rem] font-display text-lg leading-none shadow-[0_3px_10px_rgba(30,42,56,0.16)] sm:h-16 sm:w-16 sm:text-xl",
+                // Las fichas claras se perderían contra el hueso sin un borde.
+                h.bg === "#FFFFFF" && "ring-1 ring-marino/15",
+              ]}
+            >
+              {h.logo ? (
+                <img src={h.logo} alt="" width="32" height="32" loading="lazy" class="h-8 w-8 object-contain" />
+              ) : (
+                h.sigla
+              )}
+            </span>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</section>

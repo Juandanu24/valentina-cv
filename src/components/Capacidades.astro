@@ -1,38 +1,36 @@
 ---
 import { capacidades, herramientas } from "../data/site";
-
-// Colores de la paleta rotando, para que las fichas tengan vida sin salirse de la identidad.
-const fichas = [
-  "bg-vino text-hueso",
-  "bg-oliva text-hueso",
-  "bg-marino text-hueso",
-];
 ---
 
-<section id="experiencia" class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+<!-- Poco aire arriba: viene pegada al bloque verde de "Conoce más de mi trabajo". -->
+<!-- En celular casi no lleva aire abajo: la cinta de herramientas va enseguida. -->
+<section id="capacidades" class="mx-auto max-w-6xl px-5 pb-8 pt-14 sm:px-8 sm:pb-32 sm:pt-20">
   <h2 data-reveal class="font-display text-4xl leading-tight text-marino sm:text-5xl">
-    Experiencia
+    Capacidades
   </h2>
 
-  <!-- Cuatro áreas -->
-  <div class="mt-12 grid gap-5 sm:grid-cols-2">
+  <!-- Cuatro áreas. En celular van en azul de entrada: el hover no existe ahí y
+       la sección se perdía contra el fondo hueso. -->
+  <div class="mt-10 grid gap-5 sm:grid-cols-2">
     {
       capacidades.map((c, i) => (
         <div
           data-reveal
-          class="group rounded-suave border border-marino/15 bg-hueso p-7 shadow-[0_2px_10px_rgba(30,42,56,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:bg-marino hover:shadow-[0_14px_30px_rgba(30,42,56,0.18)] sm:p-8"
+          class="group rounded-suave border border-transparent bg-marino p-6 shadow-[0_6px_18px_rgba(30,42,56,0.16)] transition-all duration-300 sm:border-marino/15 sm:bg-hueso sm:p-8 sm:shadow-[0_2px_10px_rgba(30,42,56,0.06)] sm:hover:-translate-y-1 sm:hover:border-transparent sm:hover:bg-marino sm:hover:shadow-[0_14px_30px_rgba(30,42,56,0.18)]"
         >
-          <span class="font-display text-4xl leading-none text-oliva/40 transition-colors duration-300 group-hover:text-hueso/45">
-            {String(i + 1).padStart(2, "0")}
-          </span>
+          <div class="flex items-baseline gap-3">
+            <span class="font-display text-2xl leading-none text-hueso/45 transition-colors duration-300 sm:text-3xl sm:text-oliva/40 sm:group-hover:text-hueso/45">
+              {String(i + 1).padStart(2, "0")}
+            </span>
 
-          <h3 class="mt-3 font-display text-2xl leading-tight text-marino transition-colors duration-300 group-hover:text-hueso sm:text-3xl">
-            {c.title}
-          </h3>
+            <h3 class="font-display text-2xl leading-tight text-hueso transition-colors duration-300 sm:text-3xl sm:text-marino sm:group-hover:text-hueso">
+              {c.title}
+            </h3>
+          </div>
 
           <ul class="mt-4 flex flex-wrap gap-2">
             {c.items.map((item) => (
-              <li class="rounded-pill bg-oliva/10 px-3 py-1 text-sm text-tinta/80 transition-colors duration-300 group-hover:bg-hueso/15 group-hover:text-hueso/90">
+              <li class="rounded-pill bg-hueso/15 px-3 py-1 text-sm text-hueso/90 transition-colors duration-300 sm:bg-oliva/10 sm:text-tinta/80 sm:group-hover:bg-hueso/15 sm:group-hover:text-hueso/90">
                 {item}
               </li>
             ))}
@@ -42,27 +40,31 @@ const fichas = [
     }
   </div>
 
-  <!-- Herramientas: fichas tipo icono -->
+  <!-- Herramientas en rejilla: solo en pantalla ancha. En celular las reemplaza
+       la cinta deslizante (BannerHerramientas), donde diez fichas sí caben. -->
   <div
     data-reveal
-    class="mt-12 rounded-suave border border-marino/15 bg-hueso px-6 py-9 shadow-[0_2px_10px_rgba(30,42,56,0.06)] sm:px-9 sm:py-10"
+    class="mt-12 hidden rounded-suave border border-marino/15 bg-hueso px-6 py-9 shadow-[0_2px_10px_rgba(30,42,56,0.06)] sm:block sm:px-9 sm:py-10"
   >
-    <h3 class="font-display text-2xl leading-tight text-marino sm:text-3xl">
-      Herramientas
-    </h3>
+    <h3 class="font-display text-2xl leading-tight text-marino sm:text-3xl">Herramientas</h3>
 
-    <ul class="mt-8 grid grid-cols-3 gap-x-4 gap-y-7 sm:grid-cols-5 lg:grid-cols-10">
+    <ul class="mt-8 grid grid-cols-5 gap-x-4 gap-y-7 lg:grid-cols-10">
       {
-        herramientas.map((h, i) => (
+        herramientas.map((h) => (
           <li class="group flex flex-col items-center gap-2.5 text-center">
             <span
+              style={`background:${h.bg};color:${h.fg}`}
               class:list={[
                 "grid h-14 w-14 place-items-center rounded-[1.1rem] font-display text-lg leading-none shadow-[0_3px_10px_rgba(30,42,56,0.14)] transition-transform duration-300 group-hover:-translate-y-1.5 group-hover:rotate-[-5deg]",
-                fichas[i % fichas.length],
+                h.bg === "#FFFFFF" && "ring-1 ring-marino/15",
               ]}
               aria-hidden="true"
             >
-              {h.sigla}
+              {h.logo ? (
+                <img src={h.logo} alt="" width="32" height="32" loading="lazy" class="h-8 w-8 object-contain" />
+              ) : (
+                h.sigla
+              )}
             </span>
             <span class="font-mono text-[10px] uppercase leading-tight tracking-wide text-marino/65 transition-colors duration-300 group-hover:text-vino">
               {h.name}
