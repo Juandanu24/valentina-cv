@@ -468,9 +468,11 @@ const reel = (slug: string, label: string, instagram = "#"): PiezaSuelta => ({
 });
 
 export const masTrabajo = {
-  title: "Conoce más de mi trabajo",
-  body: "Este es solo un recorte. Tengo más campañas, videos y piezas de otros clientes esperándote.",
-  cta: "Conoce más de mi trabajo",
+  title: "¡Conoce más de mi trabajo!",
+  body: "Campañas, video y contenido para clientes de otros sectores.",
+  cta: "Portafolio completo",
+  // El titular de dentro de la ventana es distinto al del banner que la abre.
+  tituloVentana: "Más trabajo de 5 sectores diferentes.",
   // Material de la carpeta "ventana conoce más": 20 reels + la pieza ancha final.
   piezas: [
     reel('25-gestiona-tu-creditos', 'Gestiona tus créditos', 'https://www.instagram.com/reel/DFYzrUlSLFh/'),
@@ -507,9 +509,10 @@ export const masTrabajo = {
 } as const;
 
 export const contacto = {
-  title: "¿Estás armando equipo?",
-  subtitle: "Cuéntame qué marca es y qué necesitan. Respondo el mismo día.",
-  ctaPrimary: "Escríbeme por WhatsApp",
+  title: "¿Buscas a alguien para tu equipo de marketing?",
+  subtitle: "Contáctame y agendemos una entrevista",
+  ctaPrimary: "Escribir por WhatsApp",
+  telefono: "321 862 2670",
   // El botón del PDF se retiró hasta que exista el archivo: un botón que anuncia
   // "pronto disponible" resta más de lo que suma. Al volver, va como enlace real.
 } as const;

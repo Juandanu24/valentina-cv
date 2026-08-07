@@ -8,7 +8,7 @@
 @import "@fontsource-variable/jetbrains-mono"; /* datos y etiquetas */
 /* Cursiva caligráfica: solo el saludo del inicio y el título de Mi filosofía.
    Dos apariciones y nada más; repartida por la página deja de sentirse especial. */
-@import "@fontsource/petit-formal-script";
+@import "@fontsource/birthstone";
 
 /*
  * Sistema de diseño v2 — "Tablero de trabajo" (especificación de Valentina, jul 2026).
@@ -32,7 +32,7 @@
   --font-body: "DM Sans Variable", "DM Sans", sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
   /* Cursiva del saludo y de Mi filosofía. */
-  --font-cursiva: "Petit Formal Script", cursive;
+  --font-cursiva: "Birthstone", cursive;
 
   /* Radios: el estilo pide esquinas redondeadas en todo. */
   --radius-suave: 0.75rem;
