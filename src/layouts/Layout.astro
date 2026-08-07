@@ -45,6 +45,39 @@ const { title, description } = Astro.props;
         // encima avisa por evento para que suelte la rueda.
         document.addEventListener("capa:abrir", () => lenis.stop());
         document.addEventListener("capa:cerrar", () => lenis.start());
+
+        // Los enlaces de ancla los resolvía el navegador de un salto: Lenis no
+        // los intercepta solo. Se delega el clic para que también funcione con
+        // los del menú de celular, que se pintan aparte.
+        // El aire bajo la barra fija NO se calcula aquí: lo pone el
+        // `scroll-margin-top` de global.css, que Lenis ya respeta. Sumarlo
+        // también en JS lo contaba dos veces y la sección caía muy abajo.
+        document.addEventListener("click", (e) => {
+          const enlace = (e.target as HTMLElement)?.closest?.<HTMLAnchorElement>(
+            'a[href^="#"]'
+          );
+          if (!enlace) return;
+
+          const destino = enlace.getAttribute("href");
+          if (!destino) return;
+
+          // "#" a secas es el nombre de la barra: vuelve arriba del todo.
+          if (destino === "#") {
+            e.preventDefault();
+            lenis.scrollTo(0, { duration: 1.1 });
+            return;
+          }
+
+          const seccion = document.querySelector(destino);
+          if (!seccion) return;
+
+          e.preventDefault();
+          lenis.scrollTo(seccion as HTMLElement, {
+            duration: 1.1,
+            easing: (t: number) => 1 - Math.pow(1 - t, 3),
+          });
+          history.pushState(null, "", destino);
+        });
         gsap.ticker.lagSmoothing(0);
 
         // Reveal genérico: cualquier elemento con [data-reveal] entra al hacer scroll.

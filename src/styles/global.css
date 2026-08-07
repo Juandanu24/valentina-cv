@@ -75,6 +75,11 @@
   .font-name {
     font-variation-settings: "SOFT" 40, "WONK" 1;
   }
+  /* Cuando el desplazamiento suave no corre (reduced-motion, o JS aún cargando)
+     el salto lo hace el navegador: sin esto el titular queda bajo la barra fija. */
+  [id] {
+    scroll-margin-top: 5rem;
+  }
   /* Piso de calidad: foco de teclado siempre visible. */
   :focus-visible {
     outline: 2px solid var(--color-vino);
