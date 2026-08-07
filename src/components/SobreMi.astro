@@ -16,7 +16,18 @@ const parrafo = "text-center text-[1.05rem] leading-[1.8] text-tinta/85";
 // primero los tres de un lado y luego los del otro.
 // `desfase` sube o baja el origen respecto a la altura del texto: sin él las seis
 // saldrían perfectamente horizontales y se verían de plantilla.
-const izquierda = [
+interface Bloque {
+  i: number;
+  ancho: string;
+  lado: string;
+  curva: number;
+  desfase: number;
+  /** Cuánto entra el origen en el retrato. Si se omite, el script usa 0.12. */
+  entra?: number;
+  orden: string;
+}
+
+const izquierda: Bloque[] = [
   // Bloque de arriba a la izquierda: el retrato queda abajo y el texto arriba,
   // así que el arco tiene que abrir por encima, no por debajo.
   { i: 0, ancho: "lg:max-w-[16rem]", lado: "lg:self-start", curva: 0.2, desfase: 34, orden: "order-2" },
@@ -27,7 +38,7 @@ const izquierda = [
 // pegado al retrato (self-start) y su flecha nacía sobre el cuerpo de Valentina.
 // `entra` es cuánto se mete el origen dentro del retrato (fracción de su ancho).
 // Bajarlo acorta la flecha y la despega del cuerpo.
-const derecha = [
+const derecha: Bloque[] = [
   { i: 1, ancho: "lg:max-w-[18.5rem]", lado: "lg:self-end", curva: 0.14, desfase: -22, orden: "order-3" },
   { i: 4, ancho: "lg:max-w-[13rem]", lado: "lg:self-end", curva: -0.22, desfase: 30, entra: 0.03, orden: "order-6" },
   { i: 3, ancho: "lg:max-w-[15.5rem]", lado: "lg:self-start", curva: -0.26, desfase: 16, orden: "order-5" },
@@ -85,7 +96,7 @@ const derecha = [
         </div>
 
         <!-- Retrato: sin fondo, sin borde, sin recorte. Se ve entero. -->
-        <figure class="order-1 w-full lg:order-none lg:self-end" data-foto>
+        <figure class="relative order-1 w-full lg:order-none lg:self-end" data-foto>
           <img
             src={foto}
             alt={`Retrato de ${site.name}`}
@@ -95,6 +106,20 @@ const derecha = [
             class="block w-full"
             onerror="this.style.display='none'"
           />
+
+          <!--
+            Solo en celular: ahí no caben las flechas y la sección se quedaba en
+            texto suelto. Esta banda cruza el retrato de borde a borde de la
+            pantalla (por eso los márgenes negativos) y de paso tapa el corte
+            recto de la foto. En pantalla ancha no aparece: mandan las flechas.
+          -->
+          <div
+            class="absolute inset-x-0 bottom-0 -mx-5 bg-vino py-3 text-center sm:-mx-8 lg:hidden"
+          >
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-hueso">
+              {site.role}
+            </p>
+          </div>
         </figure>
 
         <!-- Columna derecha: arranca mucho más abajo que la izquierda -->
