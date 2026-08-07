@@ -42,7 +42,7 @@ export const sobreMi = {
   title: "Sobre mí",
   // Cada bloque se parte en tramos para poder resaltar UNA sola frase corta.
   // El énfasis es tipográfico y de color (vino), nunca fondo ni adorno.
-  // Los dos bloques breves van sin resaltado: son el respiro de la composición.
+  // Los seis llevan resaltado, incluidos los dos breves.
   bloques: [
     [
       { t: "Graduada de comunicación social y periodismo, pero " },
@@ -64,8 +64,16 @@ export const sobreMi = {
       { t: "el tono, el encuadre, el lenguaje", fuerte: true },
       { t: "." },
     ],
-    [{ t: "Me gusta el trabajo en equipo, liderar y aportar ideas." }],
-    [{ t: "No me encasillo en un cargo cuando hay algo que sacar adelante." }],
+    [
+      { t: "Me gusta el " },
+      { t: "trabajo en equipo", fuerte: true },
+      { t: ", liderar y aportar ideas." },
+    ],
+    [
+      { t: "No me encasillo en un cargo cuando hay algo que " },
+      { t: "sacar adelante", fuerte: true },
+      { t: "." },
+    ],
   ] as readonly (readonly { t: string; fuerte?: boolean }[])[],
 } as const;
 
@@ -468,9 +476,11 @@ const reel = (slug: string, label: string, instagram = "#"): PiezaSuelta => ({
 });
 
 export const masTrabajo = {
-  title: "Conoce más de mi trabajo",
-  body: "Este es solo un recorte. Tengo más campañas, videos y piezas de otros clientes esperándote.",
-  cta: "Conoce más de mi trabajo",
+  title: "¡Conoce más de mi trabajo!",
+  body: "Campañas, video y contenido para clientes de otros sectores.",
+  cta: "Portafolio completo",
+  // El titular de dentro de la ventana es distinto al del banner que la abre.
+  tituloVentana: "Más trabajo de 5 sectores diferentes.",
   // Material de la carpeta "ventana conoce más": 20 reels + la pieza ancha final.
   piezas: [
     reel('25-gestiona-tu-creditos', 'Gestiona tus créditos', 'https://www.instagram.com/reel/DFYzrUlSLFh/'),
@@ -478,19 +488,19 @@ export const masTrabajo = {
     reel('caserola-de-carne', 'Cacerola de carne'),
     reel('compra-lo-que-necesitas', 'Compra lo que necesitas', 'https://www.instagram.com/reel/DRAlDlYiTEk/'),
     reel('desde-donde-estes', 'Desde donde estés'),
-    reel('dia-de-control', 'Día de control'),
-    reel('dia-de-grabacion-vlog', 'Día de grabación · vlog'),
+    reel('dia-de-control', 'Día de control', 'https://www.instagram.com/reel/DMG1OxWR_Xa/'),
+    reel('dia-de-grabacion-vlog', 'Día de grabación · vlog', 'https://www.instagram.com/reel/DKx_qfzM-wi/'),
     reel('domicilios-el-faro', 'Domicilios El Faro'),
     reel('el-amigo-que-ve-numeros', 'El amigo que ve números'),
     reel('exoses-sesderma-v5', 'Exosomas Sesderma', 'https://www.instagram.com/reel/DSdp7KgDSxn/'),
-    reel('la-inchetera-v2', 'La inchetera'),
-    reel('madurito-desmechado', 'Madurito desmechado'),
+    reel('la-inchetera-v2', 'La inchetera', 'https://www.instagram.com/reel/DYijLyLM02k/'),
+    reel('madurito-desmechado', 'Madurito desmechado', 'https://www.instagram.com/reel/DbHOHucBZBO/'),
     reel('maiz-hibrido-especial', 'Maíz híbrido especial', 'https://www.instagram.com/reel/DNCELoTJGf8/'),
     reel('nueva-camara-intraoral', 'Nueva cámara intraoral', 'https://www.instagram.com/reel/DN4FMtxkV6l/'),
     reel('nutrisem-v1', 'Nutrisem', 'https://www.instagram.com/reel/DMqxBWnpLvS/'),
     reel('pitch-dondi-record-v2', 'Pitch Dondi'),
     reel('productos-dia-y-noche', 'Productos día y noche', 'https://www.instagram.com/reel/DU_k5d1kuIW/'),
-    reel('que-pedir-por-primera-vez', 'Qué pedir por primera vez'),
+    reel('que-pedir-por-primera-vez', 'Qué pedir por primera vez', 'https://www.instagram.com/reel/DbOu0XThBXP/'),
     reel('te-duermes-sin-cepillarte', 'Te duermes sin cepillarte', 'https://www.instagram.com/reel/DNov5tMx0so/'),
     reel('tu-amigo-el-ganadero', 'Tu amigo el ganadero', 'https://www.instagram.com/reel/DLDdmQ6ynkX/'),
     reel('vendes-tu-carro', 'Vendes tu carro', 'https://www.instagram.com/reel/DQIM4Q9DZcz/'),
@@ -507,9 +517,10 @@ export const masTrabajo = {
 } as const;
 
 export const contacto = {
-  title: "¿Estás armando equipo?",
-  subtitle: "Cuéntame qué marca es y qué necesitan. Respondo el mismo día.",
-  ctaPrimary: "Escríbeme por WhatsApp",
+  title: "¿Buscas a alguien para tu equipo de marketing?",
+  subtitle: "Contáctame y agendemos una entrevista",
+  ctaPrimary: "Escribir por WhatsApp",
+  telefono: "321 862 2670",
   // El botón del PDF se retiró hasta que exista el archivo: un botón que anuncia
   // "pronto disponible" resta más de lo que suma. Al volver, va como enlace real.
 } as const;

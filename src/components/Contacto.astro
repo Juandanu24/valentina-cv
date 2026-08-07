@@ -25,9 +25,18 @@ import { site, contacto } from "../data/site";
         {contacto.ctaPrimary}
       </a>
 
-      <p class="mt-2 font-mono text-xs tracking-wide text-hueso/60">
+      <p class="mt-2 font-mono text-xs leading-relaxed tracking-wide text-hueso/60">
         <a href={`mailto:${site.email}`} class="underline-offset-4 transition-colors hover:text-hueso hover:underline">
           {site.email}
+        </a>
+        <br />
+        <a
+          href={site.whatsapp}
+          target="_blank"
+          rel="noopener"
+          class="underline-offset-4 transition-colors hover:text-hueso hover:underline"
+        >
+          {contacto.telefono}
         </a>
         {site.linkedin && (
           <>

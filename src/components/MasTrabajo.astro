@@ -45,11 +45,8 @@ import { masTrabajo } from "../data/site";
   >
     <div>
       <h2 id="mas-trabajo-titulo" class="font-display text-2xl text-marino sm:text-3xl">
-        {masTrabajo.title}
+        {masTrabajo.tituloVentana}
       </h2>
-      <p class="mt-1 font-mono text-[10px] uppercase tracking-widest text-marino/50">
-        {masTrabajo.piezas.length} piezas
-      </p>
     </div>
 
     <button
@@ -90,11 +87,11 @@ import { masTrabajo } from "../data/site";
               data-abrir-menu
               aria-expanded="false"
               aria-controls={`menu-pieza-${i}`}
-              class="block h-full w-full cursor-pointer rounded-suave text-left transition-colors hover:bg-marino/5"
+              class="relative block h-full w-full cursor-pointer rounded-suave text-left"
             >
             <div
               class:list={[
-                "overflow-hidden rounded-t-suave bg-marino",
+                "overflow-hidden rounded-suave bg-marino",
                 pieza.ancho ? "aspect-[64/15]" : "aspect-[9/16]",
               ]}
             >
@@ -117,19 +114,15 @@ import { masTrabajo } from "../data/site";
                 />
               )}
             </div>
-            {/* Sin nombre de cliente: aquí el material va en conjunto, no por marca. */}
-            <div class="flex items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3">
-              <p class="font-mono text-[10px] uppercase leading-tight tracking-wide text-marino/55">
-                {pieza.label}
-              </p>
+              {/* Sin rótulo: la pieza habla sola. Queda una señal discreta de que
+                  la ficha se puede tocar, en la esquina y sobre el video. */}
               <span
                 aria-hidden="true"
                 data-punta
-                class="shrink-0 text-marino/40 transition-transform duration-200"
+                class="absolute bottom-2 right-2 grid h-7 w-7 place-items-center rounded-full bg-hueso/85 text-xs text-marino shadow-[0_2px_8px_rgba(30,42,56,0.25)] transition-transform duration-200"
               >
                 ⌄
               </span>
-            </div>
             </button>
 
             {/* Desplegable: aparece bajo la ficha, no navega de inmediato. */}
