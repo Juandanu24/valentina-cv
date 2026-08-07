@@ -4,8 +4,8 @@ import { site, sobreMi } from "../data/site";
 const foto = "/valentina-sobre-mi.png";
 
 // Un solo tratamiento de énfasis: vino, en negrilla, sin fondo. Nada de oliva aquí.
-const fuerte = "font-semibold text-vino";
-const parrafo = "text-center text-[1.05rem] leading-[1.8] text-tinta/85";
+const fuerte = "font-semibold text-hueso lg:text-vino";
+const parrafo = "text-center text-[1.05rem] leading-[1.8] text-hueso/85 lg:text-tinta/85";
 
 // Seis bloques. Los dos breves (índices 4 y 5) van en esquinas opuestas —arriba a
 // la derecha y abajo a la izquierda— para que la asimetría se note. Ninguno queda
@@ -72,31 +72,13 @@ const derecha: Bloque[] = [
         stroke-linecap="round"
         stroke-linejoin="round"></svg>
 
-      <div class="grid gap-y-10 lg:grid-cols-[0.9fr_1.7fr_0.9fr] lg:items-start lg:gap-x-10">
-        <!-- Columna izquierda -->
-        <div class="contents lg:flex lg:flex-col lg:gap-24 lg:pl-14 lg:pt-4">
-          {
-            izquierda.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
-              <div
-                class:list={["relative", orden, "lg:order-none", ancho, lado]}
-                data-bloque
-                data-lado="izq"
-                data-curva={curva}
-                data-desfase={desfase}
-                data-entra={entra}
-              >
-                <p data-reveal class={parrafo}>
-                  {sobreMi.bloques[i].map((f) =>
-                    f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
-                  )}
-                </p>
-              </div>
-            ))
-          }
-        </div>
-
-        <!-- Retrato: sin fondo, sin borde, sin recorte. Se ve entero. -->
-        <figure class="relative order-1 w-full lg:order-none lg:self-end" data-foto>
+      <div class="grid lg:grid-cols-[0.9fr_1.7fr_0.9fr] lg:items-start lg:gap-x-10">
+        <!-- Retrato primero en el orden del documento: en celular manda arriba y
+             el panel de texto arranca justo donde él termina. -->
+        <figure
+          class="w-full lg:col-start-2 lg:row-start-1 lg:self-end"
+          data-foto
+        >
           <img
             src={foto}
             alt={`Retrato de ${site.name}`}
@@ -106,42 +88,58 @@ const derecha: Bloque[] = [
             class="block w-full"
             onerror="this.style.display='none'"
           />
-
-          <!--
-            Solo en celular: ahí no caben las flechas y la sección se quedaba en
-            texto suelto. Esta banda cruza el retrato de borde a borde de la
-            pantalla (por eso los márgenes negativos) y de paso tapa el corte
-            recto de la foto. En pantalla ancha no aparece: mandan las flechas.
-          -->
-          <div
-            class="absolute inset-x-0 bottom-0 -mx-5 bg-vino py-3 text-center sm:-mx-8 lg:hidden"
-          >
-            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-hueso">
-              {site.role}
-            </p>
-          </div>
         </figure>
 
-        <!-- Columna derecha: arranca mucho más abajo que la izquierda -->
-        <div class="contents lg:flex lg:flex-col lg:gap-20 lg:pt-32">
-          {
-            derecha.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
-              <div
-                class:list={["relative", orden, "lg:order-none", ancho, lado]}
-                data-bloque
-                data-lado="der"
-                data-curva={curva}
-                data-desfase={desfase}
-                data-entra={entra}
-              >
-                <p data-reveal class={parrafo}>
-                  {sobreMi.bloques[i].map((f) =>
-                    f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
-                  )}
-                </p>
-              </div>
-            ))
-          }
+        <!--
+          En celular esto es un panel vino a lo ancho de la pantalla que agrupa
+          los seis textos y nace donde acaba la foto (de ahí el margen negativo
+          arriba, que además tapa su corte recto). En pantalla ancha se disuelve
+          con `contents` y las dos columnas vuelven a colocarse a los lados.
+        -->
+        <div
+          class="-mx-5 -mt-6 flex flex-col gap-10 rounded-t-[2rem] bg-vino px-6 pb-14 pt-12 sm:-mx-8 sm:px-10 lg:contents"
+        >
+          <div class="contents lg:col-start-1 lg:row-start-1 lg:flex lg:flex-col lg:gap-24 lg:pl-14 lg:pt-4">
+            {
+              izquierda.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
+                <div
+                  class:list={["relative", orden, "lg:order-none", ancho, lado]}
+                  data-bloque
+                  data-lado="izq"
+                  data-curva={curva}
+                  data-desfase={desfase}
+                  data-entra={entra}
+                >
+                  <p data-reveal class={parrafo}>
+                    {sobreMi.bloques[i].map((f) =>
+                      f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
+                    )}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="contents lg:col-start-3 lg:row-start-1 lg:flex lg:flex-col lg:gap-20 lg:pt-32">
+            {
+              derecha.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
+                <div
+                  class:list={["relative", orden, "lg:order-none", ancho, lado]}
+                  data-bloque
+                  data-lado="der"
+                  data-curva={curva}
+                  data-desfase={desfase}
+                  data-entra={entra}
+                >
+                  <p data-reveal class={parrafo}>
+                    {sobreMi.bloques[i].map((f) =>
+                      f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
+                    )}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </div>
