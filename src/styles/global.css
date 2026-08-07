@@ -80,6 +80,12 @@
   [id] {
     scroll-margin-top: 5rem;
   }
+  /* Tailwind v4 dejó de poner cursor:pointer en los botones. Aquí todos los que
+     no están deshabilitados son accionables, así que se restituye. */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
   /* Piso de calidad: foco de teclado siempre visible. */
   :focus-visible {
     outline: 2px solid var(--color-vino);

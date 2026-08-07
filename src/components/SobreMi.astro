@@ -25,9 +25,11 @@ const izquierda = [
 ];
 // Arriba va el bloque largo y en el medio el breve: al revés, el largo quedaba
 // pegado al retrato (self-start) y su flecha nacía sobre el cuerpo de Valentina.
+// `entra` es cuánto se mete el origen dentro del retrato (fracción de su ancho).
+// Bajarlo acorta la flecha y la despega del cuerpo.
 const derecha = [
-  { i: 1, ancho: "lg:max-w-[18.5rem]", lado: "lg:self-end", curva: -0.14, desfase: -22, orden: "order-3" },
-  { i: 4, ancho: "lg:max-w-[13rem]", lado: "lg:self-end", curva: 0.22, desfase: 30, orden: "order-6" },
+  { i: 1, ancho: "lg:max-w-[18.5rem]", lado: "lg:self-end", curva: 0.14, desfase: -22, orden: "order-3" },
+  { i: 4, ancho: "lg:max-w-[13rem]", lado: "lg:self-end", curva: -0.22, desfase: 30, entra: 0.03, orden: "order-6" },
   { i: 3, ancho: "lg:max-w-[15.5rem]", lado: "lg:self-start", curva: -0.26, desfase: 16, orden: "order-5" },
 ];
 ---
@@ -61,15 +63,16 @@ const derecha = [
 
       <div class="grid gap-y-10 lg:grid-cols-[0.9fr_1.7fr_0.9fr] lg:items-start lg:gap-x-10">
         <!-- Columna izquierda -->
-        <div class="contents lg:flex lg:flex-col lg:gap-24 lg:pt-4">
+        <div class="contents lg:flex lg:flex-col lg:gap-24 lg:pl-14 lg:pt-4">
           {
-            izquierda.map(({ i, ancho, lado, curva, desfase, orden }) => (
+            izquierda.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
               <div
                 class:list={["relative", orden, "lg:order-none", ancho, lado]}
                 data-bloque
                 data-lado="izq"
                 data-curva={curva}
                 data-desfase={desfase}
+                data-entra={entra}
               >
                 <p data-reveal class={parrafo}>
                   {sobreMi.bloques[i].map((f) =>
@@ -97,13 +100,14 @@ const derecha = [
         <!-- Columna derecha: arranca mucho más abajo que la izquierda -->
         <div class="contents lg:flex lg:flex-col lg:gap-20 lg:pt-32">
           {
-            derecha.map(({ i, ancho, lado, curva, desfase, orden }) => (
+            derecha.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
               <div
                 class:list={["relative", orden, "lg:order-none", ancho, lado]}
                 data-bloque
                 data-lado="der"
                 data-curva={curva}
                 data-desfase={desfase}
+                data-entra={entra}
               >
                 <p data-reveal class={parrafo}>
                   {sobreMi.bloques[i].map((f) =>
@@ -188,8 +192,8 @@ const derecha = [
         // de ~40 px; naciendo en el borde salían muñones. Entrando un 12% del
         // ancho, la flecha tiene recorrido y además pisa el rectángulo, que es
         // lo que se buscaba.
-        const ox =
-          (izq ? f.left + f.width * 0.12 : f.right - f.width * 0.12) - z.left;
+        const entra = Number(b.dataset.entra || 0.12);
+        const ox = (izq ? f.left + f.width * entra : f.right - f.width * entra) - z.left;
 
         // La altura del origen sigue a la del texto (con un desfase propio para
         // que no salgan las seis horizontales), acotada al alto del retrato.
