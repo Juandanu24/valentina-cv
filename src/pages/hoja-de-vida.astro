@@ -1,0 +1,181 @@
+---
+/**
+ * Hoja de vida en formato A4, pensada para imprimirse a PDF.
+ *
+ * No duplica ningún texto: todo sale de `src/data/site.ts`, igual que la web.
+ * Si allí cambia un cargo o un resultado, basta con regenerar el PDF:
+ *
+ *   pnpm dev                     # en otra terminal
+ *   node scripts/generar-pdf.mjs
+ *
+ * No usa Layout.astro a propósito: ese carga GSAP y Lenis, que aquí no pintan
+ * nada y solo estorbarían al motor de impresión.
+ */
+import "../styles/global.css";
+import {
+  site,
+  sobreMi,
+  projects,
+  capacidades,
+  herramientas,
+  trayectoria,
+  contacto,
+  educacion,
+} from "../data/site";
+
+const anio = new Date().getFullYear();
+const texto = (b: readonly { t: string }[]) => b.map((f) => f.t).join("");
+---
+
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{site.name} — {site.role}</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body class="bg-hueso font-body text-tinta">
+    <!-- ENCABEZADO -->
+    <!-- Los rellenos van en `style` y no en clases: en impresión las utilidades
+         con unidades milimétricas no siempre se aplican y el nombre quedaba
+         pegado al borde superior de la hoja. -->
+    <header class="bg-marino text-hueso" style="padding: 13mm 14mm 11mm">
+      <h1 class="font-name text-[30pt] font-semibold uppercase leading-[1.05] tracking-tight">
+        {site.name}
+      </h1>
+      <p class="mt-2 font-mono text-[10pt] font-bold uppercase tracking-[0.18em] text-hueso/95">
+        {site.role}
+      </p>
+      <p class="mt-1.5 font-mono text-[8pt] uppercase tracking-[0.14em] text-hueso/60">
+        {site.alcance.join(" · ")}
+      </p>
+
+      <!-- Separadores explícitos, no `gap`: al imprimir se perdían y los datos
+           salían pegados unos con otros. Además así se copian bien. -->
+      <p class="mt-5 font-mono text-[8.5pt] leading-relaxed text-hueso/85">
+        {
+          [site.email, contacto.telefono, site.location, site.linkedin]
+            .filter(Boolean)
+            .join("   ·   ")
+        }
+      </p>
+    </header>
+
+    <main style="padding: 8mm 14mm 12mm">
+      <!-- PERFIL -->
+      <section class="evitar-corte">
+        <h2 class="titulo">Perfil</h2>
+        <div class="mt-2 grid grid-cols-2 gap-x-7 gap-y-2">
+          {
+            sobreMi.bloques.map((b) => (
+              <p class="text-[9pt] leading-[1.55] text-tinta/85">{texto(b)}</p>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- EXPERIENCIA -->
+      <section style="margin-top: 9mm">
+        <h2 class="titulo">Experiencia</h2>
+        {
+          trayectoria.map((t) => (
+            <div class="evitar-corte mt-3 grid grid-cols-[34mm_1fr] gap-x-4">
+              <p class="font-mono text-[8pt] uppercase tracking-wider text-oliva">{t.period}</p>
+              <div>
+                <h3 class="font-display text-[11.5pt] leading-tight text-marino">
+                  {t.org} <span class="font-body font-normal text-marino/60">— {t.role}</span>
+                </h3>
+                <p class="mt-1 text-[9pt] leading-[1.5] text-tinta/80">{t.detail}</p>
+              </div>
+            </div>
+          ))
+        }
+      </section>
+
+      <!-- EDUCACIÓN -->
+      <section class="evitar-corte" style="margin-top: 9mm">
+        <h2 class="titulo">Educación</h2>
+        <ul class="mt-2 space-y-1">
+          {educacion.map((e) => <li class="text-[9pt] leading-[1.5] text-tinta/85">{e}</li>)}
+        </ul>
+      </section>
+
+      <!-- CAPACIDADES -->
+      <section class="evitar-corte" style="margin-top: 9mm">
+        <h2 class="titulo">Capacidades</h2>
+        <div class="mt-2 grid grid-cols-2 gap-x-6 gap-y-2">
+          {
+            capacidades.map((c) => (
+              <p class="text-[8.5pt] leading-[1.5]">
+                <span class="font-display text-[10pt] text-marino">{c.title}</span>
+                <span class="text-tinta/75"> — {c.items.join(" · ")}</span>
+              </p>
+            ))
+          }
+        </div>
+
+        <p class="mt-3 font-mono text-[8pt] uppercase tracking-wide text-marino/60">
+          Herramientas: {herramientas.map((h) => h.name).join(" · ")}
+        </p>
+      </section>
+
+      <!-- PROYECTOS (página nueva) -->
+      <section style="margin-top: 9mm">
+        <h2 class="titulo">Proyectos destacados</h2>
+        <div class="mt-3 grid grid-cols-2 gap-x-6 gap-y-4">
+          {
+            projects.map((p) => (
+              <article class="evitar-corte">
+                <h3 class="font-display text-[11pt] uppercase leading-tight tracking-tight text-marino">
+                  {p.client}
+                  <span class="font-body text-[8.5pt] normal-case tracking-normal text-marino/55">
+                    {" "}· {p.sector}
+                  </span>
+                </h3>
+                <p class="mt-0.5 font-mono text-[7.5pt] font-bold uppercase tracking-[0.12em] text-vino">
+                  {p.role}
+                </p>
+                <p class="mt-1.5 text-[8.5pt] leading-[1.45] text-tinta/80">{p.description}</p>
+                <p class="mt-1.5 font-mono text-[7.5pt] uppercase tracking-wide text-marino/55">
+                  {p.tags.join(" · ")}
+                </p>
+                <p class="mt-1.5 bg-vino px-2.5 py-1.5 font-mono text-[7.5pt] uppercase leading-snug text-hueso">
+                  ▸ {p.result}
+                </p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <p style="margin-top: 10mm" class="border-t border-marino/15 pt-2 font-mono text-[7.5pt] uppercase tracking-widest text-marino/45">
+        {site.name} · {site.location} · {anio} · {site.url}
+      </p>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  /* Hoja A4 sin márgenes del navegador: los márgenes los pone el propio diseño. */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .titulo {
+    font-family: var(--font-display);
+    font-size: 13pt;
+    color: var(--color-marino);
+    border-bottom: 1.5px solid var(--color-vino);
+    padding-bottom: 3px;
+    break-after: avoid;
+  }
+
+  /* Que un proyecto o un empleo no queden partidos entre dos páginas. */
+  .evitar-corte {
+    break-inside: avoid;
+  }
+  .pagina-nueva {
+    break-before: page;
+  }
+</style>

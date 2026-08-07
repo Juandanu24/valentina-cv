@@ -14,9 +14,14 @@ export const site = {
   // En lista, no en una cadena: así ningún término se parte a mitad de línea.
   alcance: ["Marca", "Campañas", "Pauta digital", "Producción audiovisual"],
   location: "Montería, Colombia",
-  email: "valentinagaf-21@hotmail.com", // TODO v3: correo con dominio propio
+  email: "valentina.garciaflorez@outlook.com", // TODO v3: correo con dominio propio
   whatsapp: "https://wa.me/573218622670",
   linkedin: "", // TODO: pendiente de Valentina
+  // Hoja de vida en PDF. Vacío = el botón no se pinta. En cuanto el archivo
+  // esté en public/, basta con poner aquí su ruta y el botón aparece solo.
+  // Antes de publicarlo: revisar que no lleve cédula, dirección, EPS ni
+  // teléfonos de terceros (ver "Privacidad" en AGENTS.md).
+  cvPdf: "/hoja-de-vida-valentina-garcia-florez.pdf",
   // TODO: dominio propio (ej. valentinagarcia.co) — actualizar también astro.config.mjs
   url: "https://valentinagarciaflorez.vercel.app",
 } as const;
@@ -270,10 +275,10 @@ export const projects: readonly Project[] = [
       "Analítica",
       "Copywriting promocional",
     ],
-    // TODO: la versión final pide "X% de las conversaciones terminaron en reserva".
-    // Ese porcentaje todavía no existe: hay que pedírselo al cliente. Hasta
-    // entonces se queda el dato verificado — nunca un marcador en producción.
-    result: "199 conversaciones directas a $353 COP por lead",
+    // Único resultado con cifra de las seis tarjetas. Si algún día llega el
+    // porcentaje de reservas que pedía la versión final del documento, entra
+    // aquí: un dato relativo pesa más que uno absoluto.
+    result: "199 conversaciones directas · $353 COP por lead",
     instagram: "https://www.instagram.com/motelmanhattanc/",
     emphasis: "destacada", // el dato más contundente del portafolio
     pieces: 3,
@@ -519,8 +524,9 @@ export const masTrabajo = {
 export const contacto = {
   title: "¿Buscas a alguien para tu equipo de marketing?",
   subtitle: "Contáctame y agendemos una entrevista",
-  ctaPrimary: "Escribir por WhatsApp",
+  ctaPrimary: "Escríbeme por WhatsApp",
   telefono: "321 862 2670",
-  // El botón del PDF se retiró hasta que exista el archivo: un botón que anuncia
-  // "pronto disponible" resta más de lo que suma. Al volver, va como enlace real.
+  // El botón del PDF solo se pinta si `site.cvPdf` tiene ruta: un botón que
+  // anuncia "pronto disponible" resta más de lo que suma.
+  ctaSecondary: "Descargar mi hoja de vida",
 } as const;

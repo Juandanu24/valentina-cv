@@ -220,7 +220,7 @@ const tieneVideo = (p: (typeof projects)[number]) =>
                 aria-expanded="false"
                 class="mt-1.5 font-mono text-[10px] uppercase tracking-widest text-vino underline-offset-4 transition-colors hover:text-quemado hover:underline"
               >
-                Ver más...
+                Ampliar
               </button>
             </div>
 
@@ -269,7 +269,7 @@ const tieneVideo = (p: (typeof projects)[number]) =>
       const abierto = boton.getAttribute("aria-expanded") === "true";
       texto.style.webkitLineClamp = abierto ? "2" : "unset";
       boton.setAttribute("aria-expanded", String(!abierto));
-      boton.textContent = abierto ? "Ver más..." : "Ver menos";
+      boton.textContent = abierto ? "Ampliar" : "Reducir";
     });
   });
 
