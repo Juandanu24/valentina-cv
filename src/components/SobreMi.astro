@@ -4,8 +4,8 @@ import { site, sobreMi } from "../data/site";
 const foto = "/valentina-sobre-mi.png";
 
 // Un solo tratamiento de énfasis: vino, en negrilla, sin fondo. Nada de oliva aquí.
-const fuerte = "font-semibold text-vino";
-const parrafo = "text-center text-[1.05rem] leading-[1.8] text-tinta/85";
+const fuerte = "font-semibold text-hueso lg:text-vino";
+const parrafo = "text-center text-[1.05rem] leading-[1.8] text-hueso/85 lg:text-tinta/85";
 
 // Seis bloques. Los dos breves (índices 4 y 5) van en esquinas opuestas —arriba a
 // la derecha y abajo a la izquierda— para que la asimetría se note. Ninguno queda
@@ -16,7 +16,18 @@ const parrafo = "text-center text-[1.05rem] leading-[1.8] text-tinta/85";
 // primero los tres de un lado y luego los del otro.
 // `desfase` sube o baja el origen respecto a la altura del texto: sin él las seis
 // saldrían perfectamente horizontales y se verían de plantilla.
-const izquierda = [
+interface Bloque {
+  i: number;
+  ancho: string;
+  lado: string;
+  curva: number;
+  desfase: number;
+  /** Cuánto entra el origen en el retrato. Si se omite, el script usa 0.12. */
+  entra?: number;
+  orden: string;
+}
+
+const izquierda: Bloque[] = [
   // Bloque de arriba a la izquierda: el retrato queda abajo y el texto arriba,
   // así que el arco tiene que abrir por encima, no por debajo.
   { i: 0, ancho: "lg:max-w-[16rem]", lado: "lg:self-start", curva: 0.2, desfase: 34, orden: "order-2" },
@@ -27,7 +38,7 @@ const izquierda = [
 // pegado al retrato (self-start) y su flecha nacía sobre el cuerpo de Valentina.
 // `entra` es cuánto se mete el origen dentro del retrato (fracción de su ancho).
 // Bajarlo acorta la flecha y la despega del cuerpo.
-const derecha = [
+const derecha: Bloque[] = [
   { i: 1, ancho: "lg:max-w-[18.5rem]", lado: "lg:self-end", curva: 0.14, desfase: -22, orden: "order-3" },
   { i: 4, ancho: "lg:max-w-[13rem]", lado: "lg:self-end", curva: -0.22, desfase: 30, entra: 0.03, orden: "order-6" },
   { i: 3, ancho: "lg:max-w-[15.5rem]", lado: "lg:self-start", curva: -0.26, desfase: 16, orden: "order-5" },
@@ -61,31 +72,13 @@ const derecha = [
         stroke-linecap="round"
         stroke-linejoin="round"></svg>
 
-      <div class="grid gap-y-10 lg:grid-cols-[0.9fr_1.7fr_0.9fr] lg:items-start lg:gap-x-10">
-        <!-- Columna izquierda -->
-        <div class="contents lg:flex lg:flex-col lg:gap-24 lg:pl-14 lg:pt-4">
-          {
-            izquierda.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
-              <div
-                class:list={["relative", orden, "lg:order-none", ancho, lado]}
-                data-bloque
-                data-lado="izq"
-                data-curva={curva}
-                data-desfase={desfase}
-                data-entra={entra}
-              >
-                <p data-reveal class={parrafo}>
-                  {sobreMi.bloques[i].map((f) =>
-                    f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
-                  )}
-                </p>
-              </div>
-            ))
-          }
-        </div>
-
-        <!-- Retrato: sin fondo, sin borde, sin recorte. Se ve entero. -->
-        <figure class="order-1 w-full lg:order-none lg:self-end" data-foto>
+      <div class="grid lg:grid-cols-[0.9fr_1.7fr_0.9fr] lg:items-start lg:gap-x-10">
+        <!-- Retrato primero en el orden del documento: en celular manda arriba y
+             el panel de texto arranca justo donde él termina. -->
+        <figure
+          class="w-full lg:col-start-2 lg:row-start-1 lg:self-end"
+          data-foto
+        >
           <img
             src={foto}
             alt={`Retrato de ${site.name}`}
@@ -97,26 +90,56 @@ const derecha = [
           />
         </figure>
 
-        <!-- Columna derecha: arranca mucho más abajo que la izquierda -->
-        <div class="contents lg:flex lg:flex-col lg:gap-20 lg:pt-32">
-          {
-            derecha.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
-              <div
-                class:list={["relative", orden, "lg:order-none", ancho, lado]}
-                data-bloque
-                data-lado="der"
-                data-curva={curva}
-                data-desfase={desfase}
-                data-entra={entra}
-              >
-                <p data-reveal class={parrafo}>
-                  {sobreMi.bloques[i].map((f) =>
-                    f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
-                  )}
-                </p>
-              </div>
-            ))
-          }
+        <!--
+          En celular esto es un panel vino a lo ancho de la pantalla que agrupa
+          los seis textos y nace donde acaba la foto (de ahí el margen negativo
+          arriba, que además tapa su corte recto). En pantalla ancha se disuelve
+          con `contents` y las dos columnas vuelven a colocarse a los lados.
+        -->
+        <div
+          class="-mx-5 -mt-6 flex flex-col gap-10 rounded-t-[2rem] bg-vino px-6 pb-14 pt-12 sm:-mx-8 sm:px-10 lg:contents"
+        >
+          <div class="contents lg:col-start-1 lg:row-start-1 lg:flex lg:flex-col lg:gap-24 lg:pl-14 lg:pt-4">
+            {
+              izquierda.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
+                <div
+                  class:list={["relative", orden, "lg:order-none", ancho, lado]}
+                  data-bloque
+                  data-lado="izq"
+                  data-curva={curva}
+                  data-desfase={desfase}
+                  data-entra={entra}
+                >
+                  <p data-reveal class={parrafo}>
+                    {sobreMi.bloques[i].map((f) =>
+                      f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
+                    )}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="contents lg:col-start-3 lg:row-start-1 lg:flex lg:flex-col lg:gap-20 lg:pt-32">
+            {
+              derecha.map(({ i, ancho, lado, curva, desfase, entra, orden }) => (
+                <div
+                  class:list={["relative", orden, "lg:order-none", ancho, lado]}
+                  data-bloque
+                  data-lado="der"
+                  data-curva={curva}
+                  data-desfase={desfase}
+                  data-entra={entra}
+                >
+                  <p data-reveal class={parrafo}>
+                    {sobreMi.bloques[i].map((f) =>
+                      f.fuerte ? <strong class={fuerte}>{f.t}</strong> : f.t
+                    )}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </div>
