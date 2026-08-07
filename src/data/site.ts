@@ -42,7 +42,7 @@ export const sobreMi = {
   title: "Sobre mí",
   // Cada bloque se parte en tramos para poder resaltar UNA sola frase corta.
   // El énfasis es tipográfico y de color (vino), nunca fondo ni adorno.
-  // Los dos bloques breves van sin resaltado: son el respiro de la composición.
+  // Los seis llevan resaltado, incluidos los dos breves.
   bloques: [
     [
       { t: "Graduada de comunicación social y periodismo, pero " },
@@ -64,8 +64,16 @@ export const sobreMi = {
       { t: "el tono, el encuadre, el lenguaje", fuerte: true },
       { t: "." },
     ],
-    [{ t: "Me gusta el trabajo en equipo, liderar y aportar ideas." }],
-    [{ t: "No me encasillo en un cargo cuando hay algo que sacar adelante." }],
+    [
+      { t: "Me gusta el " },
+      { t: "trabajo en equipo", fuerte: true },
+      { t: ", liderar y aportar ideas." },
+    ],
+    [
+      { t: "No me encasillo en un cargo cuando hay algo que " },
+      { t: "sacar adelante", fuerte: true },
+      { t: "." },
+    ],
   ] as readonly (readonly { t: string; fuerte?: boolean }[])[],
 } as const;
 
