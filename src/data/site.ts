@@ -494,18 +494,19 @@ export const masTrabajo = {
   piezas: [
     reel('productos-dia-y-noche', 'Productos día y noche', 'https://www.instagram.com/reel/DU_k5d1kuIW/'),
     reel('madurito-desmechado', 'Madurito desmechado', 'https://www.instagram.com/reel/DbHOHucBZBO/'),
-    reel('03-que-calor', 'Qué calor', 'https://www.instagram.com/reel/DAemHf-oi2w/'),
+    reel('compra-lo-que-necesitas', 'Compra lo que necesitas', 'https://www.instagram.com/reel/DRAlDlYiTEk/'),
     reel('25-gestiona-tu-creditos', 'Gestiona tus créditos', 'https://www.instagram.com/reel/DFYzrUlSLFh/'),
     reel('caipirina-de-maracuya', 'Caipiriña de maracuyá', 'https://www.instagram.com/reel/DOzVphiDU1f/'),
     reel('cancer-de-piel-v2', 'Cáncer de piel', 'https://www.instagram.com/reel/DZkgY7PJ9Ba/'),
     reel('domicilios-el-faro', 'Domicilios El Faro', 'https://www.instagram.com/reel/DSDH9rzAARU/'),
-    reel('compra-lo-que-necesitas', 'Compra lo que necesitas', 'https://www.instagram.com/reel/DRAlDlYiTEk/'),
+    reel('03-que-calor', 'Qué calor', 'https://www.instagram.com/reel/DAemHf-oi2w/'),
+    reel('nutrisem-v1', 'Nutrisem', 'https://www.instagram.com/reel/DMqxBWnpLvS/'),
     reel('que-pedir-por-primera-vez', 'Qué pedir por primera vez', 'https://www.instagram.com/reel/DbOu0XThBXP/'),
     reel('dia-de-control', 'Día de control', 'https://www.instagram.com/reel/DMG1OxWR_Xa/'),
     reel('el-amigo-que-ve-numeros', 'El amigo que ve números', 'https://www.instagram.com/reel/DXflhl9kVOa/'),
     reel('exoses-sesderma-v5', 'Exosomas Sesderma', 'https://www.instagram.com/reel/DSdp7KgDSxn/'),
     reel('la-inchetera-v2', 'La inchetera', 'https://www.instagram.com/reel/DYijLyLM02k/'),
-    reel('maiz-hibrido-especial', 'Maíz híbrido especial', 'https://www.instagram.com/reel/DNCELoTJGf8/'),
+    reel('vendes-tu-carro', 'Vendes tu carro', 'https://www.instagram.com/reel/DQIM4Q9DZcz/'),
     // Formato distinto al resto: va sola, cerrando la ventana.
     {
       type: 'video',
@@ -516,12 +517,11 @@ export const masTrabajo = {
       instagram: 'https://www.instagram.com/reel/DPMY6lkjZpQ/',
     },
     reel('nueva-camara-intraoral', 'Nueva cámara intraoral', 'https://www.instagram.com/reel/DN4FMtxkV6l/'),
-    reel('nutrisem-v1', 'Nutrisem', 'https://www.instagram.com/reel/DMqxBWnpLvS/'),
     reel('pitch-dondi-record-v2', 'Pinche Récord', 'https://www.instagram.com/reel/DVq2xGYkQV5/'),
     reel('dia-de-grabacion-vlog', 'Día de grabación · vlog', 'https://www.instagram.com/reel/DKx_qfzM-wi/'),
     reel('te-duermes-sin-cepillarte', 'Te duermes sin cepillarte', 'https://www.instagram.com/reel/DNov5tMx0so/'),
+    reel('maiz-hibrido-especial', 'Maíz híbrido especial', 'https://www.instagram.com/reel/DNCELoTJGf8/'),
     reel('tu-amigo-el-ganadero', 'Tu amigo el ganadero', 'https://www.instagram.com/reel/DLDdmQ6ynkX/'),
-    reel('vendes-tu-carro', 'Vendes tu carro', 'https://www.instagram.com/reel/DQIM4Q9DZcz/'),
   ] as readonly PiezaSuelta[],
 } as const;
 
