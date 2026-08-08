@@ -14,7 +14,5 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  // /hoja-de-vida existe solo como origen del PDF: no debe competir con la
-  // portada en los buscadores.
-  integrations: [sitemap({ filter: (pagina) => !pagina.includes('/hoja-de-vida') })]
+  integrations: [sitemap()]
 });
