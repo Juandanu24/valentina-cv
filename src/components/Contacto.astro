@@ -25,6 +25,18 @@ import { site, contacto } from "../data/site";
         {contacto.ctaPrimary}
       </a>
 
+      {/* Solo aparece cuando el PDF existe: nunca un botón que no descarga nada. */}
+      {site.cvPdf && (
+        <a
+          href={site.cvPdf}
+          download
+          class="inline-flex items-center gap-2 rounded-pill border border-hueso/40 px-6 py-3 font-mono text-xs uppercase tracking-widest text-hueso/85 transition-colors hover:border-hueso hover:bg-hueso hover:text-marino"
+        >
+          {contacto.ctaSecondary}
+          <span aria-hidden="true">↓</span>
+        </a>
+      )}
+
       <p class="mt-2 font-mono text-xs leading-relaxed tracking-wide text-hueso/60">
         <a href={`mailto:${site.email}`} class="underline-offset-4 transition-colors hover:text-hueso hover:underline">
           {site.email}

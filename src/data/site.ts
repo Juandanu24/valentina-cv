@@ -14,9 +14,18 @@ export const site = {
   // En lista, no en una cadena: así ningún término se parte a mitad de línea.
   alcance: ["Marca", "Campañas", "Pauta digital", "Producción audiovisual"],
   location: "Montería, Colombia",
-  email: "valentinagaf-21@hotmail.com", // TODO v3: correo con dominio propio
+  email: "valentina.garciaflorez@outlook.com", // TODO v3: correo con dominio propio
   whatsapp: "https://wa.me/573218622670",
-  linkedin: "", // TODO: pendiente de Valentina
+  // La dirección lleva la tilde de "garcía" codificada (%C3%AD) y un código
+  // aleatorio al final. Funciona, pero el documento de estrategia pide dejarla
+  // como linkedin.com/in/valentinagarciaflorez. Si Valentina la cambia en
+  // LinkedIn, hay que actualizarla aquí: la anterior deja de resolver.
+  linkedin: "https://www.linkedin.com/in/valentina-garc%C3%ADa-florez-aa7505195/",
+  // Hoja de vida en PDF. Vacío = el botón no se pinta. En cuanto el archivo
+  // esté en public/, basta con poner aquí su ruta y el botón aparece solo.
+  // Antes de publicarlo: revisar que no lleve cédula, dirección, EPS ni
+  // teléfonos de terceros (ver "Privacidad" en AGENTS.md).
+  cvPdf: "/hoja-de-vida-valentina-garcia-florez.pdf",
   // TODO: dominio propio (ej. valentinagarcia.co) — actualizar también astro.config.mjs
   url: "https://valentinagarciaflorez.vercel.app",
 } as const;
@@ -270,10 +279,10 @@ export const projects: readonly Project[] = [
       "Analítica",
       "Copywriting promocional",
     ],
-    // TODO: la versión final pide "X% de las conversaciones terminaron en reserva".
-    // Ese porcentaje todavía no existe: hay que pedírselo al cliente. Hasta
-    // entonces se queda el dato verificado — nunca un marcador en producción.
-    result: "199 conversaciones directas a $353 COP por lead",
+    // Único resultado con cifra de las seis tarjetas. Si algún día llega el
+    // porcentaje de reservas que pedía la versión final del documento, entra
+    // aquí: un dato relativo pesa más que uno absoluto.
+    result: "199 conversaciones directas · $353 COP por lead",
     instagram: "https://www.instagram.com/motelmanhattanc/",
     emphasis: "destacada", // el dato más contundente del portafolio
     pieces: 3,
@@ -413,9 +422,9 @@ export const capacidades = [
 // Canva y ChatGPT jamás se presentan como "nivel experto".
 export const herramientas = [
   { name: "Canva", sigla: "C", bg: "#FFFFFF", fg: "#00C4CC", logo: "/logos/canva-logo-png.png" },
-  { name: "Illustrator", sigla: "Ai", bg: "#330000", fg: "#FF9A00" },
-  { name: "Photoshop", sigla: "Ps", bg: "#001E36", fg: "#31A8FF" },
-  { name: "Premiere", sigla: "Pr", bg: "#00005B", fg: "#9999FF" },
+  { name: "Illustrator", sigla: "Ai", bg: "#FFFFFF", fg: "#111111", logo: "/logos/logo-ilustrator.png" },
+  { name: "Photoshop", sigla: "Ps", bg: "#FFFFFF", fg: "#111111", logo: "/logos/logo-photoshop.png" },
+  { name: "Premiere", sigla: "Pr", bg: "#FFFFFF", fg: "#111111", logo: "/logos/adobe-premiere-logo-png-seeklogo-380789.png" },
   { name: "CapCut", sigla: "Cc", bg: "#FFFFFF", fg: "#000000", logo: "/logos/capcut-logo-png.png" },
   { name: "Meta Business Suite", sigla: "M", bg: "#FFFFFF", fg: "#0081FB", logo: "/logos/logo-meta.png" },
   { name: "Notion", sigla: "N", bg: "#FFFFFF", fg: "#111111", logo: "/logos/notion-app-logo.png" },
@@ -483,26 +492,20 @@ export const masTrabajo = {
   tituloVentana: "Más trabajo de 5 sectores diferentes.",
   // Material de la carpeta "ventana conoce más": 20 reels + la pieza ancha final.
   piezas: [
-    reel('25-gestiona-tu-creditos', 'Gestiona tus créditos', 'https://www.instagram.com/reel/DFYzrUlSLFh/'),
-    reel('cancer-de-piel-v2', 'Cáncer de piel', 'https://www.instagram.com/reel/DZkgY7PJ9Ba/'),
-    reel('caserola-de-carne', 'Cacerola de carne'),
+    reel('productos-dia-y-noche', 'Productos día y noche', 'https://www.instagram.com/reel/DU_k5d1kuIW/'),
+    reel('madurito-desmechado', 'Madurito desmechado', 'https://www.instagram.com/reel/DbHOHucBZBO/'),
     reel('compra-lo-que-necesitas', 'Compra lo que necesitas', 'https://www.instagram.com/reel/DRAlDlYiTEk/'),
-    reel('desde-donde-estes', 'Desde donde estés'),
+    reel('25-gestiona-tu-creditos', 'Gestiona tus créditos', 'https://www.instagram.com/reel/DFYzrUlSLFh/'),
+    reel('caipirina-de-maracuya', 'Caipiriña de maracuyá', 'https://www.instagram.com/reel/DOzVphiDU1f/'),
+    reel('cancer-de-piel-v2', 'Cáncer de piel', 'https://www.instagram.com/reel/DZkgY7PJ9Ba/'),
+    reel('domicilios-el-faro', 'Domicilios El Faro', 'https://www.instagram.com/reel/DSDH9rzAARU/'),
+    reel('03-que-calor', 'Qué calor', 'https://www.instagram.com/reel/DAemHf-oi2w/'),
+    reel('nutrisem-v1', 'Nutrisem', 'https://www.instagram.com/reel/DMqxBWnpLvS/'),
+    reel('que-pedir-por-primera-vez', 'Qué pedir por primera vez', 'https://www.instagram.com/reel/DbOu0XThBXP/'),
     reel('dia-de-control', 'Día de control', 'https://www.instagram.com/reel/DMG1OxWR_Xa/'),
-    reel('dia-de-grabacion-vlog', 'Día de grabación · vlog', 'https://www.instagram.com/reel/DKx_qfzM-wi/'),
-    reel('domicilios-el-faro', 'Domicilios El Faro'),
-    reel('el-amigo-que-ve-numeros', 'El amigo que ve números'),
+    reel('el-amigo-que-ve-numeros', 'El amigo que ve números', 'https://www.instagram.com/reel/DXflhl9kVOa/'),
     reel('exoses-sesderma-v5', 'Exosomas Sesderma', 'https://www.instagram.com/reel/DSdp7KgDSxn/'),
     reel('la-inchetera-v2', 'La inchetera', 'https://www.instagram.com/reel/DYijLyLM02k/'),
-    reel('madurito-desmechado', 'Madurito desmechado', 'https://www.instagram.com/reel/DbHOHucBZBO/'),
-    reel('maiz-hibrido-especial', 'Maíz híbrido especial', 'https://www.instagram.com/reel/DNCELoTJGf8/'),
-    reel('nueva-camara-intraoral', 'Nueva cámara intraoral', 'https://www.instagram.com/reel/DN4FMtxkV6l/'),
-    reel('nutrisem-v1', 'Nutrisem', 'https://www.instagram.com/reel/DMqxBWnpLvS/'),
-    reel('pitch-dondi-record-v2', 'Pitch Dondi'),
-    reel('productos-dia-y-noche', 'Productos día y noche', 'https://www.instagram.com/reel/DU_k5d1kuIW/'),
-    reel('que-pedir-por-primera-vez', 'Qué pedir por primera vez', 'https://www.instagram.com/reel/DbOu0XThBXP/'),
-    reel('te-duermes-sin-cepillarte', 'Te duermes sin cepillarte', 'https://www.instagram.com/reel/DNov5tMx0so/'),
-    reel('tu-amigo-el-ganadero', 'Tu amigo el ganadero', 'https://www.instagram.com/reel/DLDdmQ6ynkX/'),
     reel('vendes-tu-carro', 'Vendes tu carro', 'https://www.instagram.com/reel/DQIM4Q9DZcz/'),
     // Formato distinto al resto: va sola, cerrando la ventana.
     {
@@ -513,14 +516,21 @@ export const masTrabajo = {
       ancho: true,
       instagram: 'https://www.instagram.com/reel/DPMY6lkjZpQ/',
     },
+    reel('nueva-camara-intraoral', 'Nueva cámara intraoral', 'https://www.instagram.com/reel/DN4FMtxkV6l/'),
+    reel('pitch-dondi-record-v2', 'Pinche Récord', 'https://www.instagram.com/reel/DVq2xGYkQV5/'),
+    reel('dia-de-grabacion-vlog', 'Día de grabación · vlog', 'https://www.instagram.com/reel/DKx_qfzM-wi/'),
+    reel('te-duermes-sin-cepillarte', 'Te duermes sin cepillarte', 'https://www.instagram.com/reel/DNov5tMx0so/'),
+    reel('maiz-hibrido-especial', 'Maíz híbrido especial', 'https://www.instagram.com/reel/DNCELoTJGf8/'),
+    reel('tu-amigo-el-ganadero', 'Tu amigo el ganadero', 'https://www.instagram.com/reel/DLDdmQ6ynkX/'),
   ] as readonly PiezaSuelta[],
 } as const;
 
 export const contacto = {
   title: "¿Buscas a alguien para tu equipo de marketing?",
   subtitle: "Contáctame y agendemos una entrevista",
-  ctaPrimary: "Escribir por WhatsApp",
+  ctaPrimary: "Escríbeme por WhatsApp",
   telefono: "321 862 2670",
-  // El botón del PDF se retiró hasta que exista el archivo: un botón que anuncia
-  // "pronto disponible" resta más de lo que suma. Al volver, va como enlace real.
+  // El botón del PDF solo se pinta si `site.cvPdf` tiene ruta: un botón que
+  // anuncia "pronto disponible" resta más de lo que suma.
+  ctaSecondary: "Descargar mi hoja de vida",
 } as const;
