@@ -5,19 +5,37 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-hueso/15 bg-marino px-5 py-8 text-hueso/60 sm:px-8">
+  <!--
+    Nombre a la izquierda y el resto agrupado a la derecha, con separadores
+    explícitos. Antes eran tres elementos sueltos con `justify-between` y un
+    hueco vacío de relleno: al copiar el texto salía todo pegado.
+  -->
   <div
-    class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-widest"
+    class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-widest"
   >
     <span>{site.name}</span>
-    <span>{site.location} · {year}</span>
-    {
-      site.linkedin ? (
-        <a href={site.linkedin} target="_blank" rel="noopener" class="transition-colors hover:text-hueso">
-          LinkedIn
-        </a>
-      ) : (
-        <span aria-hidden="true" />
-      )
-    }
+
+    <span class="flex flex-wrap items-center gap-x-2">
+      <span>{site.location}</span>
+      <span aria-hidden="true" class="text-hueso/30">·</span>
+      <span>{year}</span>
+      {
+        site.linkedin && (
+          <>
+            <span aria-hidden="true" class="text-hueso/30">
+              ·
+            </span>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener"
+              class="transition-colors hover:text-hueso"
+            >
+              LinkedIn
+            </a>
+          </>
+        )
+      }
+    </span>
   </div>
 </footer>
