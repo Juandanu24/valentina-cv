@@ -73,9 +73,16 @@ JetBrains Mono (datos, etiquetas y detalles).
 en mono sobre barra vino. Es el único momento enfático de la página, y va **igual
 en las seis tarjetas** (sin destacar una sobre otra).
 
+## Proyectos: organizados por área, no por cliente
+
+Las seis tarjetas llevan como titular el **área de experiencia** (número + área en
+la tipografía de mayor jerarquía) y debajo, en mono y menor tamaño, **cliente —
+sector**. El criterio: un reclutador busca "sabe hacer esto", no "trabajó con
+aquel". Al cambiar contenido hay que respetar esa jerarquía.
+
 ## Estructura de secciones
 
-Nav fija → Hero (retrato) → Banner de aptitudes → Proyectos destacados →
+Nav fija → Hero (retrato) → Banner de aptitudes → Áreas de experiencia →
 Experiencia → Mi filosofía → Trayectoria → Contacto → Pie.
 
 ## Piezas visuales
