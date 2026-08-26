@@ -443,9 +443,8 @@ export const herramientas = [
   { name: "Premiere", sigla: "Pr", bg: "#FFFFFF", fg: "#111111", logo: "/logos/adobe-premiere-logo-png-seeklogo-380789.png" },
   { name: "CapCut", sigla: "Cc", bg: "#FFFFFF", fg: "#000000", logo: "/logos/capcut-logo-png.png" },
   { name: "Meta Business Suite", sigla: "M", bg: "#FFFFFF", fg: "#0081FB", logo: "/logos/logo-meta.png" },
-  // TODO: falta el logo real; mientras tanto va con monograma sobre el azul
-  // de la marca. Valentina gestionó la web de Alamedas en WordPress.
-  { name: "WordPress", sigla: "W", bg: "#21759B", fg: "#FFFFFF" },
+  // Valentina gestionó la web de Alamedas en WordPress.
+  { name: "WordPress", sigla: "W", bg: "#FFFFFF", fg: "#21759B", logo: "/logos/wordpress-logo.png" },
   { name: "Notion", sigla: "N", bg: "#FFFFFF", fg: "#111111", logo: "/logos/notion-app-logo.png" },
   { name: "ChatGPT", sigla: "GPT", bg: "#FFFFFF", fg: "#000000", logo: "/logos/chatgpt-logo.png" },
   { name: "Claude", sigla: "Cl", bg: "#FFFFFF", fg: "#D97757", logo: "/logos/claude-icon-logo.png" },
