@@ -110,13 +110,14 @@ export type Media = { alt: string; fit?: "cover" | "contain" } & (
 );
 
 export interface Project {
+  /** Titular de la tarjeta: el área de experiencia, no el cliente. */
+  area: string;
   client: string;
   sector: string;
-  role: string;
   description: string;
   tags: readonly string[];
   result: string;
-  /** "destacada": tratamiento visual mayor (04 Ciudad Manhattan). "visual": la más fotográfica (05 Palmareca gastro). */
+  /** "destacada": tratamiento visual mayor (05 Ciudad Manhattan). "visual": la más fotográfica (06 producción audiovisual). */
   emphasis?: "destacada" | "visual";
   /** Cantidad de placeholders mientras no haya material real. */
   pieces: number;
@@ -126,21 +127,20 @@ export interface Project {
   instagram?: string;
 }
 
-// Seis tarjetas, en este orden. Palmareca aparece dos veces con roles distintos,
-// separadas a propósito para que no se lean seguidas.
+// Seis tarjetas ordenadas por ÁREA DE EXPERIENCIA, no por cliente: un reclutador
+// busca "sabe hacer esto", no "trabajó con aquel". Por eso el titular es el área
+// y el cliente baja a la línea de apoyo.
 export const projects: readonly Project[] = [
   {
+    area: "Dirección creativa y estrategia de marketing",
     client: "Palmareca",
     sector: "Gastrobar",
-    role: "Directora creativa & estratega de marca",
     description:
-      "Dirigí el cambio forzado de nombre de La Pérgola a Palmareca sin perder el ADN de la marca. Lideré al equipo de diseño hacia una identidad en clave nocturna, reescribí el tono para conservar la sabrosura del lugar y ejecuté la pauta de la reinauguración.",
+      "Dirigí el cambio forzado de nombre de La Pérgola a Palmareca sin perder el ADN de la marca. Lideré al equipo de diseño y comunicaciones hacia una identidad en clave nocturna, reescribí el tono para conservar la sabrosura del lugar y ejecuté la pauta de la reinauguración.",
     tags: ["Branding", "Dirección de arte", "Meta Ads", "Copywriting"],
     instagram: "https://www.instagram.com/palmarecamtr/",
-    result: "Conflicto de marca resuelto y rebranding premium en menos de 30 días",
+    result: "Conflicto de marca resuelto y rebranding premium",
     pieces: 4,
-    // Material nuevo (menú y moodboard) + las páginas del manual que ya estaban:
-    // en esta carpeta solo llegaron 2 archivos y la tarjeta se quedaba corta.
     media: [
       {
         type: "image",
@@ -179,22 +179,19 @@ export const projects: readonly Project[] = [
     ],
   },
   {
-    // Sector belleza temprano: es la categoría a la que Valentina quiere llegar.
-    // TODO antes de publicar: confirmar autorización de la Dra. Garnica para
-    // usar su nombre, y reemplazar los marcadores por las piezas reales.
+    area: "Construcción de marca de belleza",
     client: "Dra. Natalia Garnica",
     sector: "Medicina estética",
-    role: "Directora creativa & estratega de marca personal",
     description:
-      "Construí la marca personal de una médica estética en una categoría donde nadie admite en público lo que consume y la venta depende por completo de la confianza. Traduje procedimientos clínicos a un lenguaje cercano y diseñé campañas que venden desde la seguridad, no desde la inseguridad.",
+      "Construí la marca personal de una médica estética. Traduje procedimientos clínicos a un lenguaje cercano y diseñé campañas que venden desde la seguridad, la confianza y la autoestima, no desde la inseguridad. Coordiné la estrategia de campañas de colaboración con marcas de skincare.",
     tags: [
       "Marca personal",
       "Dirección creativa",
       "Copywriting",
-      "Guion y producción",
       "Campañas estacionales",
+      "Influencer marketing",
     ],
-    result: "Construcción de marca personal y colaboraciones con marcas de skincare",
+    result: "Construcción de marca personal y colaboraciones con marcas",
     instagram: "https://www.instagram.com/dra.nataliagarnica/",
     pieces: 4,
     media: [
@@ -218,26 +215,26 @@ export const projects: readonly Project[] = [
       },
       {
         type: "video",
-        src: "/piezas/dra-natalia/que-hay-en-mi-bolso.mp4",
-        poster: "/piezas/dra-natalia/que-hay-en-mi-bolso.jpg",
-        alt: "Qué hay en mi bolso",
+        src: "/piezas/dra-natalia/surco-nasogeniano.mp4",
+        poster: "/piezas/dra-natalia/surco-nasogeniano.jpg",
+        alt: "Tratamiento del surco nasogeniano",
       },
     ],
   },
   {
+    area: "Estrategia de contenido y narrativa",
     client: "Dondi",
     sector: "Chance digital",
-    role: "Directora creativa & estratega de contenido",
     description:
-      "Diseñé la campaña de lanzamiento en redes de una nueva forma de comprar chance por WhatsApp. El reto era traducir una costumbre de toda la vida a un lenguaje digital que funcionara para dos públicos opuestos: el que ya compra en el punto físico y el joven que ni siquiera sabe qué es el chance. Dirigí guiones, storytelling y la comunicación entre las marcas aliadas que hacían posible la estrategia.",
+      "Diseñé la campaña de lanzamiento en redes de una nueva forma de comprar chance por WhatsApp. El reto era traducir una costumbre de toda la vida a un lenguaje digital que funcionara para dos públicos opuestos: el que ya compra en el punto físico y el joven que ni siquiera sabe qué es el chance. Dirigí guiones, storytelling y la comunicación entre las marcas aliadas.",
     tags: [
       "Estrategia de lanzamiento",
       "Storytelling",
       "Guion y video",
       "Dirección creativa",
+      "Producción audiovisual",
     ],
-    result:
-      "Dos audiencias en un solo lenguaje: el comprador de toda la vida y el que nunca ha comprado",
+    result: "Dos audiencias en un solo lenguaje: digitalización del chance",
     instagram: "https://www.instagram.com/somosdondi/",
     pieces: 4,
     media: [
@@ -268,121 +265,134 @@ export const projects: readonly Project[] = [
     ],
   },
   {
+    // Tarjeta nueva: rescata el trabajo de Alamedas, que solo figuraba como una
+    // línea en Trayectoria pese a ser donde aprendió CRM, datos y eventos.
+    // TODO: sustituir los marcadores por material real y añadir su Instagram.
+    area: "Datos, CRM y comunicación corporativa",
+    client: "Alamedas Centro Comercial",
+    sector: "Retail",
+    description:
+      "Manejé la comunicación 360° de un centro comercial: contenido, campañas, medios digitales y eventos. Administré el CRM WeGrow —base de datos de clientes y comercios— y construí informes de segmentación por comportamiento de compra y perfil demográfico que alimentaban las decisiones de las campañas. Ahí aprendí que la estrategia digital solo sirve cuando aterriza en algo físico: una activación, un evento, una visita a la tienda.",
+    tags: [
+      "CRM",
+      "Análisis de datos",
+      "Email marketing",
+      "Comunicación corporativa",
+      "Eventos y activaciones",
+    ],
+    result: "Comunicación, datos y eventos de un centro comercial, en un solo cargo",
+    pieces: 4,
+  },
+  {
+    area: "Pauta digital y análisis de resultados",
     client: "Ciudad Manhattan",
     sector: "Real estate & hospitality",
-    role: "Campaña multicanal & pauta digital",
     description:
-      "Diseñé y ejecuté la campaña multicanal de temporada para motel, hotel y bono gasolina. Orienté toda la pauta a abrir conversación directa por mensaje, testeando formatos y segmentaciones para maximizar la relevancia creativa.",
+      "Diseñé y ejecuté la campaña multicanal de temporada para tres unidades de negocio. Orienté toda la pauta a abrir conversación directa por mensaje, testeando formatos y segmentaciones, y analicé los resultados por audiencia y por pieza para saber qué sostener y qué cortar.",
     tags: [
       "Meta Ads Manager",
       "Anuncios conversacionales",
       "Analítica",
       "Copywriting promocional",
     ],
-    // Único resultado con cifra de las seis tarjetas. Si algún día llega el
-    // porcentaje de reservas que pedía la versión final del documento, entra
-    // aquí: un dato relativo pesa más que uno absoluto.
+    // Única cifra del portafolio: Valentina pidió conservar el 199.
     result: "199 conversaciones directas · $353 COP por lead",
     instagram: "https://www.instagram.com/motelmanhattanc/",
-    emphasis: "destacada", // el dato más contundente del portafolio
+    emphasis: "destacada",
     pieces: 3,
     media: [
       {
-        type: "duo",
-        src: [
-          "/piezas/ciudad-manhattan/slide-01.jpg",
-          "/piezas/ciudad-manhattan/slide-08.jpg",
-        ],
-        alt: "Reporte de campaña Meta Ads: portada y enfoque estratégico",
+        // Esta pieza muestra el importe gastado del cliente. AGENTS.md lo
+        // prohíbe por defecto; Valentina lo autorizó de forma expresa por ser
+        // el respaldo del dato de la barra de resultado. No revertir sin ella.
+        type: "image",
+        src: "/piezas/ciudad-manhattan/campana-02-resultados.jpg",
+        alt: "Resultados de la campaña: conversaciones, clics, impresiones y alcance",
       },
       {
-        type: "duo",
-        src: [
-          "/piezas/ciudad-manhattan/slide-09.jpg",
-          "/piezas/ciudad-manhattan/slide-13.jpg",
-        ],
-        alt: "Distribución por edades y lectura estratégica de resultados",
+        type: "image",
+        src: "/piezas/ciudad-manhattan/campana-03-publico.jpg",
+        alt: "Público objetivo y enfoque estratégico de la campaña",
+      },
+      {
+        type: "image",
+        src: "/piezas/ciudad-manhattan/campana-01-estructura.jpg",
+        alt: "Estructura de la campaña y distribución de anuncios",
       },
     ],
   },
   {
-    client: "Palmareca",
-    sector: "Gastronomía & coctelería",
-    role: "Fotógrafa & directora de arte",
+    // Sustituye a las dos tarjetas antiguas (fotografía de Palmareca y cobertura
+    // de Kepagro): la producción audiovisual es un área transversal, no un
+    // cliente. La galería reúne el material de ambas.
+    area: "Producción audiovisual y fotografía",
+    client: "Variedad de marcas",
+    sector: "Seis sectores",
     description:
-      "Construí el banco visual de la nueva carta. Definí la iluminación, el estilismo de alimentos y una paleta nocturna que traduce la experiencia premium del lugar en imágenes con alto apetito visual.",
-    tags: ["Fotografía gastronómica", "Dirección de arte", "Iluminación", "Food styling"],
-    instagram: "https://www.instagram.com/palmarecamtr/",
-    result: "Banco visual oficial, usado en menú impreso y pauta digital",
-    emphasis: "visual", // la más visual de las seis; fotografía propia
+      "He producido contenido audiovisual para marcas de gastronomía, agro, belleza, salud, real estate e ingeniería. Mi trabajo abarca el proceso completo: definir la narrativa, escribir el guion, dirigir el rodaje en set o en campo, decidir la iluminación y el encuadre, y editar hasta la pieza final. Voy desde la fotografía gastronómica de una carta —donde el estilismo y la luz son el producto— hasta la cobertura de eventos, donde hay que contar una historia con lo que pasa en tiempo real. En todos los casos parto de lo mismo: qué tiene que sentir quien lo ve, y qué decisión visual lo produce.",
+    tags: [
+      "Dirección de rodaje",
+      "Guion",
+      "Fotografía",
+      "Iluminación",
+      "Edición",
+      "Reels / TikTok",
+    ],
+    result: "Narrativa, producción y edición en seis sectores distintos",
+    emphasis: "visual",
     pieces: 6,
+    // Foto y video alternados: la tarjeta tiene que mostrar el rango, no una
+    // tanda de fotos seguida de una tanda de videos. El material sale de la
+    // carpeta del área, no de un cliente concreto: aquí conviven gastronomía,
+    // agro, salud y servicios.
     media: [
       {
         type: "image",
-        src: "/piezas/palmareca-fotos/copia-de-dsc01228.jpg",
-        alt: "Fotografía gastronómica de plato de Palmareca",
+        src: "/piezas/produccion-audiovisual/copia-de-dsc01228.jpg",
+        alt: "Fotografía gastronómica de plato",
+      },
+      {
+        type: "video",
+        src: "/piezas/produccion-audiovisual/no-solo-vendemos-maiz.mp4",
+        poster: "/piezas/produccion-audiovisual/no-solo-vendemos-maiz.jpg",
+        alt: "Pieza de campaña para el sector agro",
       },
       {
         type: "image",
-        src: "/piezas/palmareca-fotos/dsc06003.jpg",
-        alt: "Plato de la carta de Palmareca",
+        src: "/piezas/produccion-audiovisual/copia-de-dsc03106.jpg",
+        alt: "Coctelería en clave nocturna",
+      },
+      {
+        type: "video",
+        src: "/piezas/produccion-audiovisual/te-duermes-sin-cepillarte.mp4",
+        poster: "/piezas/produccion-audiovisual/te-duermes-sin-cepillarte.jpg",
+        alt: "Pieza de campaña para el sector salud",
       },
       {
         type: "image",
-        src: "/piezas/palmareca-fotos/copia-de-dsc01217.jpg",
-        alt: "Plato de la carta de Palmareca",
+        src: "/piezas/produccion-audiovisual/dsc06003.jpg",
+        alt: "Plato de carta con iluminación de estudio",
+      },
+      {
+        type: "video",
+        src: "/piezas/produccion-audiovisual/25-gestiona-tu-creditos.mp4",
+        poster: "/piezas/produccion-audiovisual/25-gestiona-tu-creditos.jpg",
+        alt: "Pieza de campaña para servicios financieros",
       },
       {
         type: "image",
-        src: "/piezas/palmareca-fotos/dsc09850.jpg",
-        alt: "Detalle gastronómico de Palmareca",
+        src: "/piezas/produccion-audiovisual/copia-de-dsc01217.jpg",
+        alt: "Plato de carta",
       },
       {
         type: "image",
-        src: "/piezas/palmareca-fotos/copia-de-dsc00908.jpg",
+        src: "/piezas/produccion-audiovisual/copia-de-dsc00908.jpg",
         alt: "Detalle gastronómico con iluminación de estudio",
       },
       {
         type: "image",
-        src: "/piezas/palmareca-fotos/copia-de-dsc03106.jpg",
-        alt: "Cóctel de la carta de Palmareca",
-      },
-    ],
-  },
-  {
-    client: "Kepagro",
-    sector: "Insumos agrícolas",
-    role: "Productora audiovisual & content creator",
-    description:
-      "Diseñé una serie de cobertura de eventos para modernizar la imagen del sector agro. Saqué el video corporativo de su fórmula habitual con estructura narrativa, voz en off y edición en tiempo real para conectar de forma cercana con los agricultores.",
-    tags: ["Cobertura de eventos", "Storytelling", "Producción en campo", "Reels / TikTok"],
-    instagram: "https://www.instagram.com/kepagrosas/",
-    result: "Miles de reproducciones orgánicas y humanización de una marca B2B",
-    pieces: 4,
-    media: [
-      {
-        type: "video",
-        src: "/piezas/kepagro/evento-1-lanzamiento-cotorra.mp4",
-        poster: "/piezas/kepagro/evento-1-lanzamiento-cotorra.jpg",
-        alt: "Cobertura del lanzamiento en Cotorra",
-      },
-      {
-        type: "video",
-        src: "/piezas/kepagro/lanzamiento-maiz-sahagun.mp4",
-        poster: "/piezas/kepagro/lanzamiento-maiz-sahagun.jpg",
-        alt: "Lanzamiento de maíz en Sahagún",
-      },
-      {
-        type: "video",
-        src: "/piezas/kepagro/bingo-patillero-final.mp4",
-        poster: "/piezas/kepagro/bingo-patillero-final.jpg",
-        alt: "Cobertura del bingo patillero",
-      },
-      {
-        type: "video",
-        src: "/piezas/kepagro/lanzamiento-tierralta.mp4",
-        poster: "/piezas/kepagro/lanzamiento-tierralta.jpg",
-        alt: "Lanzamiento en Tierralta",
+        src: "/piezas/produccion-audiovisual/dsc09850.jpg",
+        alt: "Detalle gastronómico",
       },
     ],
   },
@@ -411,8 +421,14 @@ export const capacidades = [
     items: ["Fotografía", "Video", "Edición en CapCut y Premiere", "Dirección de rodaje"],
   },
   {
-    title: "Números y pauta",
-    items: ["Meta Ads", "Análisis de métricas", "Informes de efectividad"],
+    title: "Datos y pauta",
+    items: [
+      "Meta Ads",
+      "Análisis de datos",
+      "CRM",
+      "Segmentación de audiencias",
+      "Informes de efectividad",
+    ],
   },
 ] as const;
 
@@ -427,6 +443,9 @@ export const herramientas = [
   { name: "Premiere", sigla: "Pr", bg: "#FFFFFF", fg: "#111111", logo: "/logos/adobe-premiere-logo-png-seeklogo-380789.png" },
   { name: "CapCut", sigla: "Cc", bg: "#FFFFFF", fg: "#000000", logo: "/logos/capcut-logo-png.png" },
   { name: "Meta Business Suite", sigla: "M", bg: "#FFFFFF", fg: "#0081FB", logo: "/logos/logo-meta.png" },
+  // TODO: falta el logo real; mientras tanto va con monograma sobre el azul
+  // de la marca. Valentina gestionó la web de Alamedas en WordPress.
+  { name: "WordPress", sigla: "W", bg: "#21759B", fg: "#FFFFFF" },
   { name: "Notion", sigla: "N", bg: "#FFFFFF", fg: "#111111", logo: "/logos/notion-app-logo.png" },
   { name: "ChatGPT", sigla: "GPT", bg: "#FFFFFF", fg: "#000000", logo: "/logos/chatgpt-logo.png" },
   { name: "Claude", sigla: "Cl", bg: "#FFFFFF", fg: "#D97757", logo: "/logos/claude-icon-logo.png" },
@@ -495,7 +514,7 @@ export const masTrabajo = {
     reel('productos-dia-y-noche', 'Productos día y noche', 'https://www.instagram.com/reel/DU_k5d1kuIW/'),
     reel('madurito-desmechado', 'Madurito desmechado', 'https://www.instagram.com/reel/DbHOHucBZBO/'),
     reel('compra-lo-que-necesitas', 'Compra lo que necesitas', 'https://www.instagram.com/reel/DRAlDlYiTEk/'),
-    reel('25-gestiona-tu-creditos', 'Gestiona tus créditos', 'https://www.instagram.com/reel/DFYzrUlSLFh/'),
+    reel('21-vendiendo-tu-carro', 'Vendiendo tu carro'),
     reel('caipirina-de-maracuya', 'Caipiriña de maracuyá', 'https://www.instagram.com/reel/DOzVphiDU1f/'),
     reel('cancer-de-piel-v2', 'Cáncer de piel', 'https://www.instagram.com/reel/DZkgY7PJ9Ba/'),
     reel('domicilios-el-faro', 'Domicilios El Faro', 'https://www.instagram.com/reel/DSDH9rzAARU/'),
