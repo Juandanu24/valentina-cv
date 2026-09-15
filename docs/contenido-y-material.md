@@ -55,11 +55,11 @@ videos se descargan solo cuando se van a ver.
 ### Carpetas de `material-vale/`
 | Carpeta | Destino en el sitio |
 |---|---|
-| `Dirección creativa y estrategia de marketing` | Tarjeta 01 |
-| `Construcción de marca de belleza` | Tarjeta 02 |
-| `Estrategia de contenido y narrativa` | Tarjeta 03 |
-| `Datos, CRM y comunicación corporativa` | Tarjeta 04 |
-| `Pauta digital y análisis de resultados` | Tarjeta 05 |
+| `Datos, CRM y comunicación corporativa` | Tarjeta 01 |
+| `Dirección creativa y estrategia de marketing` | Tarjeta 02 |
+| `Pauta digital y análisis de resultados` | Tarjeta 03 |
+| `Construcción de marca de belleza` | Tarjeta 04 |
+| `Estrategia de contenido y narrativa` | Tarjeta 05 |
 | `Producción audiovisual y fotografía` | Tarjeta 06 |
 | `ventana conoce más` | Ventana "Conoce más de mi trabajo" |
 | `logos herramientas` | Fichas de herramientas |
