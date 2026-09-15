@@ -114,15 +114,8 @@ import { masTrabajo } from "../data/site";
                 />
               )}
             </div>
-              {/* Sin rótulo: la pieza habla sola. Queda una señal discreta de que
-                  la ficha se puede tocar, en la esquina y sobre el video. */}
-              <span
-                aria-hidden="true"
-                data-punta
-                class="absolute bottom-2 right-2 grid h-7 w-7 place-items-center rounded-full bg-hueso/85 text-xs text-marino shadow-[0_2px_8px_rgba(30,42,56,0.25)] transition-transform duration-200"
-              >
-                ⌄
-              </span>
+              {/* Sin rótulo ni flecha: la pieza habla sola. Se retiró la "⌄" de la
+                  esquina porque se leía como un elemento vacío. */}
             </button>
 
             {/* Desplegable: aparece bajo la ficha, no navega de inmediato. */}
@@ -202,17 +195,14 @@ import { masTrabajo } from "../data/site";
         if (ficha === excepto) return;
         const menu = ficha.querySelector<HTMLElement>("[data-menu]");
         const boton = ficha.querySelector<HTMLButtonElement>("[data-abrir-menu]");
-        const punta = ficha.querySelector<HTMLElement>("[data-punta]");
         if (menu) menu.hidden = true;
         boton?.setAttribute("aria-expanded", "false");
-        punta?.classList.remove("rotate-180");
       });
     }
 
     fichas.forEach((ficha) => {
       const boton = ficha.querySelector<HTMLButtonElement>("[data-abrir-menu]");
       const menu = ficha.querySelector<HTMLElement>("[data-menu]");
-      const punta = ficha.querySelector<HTMLElement>("[data-punta]");
       if (!boton || !menu) return;
 
       boton.addEventListener("click", () => {
@@ -220,7 +210,6 @@ import { masTrabajo } from "../data/site";
         cerrarMenus(ficha);
         menu.hidden = abierto;
         boton.setAttribute("aria-expanded", String(!abierto));
-        punta?.classList.toggle("rotate-180", !abierto);
       });
     });
 

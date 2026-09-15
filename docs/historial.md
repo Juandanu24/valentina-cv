@@ -90,6 +90,17 @@ violeta, nombre gigante y marquesina de habilidades. **Descartada por completo.*
 - `CLAUDE.md` pasó de enlace simbólico roto a archivo real con instrucciones.
 - `AGENTS.md` y `CONTEXTO.md` se consolidaron en la carpeta `docs/`.
 
+## Etapa 8 — Nuevo orden de áreas · 15 sep 2026
+
+- Orden de tarjetas: Alamedas, Dirección creativa, Pauta digital, Belleza,
+  Estrategia de contenido, Producción audiovisual.
+- Alamedas deja la portada tipográfica y usa la foto de la fachada del centro comercial.
+- Dirección creativa: la barra de resultado pasa a "+140% de crecimiento en seguidores
+  (2023–2026) y cero pérdida de comunidad en el cambio de nombre".
+- Experiencia: iClic pasa a "Cofundadora y estratega de marketing", con descripción nueva.
+- La ventana dice "6 sectores", igual que la tarjeta de producción audiovisual.
+- Se retiró la flecha "⌄" de cada pieza de la ventana: se leía como un elemento vacío.
+
 ## Solicitudes
 
 | # | Fecha | Contenido |

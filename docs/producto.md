@@ -74,11 +74,11 @@ cliente baja a una línea en mono.
 
 | # | Área | Cliente |
 |---|---|---|
-| 01 | Dirección creativa y estrategia de marketing | Palmareca — Gastrobar |
-| 02 | Construcción de marca de belleza | Dra. Natalia Garnica — Medicina estética |
-| 03 | Estrategia de contenido y narrativa | Dondi — Chance digital |
-| 04 | Datos, CRM y comunicación corporativa | Alamedas Centro Comercial — Retail |
-| 05 | Pauta digital y análisis de resultados | Ciudad Manhattan — Real estate & hospitality |
+| 01 | Datos, CRM y comunicación corporativa | Alamedas Centro Comercial — Retail |
+| 02 | Dirección creativa y estrategia de marketing | Palmareca — Gastrobar |
+| 03 | Pauta digital y análisis de resultados | Ciudad Manhattan — Real estate & hospitality |
+| 04 | Construcción de marca de belleza | Dra. Natalia Garnica — Medicina estética |
+| 05 | Estrategia de contenido y narrativa | Dondi — Chance digital |
 | 06 | Producción audiovisual y fotografía | Variedad de marcas — Seis sectores |
 
 Anatomía de cada tarjeta: carrusel de piezas (o portada tipográfica si no hay
@@ -87,7 +87,7 @@ recortada a dos líneas con **Ampliar / Reducir** → etiquetas → barra vino d
 
 ### Conoce más de mi trabajo
 - Bloque verde: **¡Conoce más de mi trabajo!** con botón **Portafolio completo**.
-- Abre una ventana dentro de la página: **Más trabajo de 5 sectores diferentes.**
+- Abre una ventana dentro de la página: **Más trabajo de 6 sectores diferentes.**
 - 22 piezas: 21 reels en filas de tres y una pieza panorámica (*Maíz SV 1035*)
   ocupando una fila entera.
 - Cada pieza abre un menú con el enlace a su reel en Instagram.

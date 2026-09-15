@@ -29,10 +29,13 @@ Kepagro). La galería mezcla material de varios sectores. *(ago 2026)*
 **Salió S Ingeniería.**
 Su área ya la cubría otra tarjeta y era la de menos material. *(ago 2026)*
 
-**Una sola cifra: "199 conversaciones directas · $353 COP por lead".**
-Es el único dato medido del portafolio. Valentina lo retiró y lo repuso. Un
-porcentaje relativo —cuántas conversaciones terminaron en reserva— sería más
-fuerte; si llega, entra aquí. *(ago 2026)*
+**Cifras en las barras de resultado.**
+"199 conversaciones directas · $353 COP por lead" (Pauta digital): Valentina lo
+retiró y lo repuso. Un porcentaje relativo —cuántas conversaciones terminaron en
+reserva— sería más fuerte; si llega, entra aquí. *(ago 2026)*
+"+140% de crecimiento en seguidores (2023–2026) y cero pérdida de comunidad en el
+cambio de nombre" (Dirección creativa) reemplazó a "Conflicto de marca resuelto y
+rebranding premium": un dato medido pesa más que un adjetivo. *(sep 2026)*
 
 **Sin fotos de banco: portada tipográfica.**
 Una foto de archivo en un portafolio resta credibilidad. La alternativa honesta no

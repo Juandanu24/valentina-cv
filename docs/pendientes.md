@@ -4,7 +4,7 @@ Actualizado: septiembre 2026.
 
 ## Contenido
 
-- [ ] Material real de Alamedas (hoy lleva portada tipográfica).
+- [ ] Más material de Alamedas (hoy lleva solo la foto de la fachada).
 - [ ] Instagram de Alamedas (decidido dejarlo sin enlace de momento).
 - [ ] Enlace del reel *Vendiendo tu carro* (decidido dejarlo sin enlace de momento).
 - [ ] Revisar si se quieren los dos reels parecidos sobre vender carro en la ventana.
