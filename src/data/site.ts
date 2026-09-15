@@ -24,7 +24,7 @@ export const site = {
   // Hoja de vida en PDF. Vacío = el botón no se pinta. En cuanto el archivo
   // esté en public/, basta con poner aquí su ruta y el botón aparece solo.
   // Antes de publicarlo: revisar que no lleve cédula, dirección, EPS ni
-  // teléfonos de terceros (ver "Privacidad" en AGENTS.md).
+  // teléfonos de terceros (ver "Privacidad" en docs/contenido-y-material.md).
   cvPdf: "/hoja-de-vida-valentina-garcia-florez.pdf",
   // TODO: dominio propio (ej. valentinagarcia.co) — actualizar también astro.config.mjs
   url: "https://valentinagarciaflorez.vercel.app",
@@ -117,7 +117,7 @@ export interface Project {
   description: string;
   tags: readonly string[];
   result: string;
-  /** "destacada": tratamiento visual mayor (05 Ciudad Manhattan). "visual": la más fotográfica (06 producción audiovisual). */
+  /** "destacada": tratamiento visual mayor (03 Ciudad Manhattan). "visual": la más fotográfica (06 producción audiovisual). */
   emphasis?: "destacada" | "visual";
   /** Cantidad de placeholders mientras no haya material real. */
   pieces: number;
@@ -132,6 +132,32 @@ export interface Project {
 // y el cliente baja a la línea de apoyo.
 export const projects: readonly Project[] = [
   {
+    // Tarjeta nueva: rescata el trabajo de Alamedas, que solo figuraba como una
+    // línea en Trayectoria pese a ser donde aprendió CRM, datos y eventos.
+    // Portada: foto del centro comercial que trajo Valentina. Pendiente su Instagram.
+    area: "Datos, CRM y comunicación corporativa",
+    client: "Alamedas Centro Comercial",
+    sector: "Retail",
+    description:
+      "Manejé la comunicación 360° de un centro comercial: contenido, campañas, medios digitales y eventos. Administré el CRM WeGrow —base de datos de clientes y comercios— y construí informes de segmentación por comportamiento de compra y perfil demográfico que alimentaban las decisiones de las campañas. Ahí aprendí que la estrategia digital solo sirve cuando aterriza en algo físico: una activación, un evento, una visita a la tienda.",
+    tags: [
+      "CRM",
+      "Análisis de datos",
+      "Email marketing",
+      "Comunicación corporativa",
+      "Eventos y activaciones",
+    ],
+    result: "Comunicación, datos y eventos de un centro comercial, en un solo cargo",
+    pieces: 1,
+    media: [
+      {
+        type: "image",
+        src: "/piezas/alamedas/alamedas-cc-portada.jpg",
+        alt: "Fachada de Alamedas Centro Comercial",
+      },
+    ],
+  },
+  {
     area: "Dirección creativa y estrategia de marketing",
     client: "Palmareca",
     sector: "Gastrobar",
@@ -139,7 +165,7 @@ export const projects: readonly Project[] = [
       "Dirigí el cambio forzado de nombre de La Pérgola a Palmareca sin perder el ADN de la marca. Lideré al equipo de diseño y comunicaciones hacia una identidad en clave nocturna, reescribí el tono para conservar la sabrosura del lugar y ejecuté la pauta de la reinauguración.",
     tags: ["Branding", "Dirección de arte", "Meta Ads", "Copywriting"],
     instagram: "https://www.instagram.com/palmarecamtr/",
-    result: "Conflicto de marca resuelto y rebranding premium",
+    result: "+140% de crecimiento en seguidores (2023–2026) y cero pérdida de comunidad en el cambio de nombre",
     pieces: 4,
     media: [
       {
@@ -175,6 +201,44 @@ export const projects: readonly Project[] = [
           "/piezas/palmareca-rebranding/manual-07.jpg",
         ],
         alt: "Manual de marca de Palmareca: aplicaciones de la identidad",
+      },
+    ],
+  },
+  {
+    area: "Pauta digital y análisis de resultados",
+    client: "Ciudad Manhattan",
+    sector: "Real estate & hospitality",
+    description:
+      "Diseñé y ejecuté la campaña multicanal de temporada para tres unidades de negocio. Orienté toda la pauta a abrir conversación directa por mensaje, testeando formatos y segmentaciones, y analicé los resultados por audiencia y por pieza para saber qué sostener y qué cortar.",
+    tags: [
+      "Meta Ads Manager",
+      "Anuncios conversacionales",
+      "Analítica",
+      "Copywriting promocional",
+    ],
+    // Valentina pidió conservar el 199. La otra cifra del portafolio es el +140% de Palmareca.
+    result: "199 conversaciones directas · $353 COP por lead",
+    instagram: "https://www.instagram.com/motelmanhattanc/",
+    emphasis: "destacada",
+    pieces: 3,
+    media: [
+      {
+        // Esta pieza muestra el importe gastado del cliente. docs/contenido-y-material.md lo
+        // prohíbe por defecto; Valentina lo autorizó de forma expresa por ser
+        // el respaldo del dato de la barra de resultado. No revertir sin ella.
+        type: "image",
+        src: "/piezas/ciudad-manhattan/campana-02-resultados.jpg",
+        alt: "Resultados de la campaña: conversaciones, clics, impresiones y alcance",
+      },
+      {
+        type: "image",
+        src: "/piezas/ciudad-manhattan/campana-03-publico.jpg",
+        alt: "Público objetivo y enfoque estratégico de la campaña",
+      },
+      {
+        type: "image",
+        src: "/piezas/ciudad-manhattan/campana-01-estructura.jpg",
+        alt: "Estructura de la campaña y distribución de anuncios",
       },
     ],
   },
@@ -261,63 +325,6 @@ export const projects: readonly Project[] = [
         src: "/piezas/dondi/plan-referidos.mp4",
         poster: "/piezas/dondi/plan-referidos.jpg",
         alt: "Plan de referidos de Dondi",
-      },
-    ],
-  },
-  {
-    // Tarjeta nueva: rescata el trabajo de Alamedas, que solo figuraba como una
-    // línea en Trayectoria pese a ser donde aprendió CRM, datos y eventos.
-    // TODO: sustituir los marcadores por material real y añadir su Instagram.
-    area: "Datos, CRM y comunicación corporativa",
-    client: "Alamedas Centro Comercial",
-    sector: "Retail",
-    description:
-      "Manejé la comunicación 360° de un centro comercial: contenido, campañas, medios digitales y eventos. Administré el CRM WeGrow —base de datos de clientes y comercios— y construí informes de segmentación por comportamiento de compra y perfil demográfico que alimentaban las decisiones de las campañas. Ahí aprendí que la estrategia digital solo sirve cuando aterriza en algo físico: una activación, un evento, una visita a la tienda.",
-    tags: [
-      "CRM",
-      "Análisis de datos",
-      "Email marketing",
-      "Comunicación corporativa",
-      "Eventos y activaciones",
-    ],
-    result: "Comunicación, datos y eventos de un centro comercial, en un solo cargo",
-    pieces: 4,
-  },
-  {
-    area: "Pauta digital y análisis de resultados",
-    client: "Ciudad Manhattan",
-    sector: "Real estate & hospitality",
-    description:
-      "Diseñé y ejecuté la campaña multicanal de temporada para tres unidades de negocio. Orienté toda la pauta a abrir conversación directa por mensaje, testeando formatos y segmentaciones, y analicé los resultados por audiencia y por pieza para saber qué sostener y qué cortar.",
-    tags: [
-      "Meta Ads Manager",
-      "Anuncios conversacionales",
-      "Analítica",
-      "Copywriting promocional",
-    ],
-    // Única cifra del portafolio: Valentina pidió conservar el 199.
-    result: "199 conversaciones directas · $353 COP por lead",
-    instagram: "https://www.instagram.com/motelmanhattanc/",
-    emphasis: "destacada",
-    pieces: 3,
-    media: [
-      {
-        // Esta pieza muestra el importe gastado del cliente. AGENTS.md lo
-        // prohíbe por defecto; Valentina lo autorizó de forma expresa por ser
-        // el respaldo del dato de la barra de resultado. No revertir sin ella.
-        type: "image",
-        src: "/piezas/ciudad-manhattan/campana-02-resultados.jpg",
-        alt: "Resultados de la campaña: conversaciones, clics, impresiones y alcance",
-      },
-      {
-        type: "image",
-        src: "/piezas/ciudad-manhattan/campana-03-publico.jpg",
-        alt: "Público objetivo y enfoque estratégico de la campaña",
-      },
-      {
-        type: "image",
-        src: "/piezas/ciudad-manhattan/campana-01-estructura.jpg",
-        alt: "Estructura de la campaña y distribución de anuncios",
       },
     ],
   },
@@ -451,14 +458,14 @@ export const herramientas = [
 ] as const;
 
 // Trayectoria comprimida: función de verificación para RR.HH.
-// iClic: sin "fundadora" en el titular; el mérito va en la descripción.
+// iClic: Valentina pidió "Cofundadora" en el titular (sep 2026).
 export const trayectoria = [
   {
     period: "Abr 2023 – hoy",
     org: "iClic",
-    role: "Estrategia y dirección de marketing",
+    role: "Cofundadora y estratega de marketing",
     detail:
-      "Monté y opero una operación de marketing completa: clientes, presupuesto, equipo y resultados.",
+      "Estrategia digital para empresas de varios sectores: diagnóstico, marca, contenido, pauta en Meta y medición de resultados.",
   },
   {
     period: "Oct 2021 – Mar 2023",
@@ -507,7 +514,7 @@ export const masTrabajo = {
   body: "Campañas, video y contenido para clientes de otros sectores.",
   cta: "Portafolio completo",
   // El titular de dentro de la ventana es distinto al del banner que la abre.
-  tituloVentana: "Más trabajo de 5 sectores diferentes.",
+  tituloVentana: "Más trabajo de 6 sectores diferentes.",
   // Material de la carpeta "ventana conoce más": 20 reels + la pieza ancha final.
   piezas: [
     reel('productos-dia-y-noche', 'Productos día y noche', 'https://www.instagram.com/reel/DU_k5d1kuIW/'),
