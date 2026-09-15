@@ -110,7 +110,7 @@ pnpm preview  # sirve el build
 ```
 
 - **Contenido:** todo el texto está en `src/data/site.ts`.
-- **Diseño y reglas del proyecto:** ver `AGENTS.md`.
+- **Diseño, decisiones y reglas del proyecto:** ver la carpeta `docs/`. Instrucciones para sesiones de Claude: `CLAUDE.md`.
 - **Piezas visuales:** `public/piezas/`. El material bruto (2.4 GB) no está en el
   repo; vive en Drive. Para regenerarlo: `bash scripts/optimizar-material.sh`
   (requiere `ffmpeg`, `imagemagick` y `poppler-utils`).

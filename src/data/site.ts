@@ -24,7 +24,7 @@ export const site = {
   // Hoja de vida en PDF. Vacío = el botón no se pinta. En cuanto el archivo
   // esté en public/, basta con poner aquí su ruta y el botón aparece solo.
   // Antes de publicarlo: revisar que no lleve cédula, dirección, EPS ni
-  // teléfonos de terceros (ver "Privacidad" en AGENTS.md).
+  // teléfonos de terceros (ver "Privacidad" en docs/contenido-y-material.md).
   cvPdf: "/hoja-de-vida-valentina-garcia-florez.pdf",
   // TODO: dominio propio (ej. valentinagarcia.co) — actualizar también astro.config.mjs
   url: "https://valentinagarciaflorez.vercel.app",
@@ -302,7 +302,7 @@ export const projects: readonly Project[] = [
     pieces: 3,
     media: [
       {
-        // Esta pieza muestra el importe gastado del cliente. AGENTS.md lo
+        // Esta pieza muestra el importe gastado del cliente. docs/contenido-y-material.md lo
         // prohíbe por defecto; Valentina lo autorizó de forma expresa por ser
         // el respaldo del dato de la barra de resultado. No revertir sin ella.
         type: "image",
