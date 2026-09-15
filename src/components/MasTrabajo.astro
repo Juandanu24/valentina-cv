@@ -98,7 +98,7 @@ import { masTrabajo } from "../data/site";
               {pieza.type === "video" ? (
                 <video
                   data-src={pieza.src}
-                  poster={pieza.poster}
+                  data-poster={pieza.poster}
                   muted
                   loop
                   playsinline
@@ -106,10 +106,12 @@ import { masTrabajo } from "../data/site";
                   class="h-full w-full object-cover"
                 />
               ) : (
+                // Sin `src` ni `loading="lazy"`: dentro de un <dialog> cerrado el
+                // navegador puede igual descargarla. Queda en `data-src` y el
+                // script la asigna solo cuando la pieza entra en vista.
                 <img
-                  src={pieza.src}
+                  data-src={pieza.src}
                   alt={pieza.label}
-                  loading="lazy"
                   class="h-full w-full object-cover"
                 />
               )}
@@ -153,16 +155,45 @@ import { masTrabajo } from "../data/site";
   const dialogo = document.getElementById("mas-trabajo") as HTMLDialogElement | null;
   const abrir = document.querySelector<HTMLButtonElement>("[data-abrir-mas]");
   const cerrar = document.querySelector<HTMLButtonElement>("[data-cerrar-mas]");
+  const caja = dialogo?.querySelector<HTMLElement>("[data-lenis-prevent]") ?? null;
 
-  if (dialogo && abrir) {
+  if (dialogo && abrir && caja) {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fichas = [...dialogo.querySelectorAll<HTMLElement>("[data-pieza]")];
+
+    // --- Carga y reproducción por visibilidad dentro de la caja -----------
+    // Solo las piezas visibles (o a punto de estarlo) dentro de la ventana
+    // reciben `src`/`poster` y se reproducen. Al salir de vista se pausan,
+    // pero conservan el `src`: no hace falta volver a descargarlas.
+    const cargarPieza = (ficha: HTMLElement) => {
+      const video = ficha.querySelector<HTMLVideoElement>("video[data-src]");
+      if (video) {
+        if (!video.poster && video.dataset.poster) video.poster = video.dataset.poster;
+        if (!video.src && video.dataset.src) video.src = video.dataset.src;
+        return;
+      }
+      const img = ficha.querySelector<HTMLImageElement>("img[data-src]");
+      if (img && !img.src && img.dataset.src) img.src = img.dataset.src;
+    };
+
+    const observadorPiezas = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((entrada) => {
+          const ficha = entrada.target as HTMLElement;
+          const video = ficha.querySelector<HTMLVideoElement>("video");
+          if (entrada.isIntersecting) {
+            cargarPieza(ficha);
+            if (video && !reduce) video.play().catch(() => {});
+          } else {
+            video?.pause();
+          }
+        });
+      },
+      { root: caja, rootMargin: "200px 0px" }
+    );
+    fichas.forEach((ficha) => observadorPiezas.observe(ficha));
 
     abrir.addEventListener("click", () => {
-      // Carga diferida real: los videos solo se descargan al abrir la ventana.
-      dialogo.querySelectorAll<HTMLVideoElement>("video[data-src]").forEach((v) => {
-        if (!v.src && v.dataset.src) v.src = v.dataset.src;
-        if (!reduce) v.play().catch(() => {});
-      });
       dialogo.showModal();
       // Sin esto Lenis sigue moviendo la página de atrás: no usa scroll nativo,
       // así que `overflow: hidden` en el body no lo frena.
@@ -188,7 +219,6 @@ import { masTrabajo } from "../data/site";
     // --- Desplegable por pieza --------------------------------------------
     // El clic en una ficha no navega: abre un menú con el enlace al Instagram
     // del cliente. Solo uno abierto a la vez.
-    const fichas = [...dialogo.querySelectorAll<HTMLElement>("[data-pieza]")];
 
     function cerrarMenus(excepto?: HTMLElement) {
       fichas.forEach((ficha) => {

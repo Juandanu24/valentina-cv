@@ -13,6 +13,7 @@ no se copia en otro: así la documentación no se contradice.
 | [contenido-y-material.md](contenido-y-material.md) | Reglas de texto, cómo agregar fotos y videos, privacidad |
 | [tecnico.md](tecnico.md) | Stack, dónde vive cada cosa, problemas resueltos, publicación |
 | [pendientes.md](pendientes.md) | Lo que falta, ordenado por tipo |
+| [material-alta-resolucion.md](material-alta-resolucion.md) | Tarea en curso: fuentes de fotos en alta resolución (se borra al terminar) |
 | [historial.md](historial.md) | Línea de tiempo de todo lo trabajado hasta la versión publicada |
 
 Las instrucciones operativas para sesiones de Claude están en
