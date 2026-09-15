@@ -98,6 +98,15 @@ en el orden de `site.ts`.
 **Casilla vacía en la ventana.** Ver decisiones.md: la pieza panorámica debe ir tras
 un número de piezas múltiplo de 3.
 
+**Carga inicial de 4,7 MB con 62 imágenes, y 23,8 MB de golpe al abrir la ventana.**
+El fondo inline y el `poster` de cada video se descargaban siempre, y los 22
+videos de la ventana recibían `src` a la vez al abrirla. Solución en ambos:
+`data-src`/`data-poster`/`data-bg` y un `IntersectionObserver` que los asigna
+solo cuando la pieza está visible o a punto de estarlo; en la ventana el `root`
+es la caja desplazable y al salir de vista el video se pausa sin quitar el
+`src`. Al agregar medios a estos componentes, usar `data-*`, nunca
+`src`/`poster`/`style` directos, o se vuelven a descargar al entrar.
+
 **Saltos de línea.** Los archivos usan CRLF. Los scripts que buscan y reemplazan
 texto deben normalizar a `\n` antes y restaurar al escribir.
 

@@ -25,9 +25,12 @@ Actualizado: septiembre 2026.
       Si se cambia en LinkedIn, actualizar `site.linkedin` el mismo día o el enlace se rompe.
 - [ ] Cambiar la cuenta del conector de Google Drive a la cuenta de trabajo que posee el material.
 - [ ] Archivo `.gitattributes` para unificar saltos de línea entre Windows y WSL.
+- [ ] Subir la calidad de los videos a 1080p ahora que la ventana carga solo los visibles (los originales de Dondi están en 4K).
+- [ ] Nitidez de fotos en celular: 12 de 19 imágenes se muestran a más resolución de la que tienen (tope de 1200 px). Requiere los originales del Drive y migrar a `astro:assets`.
 
 ## Resueltos recientemente
 
+- [x] Carga inicial de la página y de la ventana "Conoce más" (carga diferida de medios).
 - [x] Enlace de LinkedIn en el sitio.
 - [x] Hoja de vida en PDF con botón de descarga.
 - [x] Correo profesional sin Hotmail.

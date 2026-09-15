@@ -74,7 +74,9 @@ videos se descargan solo cuando se van a ver.
 | Logo | 128 px, PNG |
 
 Nombres de salida en minúsculas, sin tildes ni espacios, con guiones.
-Se eligió 720 y no 1080 porque los videos de la ventana cargan juntos al abrirla.
+Se eligió 720 y no 1080 cuando la ventana cargaba todos los videos juntos al
+abrirla; ya se corrigió (ver "Problemas resueltos" en tecnico.md), y subir a
+1080 queda pendiente.
 
 ### Comandos (Windows, PowerShell)
 Si FFmpeg, ImageMagick o Poppler no responden, refrescar el `PATH` en la sesión:
